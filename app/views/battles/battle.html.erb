@@ -1,0 +1,29 @@
+<script type="text/javascript">
+  battle = {
+    skills: <%= Constant.skills.html_safe %>,
+    actions: {
+      pos0: [],
+      pos1: [],
+      pos2: [],
+      pos3: [],
+      pos4: []
+    }
+  }
+</script>
+
+Doin battle against <%= @op_team.name %>!
+
+<div id="opponent-team">
+  <%= render :partial => "characters/op_character", :collection => @op_team.characters %>
+</div>
+<div id="home-team">
+  <% @team.characters.each_with_index do |char, num|%>
+    <script type="text/javascript">
+      battle.pos<%= num %>_ap = <%= char.ap %>
+    </script>
+    <%= render :partial => "characters/char_action", :locals => { :character => char, :num => num} %>
+  <% end %>
+</div>
+
+<a href="#" id="submit-turn">Confirm</a>
+

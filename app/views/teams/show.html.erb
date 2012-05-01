@@ -1,0 +1,10 @@
+<h2><%= @team.name %></h2>
+
+<h3>Warband members:</h3>
+<table id="characters-table">
+    <%= render :partial => "characters/character", :collection => @team.characters %>
+</table>
+
+<%= link_to "Home", root_path %>
+<%= link_to "Edit", edit_team_path %>
+

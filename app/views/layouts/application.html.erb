@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Warbands</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div>
+  <% if current_user and current_user.team %>
+    <h2>Playing with <%= link_to current_user.team.name, current_user.team %></h2>
+    <p>Logged in as <%= current_user.email %>
+    <% if current_user.battle_queue %>
+      <b>In queue for battle</b>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="container">
+<%= yield %>
+</div>
+
+</body>
+</html>
+

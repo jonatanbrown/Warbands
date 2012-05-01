@@ -1,0 +1,13 @@
+<h2>Create a new team!</h2>
+
+<%= form_for @team do |f| %>
+  <p>Name</p>
+  <%= f.text_field :name %>
+
+<table id="characters-table">
+    <%= render :partial => "characters/character", :collection => @team.characters %>
+</table>
+<a href="#" id="reroll-characters" data-id="<%= @team._id %>">Reroll Characters</a></br>
+  <%= f.submit "Create Team" %>
+<% end %>
+
