@@ -16,7 +16,7 @@ $(document).ready(function() {
             var skill_ap = $('#pos' + pos + '-selector' + " option[value=" + skill_id + "]").attr('data-ap');
 
             //Add actions to battle orders
-            battle['actions']['pos' + pos].push({action: skill_id, target: target})
+            battle['actions']['' + pos].push({action: skill_id, target: target})
 
             //Recalculate remaining AP, and update display
             battle['pos' + pos + '_ap'] -= skill_ap
@@ -34,10 +34,10 @@ $(document).ready(function() {
 
 function update_action_list(pos) {
     $('#pos' + pos + '-actions').html("");
-    for (i in battle['actions']['pos' + pos])
+    for (i in battle['actions']['' + pos])
     {
-        var skill_id = battle['actions']['pos' + pos][i]['action'];
-        var target_pos = battle['actions']['pos' + pos][i]['target'];
+        var skill_id = battle['actions']['' + pos][i]['action'];
+        var target_pos = battle['actions']['' + pos][i]['target'];
         var skill_name = battle['skills'][skill_id - 1][0];
         $('#pos' + pos + '-actions').append('<p>' + skill_name + ' at ' + target_pos + '</p>');
     }
