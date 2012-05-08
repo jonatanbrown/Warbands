@@ -1,18 +1,20 @@
-<b><%= character.name %></b>
+<div class="team-character">
+  <b><%= character.name %></b>
 
-<div id="pos<%= num %>-ap">AP: <%= character.ap %></div>
-<div id="pos<%= num %>-actions">
+  <div id="pos<%= num %>-ap">AP: <%= character.ap %></div>
+  <div id="pos<%= num %>-actions">
+  </div>
+
+  <select name="pos<%= num %>-selector" id="pos<%= num %>-selector"></select>
+  <% characters_array = @op_team.characters.all.map { |char| ["#{char.name} - #{char.position}", char.position] } %>
+  <%= select_tag("pos#{num}-character-selector", options_for_select(characters_array)) %>
+
+  <script type="text/javascript">
+      var selector = $('#pos<%= num %>-selector')
+      set_options(selector, <%= num %>)
+  </script>
+
+  <a href="#" class="confirm-skill" data-pos="<%= num %>">Confirm Skill</a>
+  </br>
 </div>
-
-<select name="pos<%= num %>-selector" id="pos<%= num %>-selector"></select>
-<% characters_array = @op_team.characters.all.map { |char| ["#{char.name} - #{char.position}", char.position] } %>
-<%= select_tag("pos#{num}-character-selector", options_for_select(characters_array)) %>
-
-<script type="text/javascript">
-    var selector = $('#pos<%= num %>-selector')
-    set_options(selector, <%= num %>)
-</script>
-
-<a href="#" class="confirm-skill" data-pos="<%= num %>">Confirm Skill</a>
-</br>
 

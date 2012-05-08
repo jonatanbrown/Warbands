@@ -1,0 +1,9 @@
+.opponent-character{
+    min-width: 188px;
+    float: left;
+}
+
+#opponent-team{
+    min-height: 100px;
+}
+

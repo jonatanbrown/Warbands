@@ -18,5 +18,11 @@ class Team
     self.characters.where(position: pos).first
   end
 
+  def reset_battle_stats
+    self.characters.each do |c|
+      c.update_attribute(:current_hp, c.hp)
+    end
+  end
+
 end
 

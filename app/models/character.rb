@@ -14,6 +14,8 @@ class Character
 
   field :ap, :type => Integer
 
+  field :hp, :type => Integer, :default => 20
+
   #Skills
 
   #Melee Combat
@@ -38,6 +40,9 @@ class Character
   field :debuffs, :type => Integer
 
   field :position, :type => Integer
+
+  #Combat info
+  field :current_hp, :type => Integer
 
   def roll_char
     self.roll_stats

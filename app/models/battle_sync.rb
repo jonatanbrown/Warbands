@@ -4,6 +4,7 @@ class BattleSync
   has_many :users
 
   field :resolving, :type => Boolean, :default => false
+  field :resolved, :type => Boolean, :default => false
 
   field :submit_count, :type => Integer, :default => 0
 
