@@ -43,6 +43,7 @@ class Character
 
   #Combat info
   field :current_hp, :type => Integer
+  field :active, :type => Boolean
 
   def roll_char
     self.roll_stats
@@ -72,7 +73,7 @@ class Character
     self.poison = roll_skill
     self.dirt = roll_skill
 
-    #Works as all other skills now, will later be done in some other way.
+    #Magic works as all other skills now, will later be done in some other way.
     self.defensive = roll_skill
     self.destructive = roll_skill
     self.debuffs = roll_skill
@@ -81,6 +82,10 @@ class Character
 
   def get_priority
     self.ini
+  end
+
+  def is_active?
+    current_hp > 0
   end
 
   private

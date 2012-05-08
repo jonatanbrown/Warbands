@@ -14,11 +14,11 @@
 Doin battle against <%= @op_team.name %>!
 
 <div id="opponent-team">
-  <%= render :partial => "characters/op_character", :collection => @op_team.characters %>
+  <%= render :partial => "characters/op_character", :collection => @op_chars %>
 </div>
 </br>
 <div id="home-team">
-  <% @team.characters.each_with_index do |char, num|%>
+  <% @chars.each_with_index do |char, num|%>
     <script type="text/javascript">
       battle.pos<%= num %>_ap = <%= char.ap %>
     </script>

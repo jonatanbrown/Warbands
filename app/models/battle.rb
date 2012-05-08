@@ -58,9 +58,11 @@ class Battle
     case action['skill']
     when '1'
       target.current_hp -= 5
+      target.active = target.is_active?
       target.save
     when '2'
       target.current_hp -= 7
+      target.active = target.is_active?
       target.save
     end
   end
