@@ -3,8 +3,7 @@ class BattleSync
 
   has_many :users
 
-  field :resolving, :type => Boolean, :default => false
-  field :resolved, :type => Boolean, :default => false
+  field :state, :type => String, :default => 'orders'
 
   field :submit_count, :type => Integer, :default => 0
 

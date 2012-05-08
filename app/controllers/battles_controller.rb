@@ -52,12 +52,13 @@ class BattlesController < ApplicationController
 
     @op_battle = @op_team = User.find(@battle.opponent).battle
 
-    battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], submit_count: 2, resolving: false }, update: {'$set' => {resolving: true}}, :new => true)
+    battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], submit_count: 2, state: 'orders' }, update: {'$set' => {state: 'resolving'}}, :new => true)
 
     if battle_sync
       #Resolve turn
       Battle.resolve_turn(@battle, @op_battle)
-      bs.update_attribute(:resolved, true)
+      bs = BattleSync.instantiate(battle_sync)
+      bs.update_attributes(submit_count: 0, state: 'orders')
     end
 
     render :nothing => true
@@ -65,7 +66,9 @@ class BattlesController < ApplicationController
 
   def waiting_for_turn
     bs = current_user.battle_sync
-    if bs.resolved
+
+    #PROBLEM HERE IF OTHER PLAYER SUBMITS BEFORE WE CAN CHECK THIS CONDITION
+    if bs.state == 'orders' and bs.submit_count == 0
       redirect_to battle_path
     end
   end
