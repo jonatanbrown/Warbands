@@ -7,13 +7,14 @@ class Battle
 
   field :actions
 
+  field :result, :type => Integer
+
   def self.resolve_turn(battle1, battle2)
+
+    turn_events = ""
 
     team1 = battle1.user.team
     team2 = battle2.user.team
-
-    team1_chars = team1.characters
-    team2_chars = team2.characters
 
     action_list = []
 
@@ -22,11 +23,12 @@ class Battle
 
     action_list = sort_order(action_list)
 
-    turn_events = ""
-
     action_list.each do |a|
       turn_events += resolve_action(a)
     end
+
+    check_if_lost(team1, team2)
+    check_if_lost(team2, team1)
 
     turn_events
 
@@ -59,7 +61,7 @@ class Battle
       puts "#{char.name} is using #{Constant.get_skill_name(action['skill'].to_i)} on #{target.name} at prio #{action['prio']}"
       case action['skill']
       when '1'
-        damage = 5
+        damage = 20
         target.current_hp -= damage
         result += "<p>#{char.name} strikes #{target.name} for #{damage} damage.</p>"
         target.active = target.is_active?
@@ -79,6 +81,13 @@ class Battle
       end
     end
     result
+  end
+
+  def self.check_if_lost(team, op_team)
+    if !team.characters.where(:active => true).any?
+      team.user.battle.update_attribute(:result, BATTLE_LOST)
+      op_team.user.battle.update_attribute(:result, BATTLE_WON)
+    end
   end
 
 end

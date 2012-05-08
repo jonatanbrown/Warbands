@@ -35,8 +35,29 @@ class BattlesController < ApplicationController
     bs.users << current_user
     bs.save
 
+    @turn_events = ""
+  end
+
+  def next_turn
+
+    @battle = current_user.battle
+    @team = current_user.team
+    @op_team = User.find(@battle.opponent).team
+
+    @chars = @team.characters.where(:active => true)
+    @op_chars = @op_team.characters.where(:active => true)
+
+    bs = current_user.battle_sync
+
     @turn_events = bs.turn_events
 
+    if @battle.result == BATTLE_LOST
+      redirect_to lost_battle_path
+    elsif @battle.result == BATTLE_WON
+      redirect_to won_battle_path
+    else
+      render 'battle'
+    end
   end
 
   def leave_queue
@@ -74,8 +95,32 @@ class BattlesController < ApplicationController
     bs = current_user.battle_sync
 
     if bs.state == 'orders'
-      redirect_to battle_path
+      redirect_to next_turn_path
     end
+  end
+
+  def won_battle
+    bs = current_user.battle_sync
+    battle = current_user.battle
+    @turn_events = bs.turn_events
+    current_user.battle_sync = nil
+    current_user.save
+    if !bs.users.any?
+      bs.destroy
+    end
+    battle.destroy
+  end
+
+  def lost_battle
+    bs = current_user.battle_sync
+    battle = current_user.battle
+    @turn_events = bs.turn_events
+    current_user.battle_sync = nil
+    current_user.save
+    if !bs.users.any?
+      bs.destroy
+    end
+    battle.destroy
   end
 
 end

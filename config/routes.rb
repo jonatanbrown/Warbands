@@ -16,7 +16,9 @@ Warbands::Application.routes.draw do
     match 'battles/battle' => 'battles#battle', :as => "battle"
     match 'battles/confirm_turn' => 'battles#confirm_turn', :as => "confirm_turn"
     match 'battles/waiting_for_turn' => 'battles#waiting_for_turn', :as => "waiting_for_turn"
-
+    match 'battles/next_turn' => 'battles#next_turn', :as => "next_turn"
+    match 'battles/won_battle' => 'battles#won_battle', :as => "won_battle"
+    match 'battles/lost_battle' => 'battles#lost_battle', :as => "lost_battle"
     match 'characters/:id/update' => 'characters#update'
 
   end

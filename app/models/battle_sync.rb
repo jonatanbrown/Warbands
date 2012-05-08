@@ -7,7 +7,7 @@ class BattleSync
 
   field :submit_count, :type => Integer, :default => 0
 
-  field :turn_events, :type => String
+  field :turn_events, :type => String, :default => ""
 
 end
 
