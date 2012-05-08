@@ -15,10 +15,6 @@ class Battle
     team1_chars = team1.characters
     team2_chars = team2.characters
 
-    puts "Team chars"
-    puts team1_chars
-    puts team2_chars
-
     action_list = []
 
     action_list += add_actions_to_list(battle1, team2)
@@ -26,9 +22,13 @@ class Battle
 
     action_list = sort_order(action_list)
 
+    turn_events = ""
+
     action_list.each do |a|
-      resolve_action(a)
+      turn_events += resolve_action(a)
     end
+
+    turn_events
 
   end
 
@@ -52,19 +52,33 @@ class Battle
   end
 
   def self.resolve_action(action)
-    puts "#{action['char'].name} is using #{Constant.get_skill_name(action['skill'].to_i)} on #{action['target']['team'].get_char(action['target']['pos']).name} at prio #{action['prio']}"
     char = action['char']
     target = action['target']['team'].get_char(action['target']['pos'])
-    case action['skill']
-    when '1'
-      target.current_hp -= 5
-      target.active = target.is_active?
-      target.save
-    when '2'
-      target.current_hp -= 7
-      target.active = target.is_active?
-      target.save
+    result = ''
+    if char.active and target.active
+      puts "#{char.name} is using #{Constant.get_skill_name(action['skill'].to_i)} on #{target.name} at prio #{action['prio']}"
+      case action['skill']
+      when '1'
+        damage = 5
+        target.current_hp -= damage
+        result += "<p>#{char.name} strikes #{target.name} for #{damage} damage.</p>"
+        target.active = target.is_active?
+        if !target.active
+          result += "<p>#{target.name} has been knocked out!</p>"
+        end
+        target.save
+      when '2'
+        damage = 7
+        target.current_hp -= damage
+        result += "<p>#{char.name} throws a stone at #{target.name} for #{damage} damage.</p>"
+        target.active = target.is_active?
+        if !target.active
+          result += "<p>#{target.name} has been knocked out!</p>"
+        end
+        target.save
+      end
     end
+    result
   end
 
 end

@@ -35,6 +35,8 @@ class BattlesController < ApplicationController
     bs.users << current_user
     bs.save
 
+    @turn_events = bs.turn_events
+
   end
 
   def leave_queue
@@ -60,9 +62,9 @@ class BattlesController < ApplicationController
 
     if battle_sync
       #Resolve turn
-      Battle.resolve_turn(@battle, @op_battle)
+      turn_events = Battle.resolve_turn(@battle, @op_battle)
       bs = BattleSync.instantiate(battle_sync)
-      bs.update_attributes(submit_count: 0, state: 'orders')
+      bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events)
     end
 
     render :nothing => true
