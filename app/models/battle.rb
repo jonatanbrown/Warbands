@@ -59,36 +59,37 @@ class Battle
     char = Character.find(action['char']._id)
     target = Character.find(action['target']['team'].get_char(action['target']['pos'])._id)
     result = ''
+
     if char.active and target.active
       case action['skill']
-
       #Strike
       when '1'
         damage = 20
         target.current_hp -= damage
-        result += "<p>#{char.name} strikes #{target.name} for #{damage} damage.</p>"
+        result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
         target.active = target.is_active?
         if !target.active
           result += "<p>#{target.name} has been knocked out!</p>"
         end
         target.save
-
       #Throw
       when '2'
         damage = 7
         target.current_hp -= damage
-        result += "<p>#{char.name} throws a stone at #{target.name} for #{damage} damage.</p>"
+        result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
         target.active = target.is_active?
         if !target.active
           result += "<p>#{target.name} has been knocked out!</p>"
         end
         target.save
+      end
+    elsif char.active
+      case action['skill']
 
       #Retreat
       when '3'
         char.update_attribute(:active, false)
         result += "<p>#{char.name} has retreated from combat.</p>"
-
       end
     end
     result

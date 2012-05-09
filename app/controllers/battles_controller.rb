@@ -2,16 +2,20 @@ class BattlesController < ApplicationController
 
   def queue
 
-    current_user.team.reset_battle_stats
+    if current_user.battle
+      redirect_to next_turn_path
+      return
+    end
 
     if battle = Battle.where(opponent: current_user._id).first
       b = Battle.create(user: current_user, opponent: battle.user._id )
+      current_user.team.reset_battle_stats
       redirect_to battle_path
     elsif q = BattleQueue.all.first and q.user != current_user
-
       #CONCURRENCY ISSUE HERE, NEEDS TO BE FIXED. Two people can check condition at same time!
       q.destroy
       b = Battle.create(user: current_user, opponent: q.user._id )
+      current_user.team.reset_battle_stats
       redirect_to battle_path
     elsif !BattleQueue.all.any?
       @queue = BattleQueue.create(user: current_user)

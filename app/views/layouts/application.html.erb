@@ -15,6 +15,9 @@
     <% if current_user.battle_queue %>
       <b>In queue for battle</b>
     <% end %>
+    <% if current_user.battle %>
+      <span class="red"><b>In battle!</b></span>
+    <% end %>
   <% end %>
 </div>
 
