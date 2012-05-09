@@ -3,7 +3,8 @@ class Constant
   def self.skills
     [
       ["#{get_skill_name(1)}", 1, get_skill_ap(1)],
-      ["#{get_skill_name(2)}", 2, get_skill_ap(2)]
+      ["#{get_skill_name(2)}", 2, get_skill_ap(2)],
+      ["#{get_skill_name(3)}", 3, get_skill_ap(3)]
     ].to_s
   end
 
@@ -12,6 +13,8 @@ class Constant
       4
     elsif skill_id == 2
       6
+    elsif skill_id == 3
+      0
     end
   end
 
@@ -20,6 +23,8 @@ class Constant
       'Strike'
     elsif skill_id == 2
       'Throw'
+    elsif skill_id == 3
+      'Retreat'
     end
   end
 

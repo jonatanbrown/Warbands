@@ -61,6 +61,8 @@ class Battle
     result = ''
     if char.active and target.active
       case action['skill']
+
+      #Strike
       when '1'
         damage = 20
         target.current_hp -= damage
@@ -70,6 +72,8 @@ class Battle
           result += "<p>#{target.name} has been knocked out!</p>"
         end
         target.save
+
+      #Throw
       when '2'
         damage = 7
         target.current_hp -= damage
@@ -79,6 +83,12 @@ class Battle
           result += "<p>#{target.name} has been knocked out!</p>"
         end
         target.save
+
+      #Retreat
+      when '3'
+        char.update_attribute(:active, false)
+        result += "<p>#{char.name} has retreated from combat.</p>"
+
       end
     end
     result
