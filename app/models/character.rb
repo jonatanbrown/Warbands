@@ -39,11 +39,12 @@ class Character
   field :buffs, :type => Integer
   field :debuffs, :type => Integer
 
-  field :position, :type => Integer
-
   #Combat info
   field :current_hp, :type => Integer
   field :active, :type => Boolean
+
+  field :position, :type => Integer
+
 
   def roll_char
     self.roll_stats

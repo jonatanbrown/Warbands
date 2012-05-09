@@ -18,11 +18,11 @@ Doin battle against <%= @op_team.name %>!
 </div>
 </br>
 <div id="home-team">
-  <% @chars.each_with_index do |char, num|%>
+  <% @chars.each do |char|%>
     <script type="text/javascript">
-      battle.pos<%= num %>_ap = <%= char.ap %>
+      battle.pos<%= char.position %>_ap = <%= char.ap %>
     </script>
-    <%= render :partial => "characters/char_action", :locals => { :character => char, :num => num} %>
+    <%= render :partial => "characters/char_action", :locals => { :character => char, :pos => char.position} %>
   <% end %>
 </div>
 

@@ -85,7 +85,7 @@ class BattlesController < ApplicationController
       #Resolve turn
       turn_events = Battle.resolve_turn(@battle, @op_battle)
       bs = BattleSync.instantiate(battle_sync)
-      bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events)
+      bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events, turn: bs.turn + 1)
     end
 
     render :nothing => true
@@ -93,8 +93,10 @@ class BattlesController < ApplicationController
 
   def waiting_for_turn
     bs = current_user.battle_sync
+    battle = current_user.battle
 
-    if bs.state == 'orders'
+    if bs.turn > battle.turn
+      battle.update_attribute(:turn, battle.turn + 1)
       redirect_to next_turn_path
     end
   end

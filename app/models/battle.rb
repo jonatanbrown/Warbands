@@ -9,6 +9,8 @@ class Battle
 
   field :result, :type => Integer
 
+  field :turn, :type => Integer, :default => 1
+
   def self.resolve_turn(battle1, battle2)
 
     turn_events = ""

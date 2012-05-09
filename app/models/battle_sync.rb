@@ -9,5 +9,7 @@ class BattleSync
 
   field :turn_events, :type => String, :default => ""
 
+  field :turn, :type => Integer, :default => 1
+
 end
 
