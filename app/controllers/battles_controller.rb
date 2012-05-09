@@ -9,13 +9,11 @@ class BattlesController < ApplicationController
 
     if battle = Battle.where(opponent: current_user._id).first
       b = Battle.create(user: current_user, opponent: battle.user._id )
-      current_user.team.reset_battle_stats
       redirect_to battle_path
     elsif q = BattleQueue.all.first and q.user != current_user
       #CONCURRENCY ISSUE HERE, NEEDS TO BE FIXED. Two people can check condition at same time!
       q.destroy
       b = Battle.create(user: current_user, opponent: q.user._id )
-      current_user.team.reset_battle_stats
       redirect_to battle_path
     elsif !BattleQueue.all.any?
       @queue = BattleQueue.create(user: current_user)
@@ -115,6 +113,7 @@ class BattlesController < ApplicationController
       bs.destroy
     end
     battle.destroy
+    current_user.team.reset_battle_stats
   end
 
   def lost_battle
@@ -127,6 +126,7 @@ class BattlesController < ApplicationController
       bs.destroy
     end
     battle.destroy
+    current_user.team.reset_battle_stats
   end
 
 end

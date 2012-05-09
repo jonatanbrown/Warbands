@@ -60,6 +60,16 @@ class Battle
     target = Character.find(action['target']['team'].get_char(action['target']['pos'])._id)
     result = ''
 
+    if char.active
+      case action['skill']
+
+      #Retreat
+      when '3'
+        char.update_attribute(:active, false)
+        result += "<p>#{char.name} has retreated from combat.</p>"
+      end
+    end
+
     if char.active and target.active
       case action['skill']
       #Strike
@@ -83,15 +93,8 @@ class Battle
         end
         target.save
       end
-    elsif char.active
-      case action['skill']
-
-      #Retreat
-      when '3'
-        char.update_attribute(:active, false)
-        result += "<p>#{char.name} has retreated from combat.</p>"
-      end
     end
+
     result
   end
 
