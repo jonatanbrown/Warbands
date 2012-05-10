@@ -76,6 +76,7 @@ class BattlesController < ApplicationController
 
     @battle = current_user.battle
     @battle.actions = params[:actions]
+    @battle.submitted = true
     bs = current_user.battle_sync
     bs.submit_count += 1
     bs.state = 'waiting'
@@ -87,7 +88,6 @@ class BattlesController < ApplicationController
     battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], submit_count: 2, state: 'waiting' }, update: {'$set' => {state: 'resolving'}}, :new => true)
 
     if battle_sync
-      #Resolve turn
       turn_events = Battle.resolve_turn(@battle, @op_battle)
       bs = BattleSync.instantiate(battle_sync)
       bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events, turn: bs.turn + 1)
@@ -101,7 +101,7 @@ class BattlesController < ApplicationController
     battle = current_user.battle
 
     if bs.turn > battle.turn
-      battle.update_attribute(:turn, battle.turn + 1)
+      battle.update_attributes(turn: battle.turn + 1, submitted: false)
       redirect_to next_turn_path
     end
   end

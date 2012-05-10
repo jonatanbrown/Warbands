@@ -11,6 +11,8 @@ class Battle
 
   field :turn, :type => Integer, :default => 1
 
+  field :submitted, :type => Boolean
+
   def self.resolve_turn(battle1, battle2)
 
     turn_events = ""
