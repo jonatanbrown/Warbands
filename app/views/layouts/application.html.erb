@@ -16,7 +16,7 @@
       <b>In queue for battle</b>
     <% end %>
     <% if current_user.battle %>
-      <span class="red"><b>In battle!</b></span>
+      <%= link_to "<span class='red'><b>In battle!</b></span>".html_safe, next_turn_path %>
     <% end %>
   <% end %>
 </div>
