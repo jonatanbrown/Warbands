@@ -7,7 +7,7 @@ class Battle
 
   field :actions
 
-  field :result, :type => Integer
+  field :result, :type => Integer, :default => 0
 
   field :turn, :type => Integer, :default => 1
 

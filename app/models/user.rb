@@ -4,6 +4,7 @@ class User
   has_one :team
   has_one :battle
   has_one :battle_queue
+  has_one :battle_result
 
   belongs_to :battle_sync
 

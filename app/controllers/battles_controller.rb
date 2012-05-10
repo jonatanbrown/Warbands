@@ -2,12 +2,17 @@ class BattlesController < ApplicationController
 
   def queue
 
+    if current_user.battle_result
+      br = current_user.battle_result
+      br.destroy
+    end
+
     if current_user.battle
       redirect_to next_turn_path
       return
     end
 
-    if battle = Battle.where(opponent: current_user._id).first
+    if battle = Battle.where(opponent: current_user._id, result: 0).first
       b = Battle.create(user: current_user, opponent: battle.user._id )
       redirect_to battle_path
     elsif q = BattleQueue.all.first and q.user != current_user
@@ -53,10 +58,8 @@ class BattlesController < ApplicationController
 
     @turn_events = bs.turn_events
 
-    if @battle.result == BATTLE_LOST
-      redirect_to lost_battle_path
-    elsif @battle.result == BATTLE_WON
-      redirect_to won_battle_path
+    if @battle.result != BATTLE_UNDECIDED
+      redirect_to battle_finished_path
     else
       render 'battle'
     end
@@ -103,30 +106,30 @@ class BattlesController < ApplicationController
     end
   end
 
-  def won_battle
-    bs = current_user.battle_sync
-    battle = current_user.battle
-    @turn_events = bs.turn_events
-    current_user.battle_sync = nil
-    current_user.save
-    if !bs.users.any?
-      bs.destroy
+  def battle_finished
+    if current_user.battle_result
+      battle_result = current_user.battle_result
+    else
+      bs = current_user.battle_sync
+      battle = current_user.battle
+      battle_result = BattleResult.create(last_turn_events: bs.turn_events, result: battle.result)
+      current_user.battle_result = battle_result
+      current_user.battle_sync = nil
+      current_user.battle = nil
+      current_user.save
+      if !bs.users.any?
+        bs.destroy
+      end
+      battle.destroy
+      current_user.team.reset_battle_stats
     end
-    battle.destroy
-    current_user.team.reset_battle_stats
-  end
 
-  def lost_battle
-    bs = current_user.battle_sync
-    battle = current_user.battle
-    @turn_events = bs.turn_events
-    current_user.battle_sync = nil
-    current_user.save
-    if !bs.users.any?
-      bs.destroy
+    @turn_events = battle_result.last_turn_events
+    if battle_result.result == BATTLE_WON
+      render 'won_battle'
+    else
+      render 'lost_battle'
     end
-    battle.destroy
-    current_user.team.reset_battle_stats
   end
 
 end
