@@ -11,7 +11,8 @@
   }
 </script>
 
-Doin battle against <%= @op_team.name %>!
+<p>Doin battle against <%= @op_team.name %>!</p>
+<p>Battle is on turn <%= @battle.turn %></p>
 
 <div id="opponent-team">
   <%= render :partial => "characters/op_character", :collection => @op_chars %>
@@ -24,9 +25,10 @@ Doin battle against <%= @op_team.name %>!
     </script>
     <%= render :partial => "characters/char_action", :locals => { :character => char, :pos => char.position} %>
   <% end %>
+  <a href="#" id="submit-turn">Confirm</a>
 </div>
 
-<a href="#" id="submit-turn">Confirm</a>
+
 
 <div id="turn-events"><%= @turn_events.html_safe %></div>
 

@@ -7,3 +7,12 @@
     min-height: 100px;
 }
 
+#home-team{
+    float: left;
+    margin-right: 50px;
+}
+
+#turn-events{
+    float: left;
+}
+
