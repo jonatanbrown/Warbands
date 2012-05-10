@@ -5,10 +5,11 @@ $(document).ready(function() {
     $(".confirm-skill").on("click", function(event) {
 
         var pos = $(this).attr('data-pos');
-        var selector = $('#pos' + pos + '-skill-selector')
+        var skill_selector = $('#pos' + pos + '-skill-selector')
+        var target_selector = $('#pos' + pos + '-character-selector')
 
         var skill_id = $('#pos' + pos + '-skill-selector').val()
-        var target = $('#pos' + pos + '-character-selector').val()
+        var target = target_selector.val()
 
         if (skill_id)
         {
@@ -25,10 +26,18 @@ $(document).ready(function() {
             //Append to visible list of actions
             update_action_list(pos);
 
-            //Recalculate action selector options
-            set_options(selector, pos);
+            //Recalculate action selector options and set selectors
+            set_skill_options(skill_selector, pos);
+            set_target_options(target_selector, skill_selector.val(), pos)
         }
         return false;
+    });
+
+    $(".skill-selector").on("change", function(event) {
+        var skill_id = $(this).val()
+        var pos = $(this).attr('data-pos');
+        var target_selector = $('#pos' + pos + '-character-selector')
+        set_target_options(target_selector, skill_id, pos)
     });
 });
 
@@ -43,7 +52,24 @@ function update_action_list(pos) {
     }
 }
 
-function set_options(selector, pos) {
+function set_target_options(selector, skill_id, pos) {
+    selector.html(" ");
+    if(battle.skills[skill_id - 1][3] == 0)
+    {
+    }
+    else
+    {
+        for (i in battle.op_chars_pos)
+        {
+            if (skill_can_target_pos(skill_id, pos, battle.op_chars_pos[i][1]))
+            {
+                selector.append('<option value="' + battle.op_chars_pos[i][1] + '">' + battle.op_chars_pos[i][0] + '</option>');
+            }
+        }
+    }
+}
+
+function set_skill_options(selector, pos) {
     selector.html(" ");
     ap = battle['pos' + pos + '_ap']
     for (i in battle.skills)
@@ -56,7 +82,6 @@ function set_options(selector, pos) {
 }
 
 function submit_turn() {
-    console.log("submitting turn");
     delete battle['skills'];
     $.ajax({
         url: 'confirm_turn',
@@ -67,5 +92,9 @@ function submit_turn() {
         dataType: 'html'
     });
     return false;
+}
+
+function skill_can_target_pos(skill_id, char_pos, target_pos) {
+    return true;
 }
 

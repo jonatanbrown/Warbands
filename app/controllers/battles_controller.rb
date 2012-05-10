@@ -53,6 +53,7 @@ class BattlesController < ApplicationController
 
     @chars = @team.characters.where(:active => true)
     @op_chars = @op_team.characters.where(:active => true)
+    @op_chars_pos = @op_team.get_char_positions
 
     bs = current_user.battle_sync
 

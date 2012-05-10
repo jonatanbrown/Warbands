@@ -13,6 +13,8 @@ class Battle
 
   field :submitted, :type => Boolean
 
+  field :formation, :type => Integer, :default => 0
+
   def self.resolve_turn(battle1, battle2)
 
     turn_events = ""
@@ -59,7 +61,12 @@ class Battle
 
   def self.resolve_action(action)
     char = Character.find(action['char']._id)
-    target = Character.find(action['target']['team'].get_char(action['target']['pos'])._id)
+    if action['target']['pos'] != 'null'
+      target = Character.find(action['target']['team'].get_char(action['target']['pos'])._id)
+    else
+      target = nil
+    end
+
     result = ''
 
     if char.active
@@ -72,7 +79,7 @@ class Battle
       end
     end
 
-    if char.active and target.active
+    if char.active and target and target.active
       case action['skill']
       #Strike
       when '1'

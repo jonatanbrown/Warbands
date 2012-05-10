@@ -7,7 +7,8 @@
       '2': [],
       '3': [],
       '4': []
-    }
+    },
+    op_chars_pos: <%= @op_chars.all.map { |char| ["#{char.name} - #{char.position}", char.position] }.to_s.html_safe %>
   }
 </script>
 
