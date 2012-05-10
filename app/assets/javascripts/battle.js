@@ -5,15 +5,15 @@ $(document).ready(function() {
     $(".confirm-skill").on("click", function(event) {
 
         var pos = $(this).attr('data-pos');
-        var selector = $('#pos' + pos + '-selector')
+        var selector = $('#pos' + pos + '-skill-selector')
 
-        var skill_id = $('#pos' + pos + '-selector').val()
+        var skill_id = $('#pos' + pos + '-skill-selector').val()
         var target = $('#pos' + pos + '-character-selector').val()
 
         if (skill_id)
         {
-            var skill_text = $('#pos' + pos + '-selector' + " option[value=" + skill_id + "]").text();
-            var skill_ap = $('#pos' + pos + '-selector' + " option[value=" + skill_id + "]").attr('data-ap');
+            var skill_text = $('#pos' + pos + '-skill-selector' + " option[value=" + skill_id + "]").text();
+            var skill_ap = $('#pos' + pos + '-skill-selector' + " option[value=" + skill_id + "]").attr('data-ap');
 
             //Add actions to battle orders
             battle['actions']['' + pos].push({action: skill_id, target: target})

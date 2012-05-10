@@ -6,12 +6,12 @@
   <div id="pos<%= pos %>-actions">
   </div>
 
-  <select name="pos<%= pos %>-selector" id="pos<%= pos %>-selector"></select>
+  <select name="pos<%= pos %>-skill-selector" id="pos<%= pos %>-skill-selector"></select>
   <% characters_array = @op_chars.all.map { |char| ["#{char.name} - #{char.position}", char.position] } %>
   <%= select_tag("pos#{pos}-character-selector", options_for_select(characters_array)) %>
 
   <script type="text/javascript">
-      var selector = $('#pos<%= pos %>-selector')
+      var selector = $('#pos<%= pos %>-skill-selector')
       set_options(selector, <%= pos %>)
   </script>
 
