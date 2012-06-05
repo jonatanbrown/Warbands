@@ -5,6 +5,8 @@ class Team
 
   field :name, :type => String
 
+  field :formation, :type => Integer, :default => 1
+
   def create_characters
     5.times do |i|
       c = Character.new(:name => "Character #{i + 1}")
@@ -24,5 +26,21 @@ class Team
     end
   end
 
+  def set_character_positions(char_positions)
+    chars = char_positions.map{|i| i[1] }
+    chars.uniq!
+    if chars.length == 5
+      char_positions.each do |c|
+        position = c[0].to_i
+        id = c[1]
+        char = Character.find(id)
+        char.position = position
+        char.save
+      end
+      true
+    else
+      false
+    end
+  end
 end
 

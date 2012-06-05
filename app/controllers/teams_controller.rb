@@ -32,5 +32,21 @@ class TeamsController < ApplicationController
     @team = current_user.team
   end
 
+  def set_formation
+    @team = Team.find(params[:id])
+    @team.formation = params[:formation_num]
+    @team.save
+    render "_formation", :layout => false
+  end
+
+  def set_character_positions
+    @team = Team.find(params[:id])
+    if @team.set_character_positions(params["positions"])
+      @team.save
+    else
+      @error = "You can not have two characters in the same position."
+    end
+    render "_char_positions", :layout => false
+  end
 end
 
