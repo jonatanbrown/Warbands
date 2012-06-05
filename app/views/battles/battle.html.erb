@@ -16,10 +16,40 @@
 <p>Battle is on turn <%= @battle.turn %></p>
 
 <div id="opponent-team">
-  <%= render :partial => "characters/op_character", :collection => @op_chars %>
+  <% case @op_team.formation %>
+    <% when 1 %>
+      <%= render :partial => "front_row_1", :locals => {:team => @op_team} %>
+    <% when 2 %>
+      <%= render :partial => "back_row_2", :locals => {:team => @op_team} %>
+      <%= render :partial => "front_row_2", :locals => {:team => @op_team} %>
+    <% when 3 %>
+      <%= render :partial => "back_row_3", :locals => {:team => @op_team} %>
+      <%= render :partial => "front_row_3", :locals => {:team => @op_team} %>
+    <% when 4 %>
+      <%= render :partial => "back_row_4", :locals => {:team => @op_team} %>
+      <%= render :partial => "front_row_4", :locals => {:team => @op_team} %>
+  <% end %>
 </div>
-</br>
+
+<div class="separator"></div>
+
 <div id="home-team">
+  <% case @team.formation %>
+    <% when 1 %>
+      <%= render :partial => "front_row_1", :locals => {:team => @team} %>
+    <% when 2 %>
+      <%= render :partial => "front_row_2", :locals => {:team => @team} %>
+      <%= render :partial => "back_row_2", :locals => {:team => @team} %>
+    <% when 3 %>
+      <%= render :partial => "front_row_3", :locals => {:team => @team} %>
+      <%= render :partial => "back_row_3", :locals => {:team => @team} %>
+    <% when 4 %>
+      <%= render :partial => "front_row_4", :locals => {:team => @team} %>
+      <%= render :partial => "back_row_4", :locals => {:team => @team} %>
+  <% end %>
+</div>
+
+<div id="home-team-actions">
   <% @chars.each do |char|%>
     <script type="text/javascript">
       battle.pos<%= char.position %>_ap = <%= char.ap %>
@@ -28,8 +58,6 @@
   <% end %>
   <a href="#" id="submit-turn">Confirm</a>
 </div>
-
-
 
 <div id="turn-events"><%= @turn_events.html_safe %></div>
 

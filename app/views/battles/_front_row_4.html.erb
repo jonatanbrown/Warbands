@@ -1,0 +1,21 @@
+<div class="front-row two-char-row">
+  <div class="front-row-formation-4">
+    <div class="battle-character">
+      <% if team.get_char(0).active %>
+        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(0) } %>
+      <% else %>
+        Knocked out.
+      <% end %>
+    </div>
+  </div>
+  <div class="front-row-formation-4">
+    <div class="battle-character">
+      <% if team.get_char(1).active %>
+        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(1) } %>
+      <% else %>
+        Knocked out.
+      <% end %>
+    </div>
+  </div>
+</div>
+

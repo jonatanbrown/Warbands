@@ -1,4 +1,10 @@
 .red{
-    color: red
+    color: red;
+}
+
+.separator{
+    height: 50px;
+    width: 940px;
+    float: left;
 }
 

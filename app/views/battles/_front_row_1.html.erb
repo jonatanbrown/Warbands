@@ -1,0 +1,48 @@
+<div class="front-row">
+  <div class="front-row-formation-1">
+    <div class="battle-character">
+      <% if team.get_char(0).active %>
+        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(0) } %>
+      <% else %>
+        Knocked out.
+      <% end %>
+    </div>
+  </div>
+  <div class="front-row-formation-1">
+    <div class="battle-character">
+      <% if team.get_char(1).active %>
+        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(1) } %>
+      <% else %>
+        Knocked out.
+      <% end %>
+    </div>
+  </div>
+  <div class="front-row-formation-1">
+    <div class="battle-character">
+      <% if team.get_char(2).active %>
+        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(2) } %>
+      <% else %>
+        Knocked out.
+      <% end %>
+    </div>
+  </div>
+  <div class="front-row-formation-1">
+    <div class="battle-character">
+      <% if team.get_char(3).active %>
+        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(3) } %>
+      <% else %>
+        Knocked out.
+      <% end %>
+    </div>
+  </div>
+  <div class="front-row-formation-1">
+    <div class="battle-character">
+      <% if team.get_char(4).active %>
+        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(4) } %>
+      <% else %>
+        Knocked out.
+      <% end %>
+    </div>
+  </div>
+</div>
+

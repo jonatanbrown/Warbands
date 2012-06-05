@@ -1,18 +1,77 @@
-.opponent-character{
-    min-width: 188px;
-    float: left;
-}
-
 #opponent-team{
-    min-height: 100px;
+    width: auto;
 }
 
 #home-team{
+
+}
+
+#home-team-actions{
     float: left;
     margin-right: 50px;
 }
 
 #turn-events{
     float: left;
+}
+
+.battle-character{
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 100px;
+    min-height: 60px;
+    margin: 0px auto;
+}
+
+.front-row{
+    float: left;
+    min-width: 940px;
+    margin-bottom: 20px;
+}
+
+.back-row{
+    float: left;
+    min-width: 940px;
+    margin-bottom: 20px;
+}
+
+.two-char-row{
+    padding-left: 16%;
+}
+
+.front-row-formation-1{
+    float: left;
+    width: 20%;
+}
+
+.front-row-formation-2{
+    float: left;
+    width: 25%;
+}
+
+.back-row-formation-2{
+    float: left;
+    width: 100%;
+}
+
+.front-row-formation-3{
+    float: left;
+    width: 33%;
+}
+
+.back-row-formation-3{
+    float: left;
+    width: 33%;
+}
+
+.front-row-formation-4{
+    float: left;
+    width: 33%;
+}
+
+.back-row-formation-4{
+    float: left;
+    width: 33%;
 }
 
