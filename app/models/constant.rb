@@ -8,16 +8,6 @@ class Constant
     ].to_s
   end
 
-  def self.get_skill_ap(skill_id)
-    if skill_id == 1
-      4
-    elsif skill_id == 2
-      6
-    elsif skill_id == 3
-      0
-    end
-  end
-
   def self.get_skill_name(skill_id)
     if skill_id == 1
       'Strike'
@@ -25,6 +15,16 @@ class Constant
       'Throw'
     elsif skill_id == 3
       'Retreat'
+    end
+  end
+
+  def self.get_skill_ap(skill_id)
+    if skill_id == 1
+      4
+    elsif skill_id == 2
+      6
+    elsif skill_id == 3
+      0
     end
   end
 
