@@ -82,7 +82,14 @@ function set_skill_options(selector, pos) {
     {
         if (ap >= battle.skills[i][2])
         {
-            selector.append('<option value="' + battle.skills[i][1] + '" data-ap="' + battle.skills[i][2] + '">' + battle.skills[i][0] + ' - ' + battle.skills[i][2] + '</option>');
+            if (battle.skills[i][3] == 1 && !battle.melee_range[pos])
+            {
+                //Melee skill and char infront, don't add option.
+            }
+            else
+            {
+                selector.append('<option value="' + battle.skills[i][1] + '" data-ap="' + battle.skills[i][2] + '">' + battle.skills[i][0] + ' - ' + battle.skills[i][2] + '</option>');
+            }
         }
     }
 }
@@ -103,12 +110,14 @@ function submit_turn() {
 function skill_can_target_pos(skill_id, char_pos, formation, target_pos) {
 
     //Ranged Skill
-    if(battle.skills[skill_id - 1][3] == 2) {
+    if(battle.skills[skill_id - 1][3] == 2)
+    {
         return true;
     }
 
     //Melee skill
-    else if(battle.skills[skill_id - 1][3] == 1) {
+    else if(battle.skills[skill_id - 1][3] == 1)
+    {
         if(battle.pos_targetability[target_pos] == true)
             return true;
         else
