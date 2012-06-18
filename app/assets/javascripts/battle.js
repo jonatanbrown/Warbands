@@ -39,6 +39,12 @@ $(document).ready(function() {
         var target_selector = $('#pos' + pos + '-character-selector')
         set_target_options(target_selector, skill_id, pos)
     });
+
+    $(".target-selector").each(function(index, selector) {
+        var pos = $(selector).attr('data-pos')
+        var skill_selector = $('#pos' + pos + '-skill-selector')
+        set_target_options($(selector), skill_selector.val(), pos)
+    });
 });
 
 function update_action_list(pos) {
@@ -61,7 +67,7 @@ function set_target_options(selector, skill_id, pos) {
     {
         for (i in battle.op_chars_pos)
         {
-            if (skill_can_target_pos(skill_id, pos, battle.op_chars_pos[i][1]))
+            if (skill_can_target_pos(skill_id, pos, battle.formation, battle.op_chars_pos[i][1]))
             {
                 selector.append('<option value="' + battle.op_chars_pos[i][1] + '">' + battle.op_chars_pos[i][0] + '</option>');
             }
@@ -94,7 +100,23 @@ function submit_turn() {
     return false;
 }
 
-function skill_can_target_pos(skill_id, char_pos, target_pos) {
-    return true;
+function skill_can_target_pos(skill_id, char_pos, formation, target_pos) {
+
+    //Ranged Skill
+    if(battle.skills[skill_id - 1][3] == 2) {
+        return true;
+    }
+
+    //Melee skill
+    else if(battle.skills[skill_id - 1][3] == 1) {
+        if(battle.pos_targetability[target_pos] == true)
+            return true;
+        else
+            return false;
+    }
+
+    //Other skill
+    else
+        return true;
 }
 

@@ -42,5 +42,66 @@ class Team
       false
     end
   end
+
+  def position_targetability_melee(pos)
+    if get_char(pos).active
+      pos0_active = get_char(0).active
+      pos1_active = get_char(1).active
+      pos2_active = get_char(2).active
+      case formation
+      when 1
+        true
+      when 2
+        if (0..3) === pos
+          true
+        elsif !pos1_active and !pos2_active
+          true
+        else
+          false
+        end
+      when 3
+        if (0..2) === pos
+          true
+        elsif pos == 3
+          if !pos0_active and !pos1_active
+            true
+          else
+            false
+          end
+        elsif pos == 4
+          if !pos1_active and !pos2_active
+            true
+          else
+            false
+          end
+        end
+      when 4
+        if (0..1) === pos
+          true
+        elsif pos == 2
+          if !pos0_active
+            true
+          else
+            false
+          end
+        elsif pos == 3
+          if !pos0_active and !pos1_active
+            true
+          else
+            false
+          end
+        elsif pos == 4
+          if !pos1_active
+            true
+          else
+            false
+          end
+        end
+      end
+    else
+      false
+    end
+  end
+
 end
 
