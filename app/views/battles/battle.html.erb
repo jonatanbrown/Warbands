@@ -8,7 +8,7 @@
       '3': [],
       '4': []
     },
-    op_chars_pos: <%= @op_chars.all.map { |char| ["#{char.name} - #{char.position}", char.position] }.to_s.html_safe %>
+    op_chars_pos: <%= @op_chars.all.map { |char| ["#{char.name} - #{char.position}", char.position, char.melee_target, char.ranged_target] }.to_s.html_safe %>
   }
 </script>
 
