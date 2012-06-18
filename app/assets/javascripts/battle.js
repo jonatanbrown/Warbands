@@ -60,16 +60,22 @@ function update_action_list(pos) {
 
 function set_target_options(selector, skill_id, pos) {
     selector.html(" ");
-    if(battle.skills[skill_id - 1][3] == 0)
+    if (battle.skills[skill_id - 1][3] == 0)
     {
     }
     else
     {
         for (i in battle.op_chars_pos)
         {
-            if (skill_can_target_pos(skill_id, pos, battle.formation, battle.op_chars_pos[i][1]))
+            var info = ""
+            var target = battle.op_chars_pos[i]
+            if (battle.pos_targetability[target[1]][1] == 1)
+                info = "Slight penalty";
+            else if (battle.pos_targetability[target[1]][1] == 2)
+                info = "Severe penalty";
+            if (skill_can_target_pos(skill_id, pos, battle.formation, target[1]))
             {
-                selector.append('<option value="' + battle.op_chars_pos[i][1] + '">' + battle.op_chars_pos[i][0] + '</option>');
+                selector.append('<option value="' + target[1] + '">' + target[0] + " " + info +'</option>');
             }
         }
     }
@@ -118,7 +124,7 @@ function skill_can_target_pos(skill_id, char_pos, formation, target_pos) {
     //Melee skill
     else if(battle.skills[skill_id - 1][3] == 1)
     {
-        if(battle.pos_targetability[target_pos] == true)
+        if(battle.pos_targetability[target_pos][0] == true)
             return true;
         else
             return false;

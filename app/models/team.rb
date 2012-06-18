@@ -103,5 +103,71 @@ class Team
     end
   end
 
+  # 0: No penalty
+  # 1: Slight penalty
+  # 2: Severe penalty
+  def position_targetability_ranged(pos)
+    pos0_active = get_char(0).active
+    pos1_active = get_char(1).active
+    pos2_active = get_char(2).active
+    case formation
+    when 1
+      0
+    when 2
+      if (0..3) === pos
+          0
+        elsif !pos1_active and !pos2_active
+          0
+        elsif !pos1_active or !pos2_active
+          1
+        else
+          2
+        end
+    when 3
+      if (0..2) === pos
+          0
+      elsif pos == 3
+        if !pos0_active and !pos1_active
+          0
+        elsif !pos0_active or !pos1_active
+          1
+        else
+          2
+        end
+      elsif pos == 4
+        if !pos1_active and !pos2_active
+          0
+        elsif !pos1_active or !pos2_active
+          1
+        else
+          2
+        end
+      end
+    when 4
+      if (0..1) === pos
+          0
+      elsif pos == 2
+        if !pos0_active
+          0
+        else
+          1
+        end
+      elsif pos == 3
+        if !pos0_active and !pos1_active
+          0
+        elsif !pos0_active or !pos1_active
+          1
+        else
+          2
+        end
+      elsif pos == 4
+        if !pos1_active
+          0
+        else
+          1
+        end
+      end
+    end
+  end
 end
 
