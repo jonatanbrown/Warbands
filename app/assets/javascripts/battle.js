@@ -53,14 +53,14 @@ function update_action_list(pos) {
     {
         var skill_id = battle['actions']['' + pos][i]['action'];
         var target_pos = battle['actions']['' + pos][i]['target'];
-        var skill_name = battle['skills'][skill_id - 1][0];
+        var skill_name = battle['skills'][skill_id][0];
         $('#pos' + pos + '-actions').append('<p>' + skill_name + ' at ' + target_pos + '</p>');
     }
 }
 
 function set_target_options(selector, skill_id, pos) {
     selector.html(" ");
-    if (battle.skills[skill_id - 1][3] == 0)
+    if (battle.skills[skill_id][3] == 0)
     {
     }
     else
@@ -116,13 +116,13 @@ function submit_turn() {
 function skill_can_target_pos(skill_id, char_pos, formation, target_pos) {
 
     //Ranged Skill
-    if(battle.skills[skill_id - 1][3] == 2)
+    if(battle.skills[skill_id][3] == 2)
     {
         return true;
     }
 
     //Melee skill
-    else if(battle.skills[skill_id - 1][3] == 1)
+    else if(battle.skills[skill_id][3] == 1)
     {
         if(battle.pos_targetability[target_pos][0] == true)
             return true;
