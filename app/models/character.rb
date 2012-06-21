@@ -89,6 +89,11 @@ class Character
     current_hp > 0
   end
 
+  def action_available?(skill_nr)
+    #Should check if the character has learned the skill etc, now only checks if skill is a valid skill number at all.
+    (0..MAX_SKILL_NUM) === skill_nr.to_i
+  end
+
   private
 
   def roll_stat

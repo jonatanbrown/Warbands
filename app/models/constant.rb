@@ -1,5 +1,7 @@
 class Constant
 
+  #Do not forget to change MAX_SKILL_NUM in initializer constants when adding skills
+
   def self.skills
     [
       ["#{get_skill_name(0)}", 0, get_skill_ap(0), get_skill_targeting(0)],

@@ -6,3 +6,5 @@ SELF = 0
 MELEE = 1
 RANGED = 2
 
+MAX_SKILL_NUM = 2
+

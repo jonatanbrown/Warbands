@@ -114,5 +114,36 @@ class Battle
     end
   end
 
+  def self.validate_actions(char_actions, team, op_team)
+    if char_actions
+      char_actions.each do |pos, actions|
+        char = team.get_char(pos.to_i)
+        total_ap = char.ap
+        actions.each do |num, action|
+          #Check if char can use action
+          unless char.action_available?(action['action'].to_i)
+            return false
+          end
+          if Constant.get_skill_targeting(action['action'].to_i) == MELEE
+            #Check if char is in melee range
+            unless team.position_targetability_melee(pos.to_i)
+              return false
+            end
+            #Check if target is in melee range
+            unless op_team.position_targetability_melee(action['target'].to_i)
+              return false
+            end
+          end
+          total_ap -= Constant.get_skill_ap(action['action'].to_i)
+        end
+        #Check if AP adds up
+        if total_ap < 0
+          return false
+        end
+      end
+    else
+      true
+    end
+  end
 end
 

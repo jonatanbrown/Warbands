@@ -72,9 +72,13 @@ class BattlesController < ApplicationController
 
   def confirm_turn
 
-    #Validate input actions so they aren't cheating!
-
     @battle = current_user.battle
+    op_user = User.find(@battle.opponent)
+
+    unless Battle.validate_actions(params[:actions], current_user.team, op_user.team)
+      params[:actions] = nil
+    end
+
     @battle.actions = params[:actions]
     @battle.submitted = true
     bs = current_user.battle_sync
@@ -83,7 +87,7 @@ class BattlesController < ApplicationController
     bs.save
     @battle.save
 
-    @op_battle = @op_team = User.find(@battle.opponent).battle
+    @op_battle = op_user.battle
 
     battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], submit_count: 2, state: 'waiting' }, update: {'$set' => {state: 'resolving'}}, :new => true)
 
