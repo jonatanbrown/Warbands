@@ -83,24 +83,35 @@ class Battle
       case action['skill']
       #Strike
       when '0'
-        damage = rand(7..13) + (char.str/2.0).round(0) - (target.tgh/2.0).round(0)
-        if damage < 0
-          damage = 0
-        end
-        target.current_hp -= damage
 
-        result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
-        target.active = target.is_active?
-        if !target.active
-          result += "<p>#{target.name} has been knocked out!</p>"
+        hit = true
+
+        if rand(1..100) <= (100*char.dex)/(100+char.dex)
+          hit = false
         end
-        target.save
+
+        if hit
+          damage = rand(7..13) + ((char.str + char.strike)/2.0).round(0) - (target.tgh/2.0).round(0)
+          if damage < 0
+            damage = 0
+          end
+          target.current_hp -= damage
+
+          result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+          target.active = target.is_active?
+          if !target.active
+            result += "<p>#{target.name} has been knocked out!</p>"
+          end
+          target.save
+        else
+          result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
+        end
       #Throw
       when '1'
 
         hit = true
 
-        if rand(1..100) > (100*char.dex)/(5+char.dex)
+        if rand(1..100) > (100*(char.dex + char.thrown))/(5+(char.dex + char.thrown))
           hit = false
         end
 
@@ -116,7 +127,7 @@ class Battle
         end
 
         if hit
-          damage = rand(4..8) + (char.str/4.0).round(0) + (char.dex/4.0).round(0) - (target.tgh/2.0).round(0)
+          damage = rand(4..8) + ((char.str + char.thrown)/4.0).round(0) + ((char.dex + char.thrown)/4.0).round(0) - (target.tgh/2.0).round(0)
           if damage < 0
             damage = 0
           end
