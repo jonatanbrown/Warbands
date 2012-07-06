@@ -83,8 +83,12 @@ class Battle
       case action['skill']
       #Strike
       when '0'
-        damage = 20
+        damage = rand(7..13) + (char.str/2.0).round(0) - (target.tgh/2.0).round(0)
+        if damage < 0
+          damage = 0
+        end
         target.current_hp -= damage
+
         result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
         target.active = target.is_active?
         if !target.active
@@ -93,14 +97,39 @@ class Battle
         target.save
       #Throw
       when '1'
-        damage = 7
-        target.current_hp -= damage
-        result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
-        target.active = target.is_active?
-        if !target.active
-          result += "<p>#{target.name} has been knocked out!</p>"
+
+        hit = true
+
+        if rand(1..100) > (100*char.dex)/(5+char.dex)
+          hit = false
         end
-        target.save
+
+        targetability = target.team.position_targetability_ranged(target.position)
+        if targetability == 1
+          if rand(1..4) > 3
+            hit = false
+          end
+        elsif targetability == 2
+          if rand(1..4) > 2
+            hit = false
+          end
+        end
+
+        if hit
+          damage = rand(4..8) + (char.str/4.0).round(0) + (char.dex/4.0).round(0) - (target.tgh/2.0).round(0)
+          if damage < 0
+            damage = 0
+          end
+          target.current_hp -= damage
+          result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+          target.active = target.is_active?
+          if !target.active
+            result += "<p>#{target.name} has been knocked out!</p>"
+          end
+          target.save
+        else
+          result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
+        end
       end
     end
 
