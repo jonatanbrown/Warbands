@@ -20,11 +20,11 @@
     <% elsif current_user.battle and !current_user.battle.submitted %>
       <%= link_to "<span class='red'><b>In battle!</b></span>".html_safe, next_turn_path %>
     <% end %>
+    <div class="navbar">
+      <%= link_to "Home", root_path %>
+      <%= link_to "Team Rankings", rankings_path %>
+    </div>
   <% end %>
-</div>
-
-<div class="navbar">
-  <%= link_to "Team Rankings", rankings_path %>
 </div>
 
 <div class="container">
