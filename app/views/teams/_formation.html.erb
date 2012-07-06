@@ -1,4 +1,13 @@
 <p><b>Current formation</b></p>
+
+<% if @team.errors.any? %>
+  <span class="red">
+    <% @team.errors.messages.each do |msg| %>
+      <p><%= msg[1][0] %></p>
+    <% end %>
+  </span>
+<% end %>
+
 <% case @team.formation %>
   <% when 1 %>
     <img src="/images/formation_1.png"/>

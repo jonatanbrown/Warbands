@@ -1,7 +1,11 @@
 <p><b>Current character positions</b></p>
 
-<% if @error %>
-  <span class="red"><%= @error %></span>
+<% if @team.errors.any? %>
+  <span class="red">
+    <% @team.errors.messages.each do |msg| %>
+      <p><%= msg[1][0] %></p>
+    <% end %>
+  </span>
 <% end %>
 
 <div>1 <%= collection_select(:position0, :character, @team.characters, :_id, :name, {:selected => @team.get_char(0)._id, }) %></div>

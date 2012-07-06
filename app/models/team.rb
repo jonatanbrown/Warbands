@@ -29,7 +29,16 @@ class Team
   def set_character_positions(char_positions)
     chars = char_positions.map{|i| i[1] }
     chars.uniq!
-    if chars.length == 5
+
+    unless chars.length == 5
+      errors.add(:position, "You can not have two characters in the same position.")
+    end
+
+    if self.user.battle
+      errors.add(:position, "Cannot change positions during battle.")
+    end
+
+    unless self.errors.any?
       char_positions.each do |c|
         position = c[0].to_i
         id = c[1]
@@ -41,6 +50,26 @@ class Team
     else
       false
     end
+
+  end
+
+  def set_formation(formation_num)
+
+    unless (1..4) === formation_num.to_i
+      errors.add(:formation, "Formation has to be between 1 and 4.")
+    end
+
+    if self.user.battle
+      errors.add(:formation, "Cannot change formation during battle.")
+    end
+
+    unless self.errors.any?
+      self.formation = formation_num
+      true
+    else
+      false
+    end
+
   end
 
   def position_targetability_melee(pos)
