@@ -15,10 +15,10 @@ class BattlesController < ApplicationController
     if battle = Battle.where(opponent: current_user._id, result: 0).first
       b = Battle.create(user: current_user, opponent: battle.user._id )
       redirect_to battle_path
-    elsif q = BattleQueue.all.first and q.user != current_user
-      #CONCURRENCY ISSUE HERE, NEEDS TO BE FIXED. Two people can check condition at same time!
-      q.destroy
-      b = Battle.create(user: current_user, opponent: q.user._id )
+
+    elsif q = BattleQueue.collection.find_and_modify(:remove => true)
+      bq = BattleQueue.instantiate(q)
+      b = Battle.create(user: current_user, opponent: bq.user_id )
       redirect_to battle_path
     elsif !BattleQueue.all.any?
       @queue = BattleQueue.create(user: current_user)
