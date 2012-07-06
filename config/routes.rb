@@ -11,6 +11,8 @@ Warbands::Application.routes.draw do
       end
     end
 
+    resources :rankings, :only => 'index'
+
     match 'battles/queue' => 'battles#queue', :as => "queue"
     match 'battles/leave_queue' => 'battles#leave_queue', :as => "leave_queue"
     match 'battles/battle' => 'battles#battle', :as => "battle"

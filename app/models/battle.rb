@@ -150,7 +150,9 @@ class Battle
   def self.check_if_lost(team, op_team)
     if !team.characters.where(:active => true).any?
       team.user.battle.update_attribute(:result, BATTLE_LOST)
+      team.update_attribute(:points, team.points - 1)
       op_team.user.battle.update_attribute(:result, BATTLE_WON)
+      op_team.update_attribute(:points, op_team.points + 1)
     end
   end
 

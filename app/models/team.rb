@@ -7,6 +7,8 @@ class Team
 
   field :formation, :type => Integer, :default => 1
 
+  field :points, :type => Integer, :default => 0
+
   def create_characters
     5.times do |i|
       c = Character.new(:name => "Character #{i + 1}")
