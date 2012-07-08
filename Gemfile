@@ -4,6 +4,7 @@ gem 'rails', '3.2.3'
 gem 'mongoid'
 gem 'devise'
 gem 'bson_ext'
+gem 'thin'
 
 
 # Bundle edge Rails instead:
