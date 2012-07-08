@@ -16,7 +16,7 @@ class BattlesController < ApplicationController
       b = Battle.create(user: current_user, opponent: battle.user._id )
       redirect_to battle_path
 
-    elsif q = BattleQueue.collection.find_and_modify(:remove => true)
+elsif q = BattleQueue.collection.find_and_modify(query: { '$nor' => [ {user_id: current_user._id} ]}, :remove => true)
       bq = BattleQueue.instantiate(q)
       b = Battle.create(user: current_user, opponent: bq.user_id )
       redirect_to battle_path
