@@ -70,7 +70,9 @@ class BattlesController < ApplicationController
   end
 
   def leave_queue
-    current_user.battle_queue.destroy
+    if current_user.battle_queue
+      current_user.battle_queue.destroy
+    end
     redirect_to root_path
   end
 
