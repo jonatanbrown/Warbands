@@ -8,17 +8,19 @@ class BattlesController < ApplicationController
     end
 
     if current_user.battle
-      redirect_to next_turn_path
-      return
-    end
+      if current_user.battle_sync
+        redirect_to next_turn_path
+        return
+      else
+        redirect_to battle_path
+        return
+      end
 
-    if battle = Battle.where(opponent: current_user._id, result: 0).first
-      b = Battle.create(user: current_user, opponent: battle.user._id )
-      redirect_to battle_path
-
-elsif q = BattleQueue.collection.find_and_modify(query: { '$nor' => [ {user_id: current_user._id} ]}, :remove => true)
+    elsif q = BattleQueue.collection.find_and_modify(query: { '$nor' => [ {user_id: current_user._id} ]}, :remove => true)
       bq = BattleQueue.instantiate(q)
-      b = Battle.create(user: current_user, opponent: bq.user_id )
+      opponent = User.find(bq.user_id)
+      Battle.create(user: current_user, opponent: bq.user_id )
+      Battle.create(user: opponent, opponent: current_user._id)
       redirect_to battle_path
     elsif !BattleQueue.all.any?
       @queue = BattleQueue.create(user: current_user)
