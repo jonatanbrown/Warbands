@@ -81,8 +81,8 @@ class Character
     self.buffs = roll_skill
   end
 
-  def get_priority
-    self.ini
+  def get_priority(action_index)
+    self.ini - (action_index * 4) + rand(1..5)
   end
 
   def is_active?
