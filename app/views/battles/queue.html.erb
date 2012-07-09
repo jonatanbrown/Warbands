@@ -1,3 +1,20 @@
+<script type="text/javascript">
+  setInterval(
+  function(){
+    $.ajax({
+      type: "GET",
+      url: '/teams/' + '<%= @team._id %>' + '/in_battle/',
+      success: function(data) {
+        if(data == 'true')
+          window.location.reload()
+      },
+      dataType: 'text'
+    });
+  },
+  3000
+  );
+</script>
+
 In queue and waiting for opponent.
 
 <%= link_to "Refresh", queue_path %>

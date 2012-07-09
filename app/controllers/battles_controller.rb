@@ -2,6 +2,8 @@ class BattlesController < ApplicationController
 
   def queue
 
+    @team = current_user.team
+
     if current_user.battle_result
       br = current_user.battle_result
       br.destroy

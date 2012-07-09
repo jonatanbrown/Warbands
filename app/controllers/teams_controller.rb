@@ -48,5 +48,14 @@ class TeamsController < ApplicationController
     end
     render "_char_positions", :layout => false
   end
+
+  def in_battle
+    team = Team.find(params[:id])
+    if team.user.battle
+      render :text => "true"
+    else
+      render :text => "false"
+    end
+  end
 end
 
