@@ -1,3 +1,20 @@
+<script type="text/javascript">
+  setInterval(
+  function(){
+    $.ajax({
+      type: "GET",
+      url: '/battle_syncs/both_submitted/',
+      success: function(data) {
+        if(data == 'true')
+          window.location.reload()
+      },
+      dataType: 'text'
+    });
+  },
+  3000
+  );
+</script>
+
 Waiting for opponent to finish..
 
 <%= link_to "Refresh", waiting_for_turn_path %>
