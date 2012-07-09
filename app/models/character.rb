@@ -41,7 +41,7 @@ class Character
 
   #Combat info
   field :current_hp, :type => Integer
-  field :active, :type => Boolean
+  field :active, :type => Boolean, :default => 1
 
   field :position, :type => Integer
 

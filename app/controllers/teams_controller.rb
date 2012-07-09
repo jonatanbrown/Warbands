@@ -5,6 +5,7 @@ class TeamsController < ApplicationController
     @team.update_attribute(:name, "The Team")
     current_user.save
     @team.create_characters
+    @team.reset_battle_stats
   end
 
   def roll_stats
