@@ -1,21 +1,9 @@
 <div class="back-row two-char-row">
   <div class="back-row-formation-3">
-    <div class="battle-character">
-      <% if team.get_char(3).active %>
-        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(3) } %>
-      <% else %>
-        Knocked out.
-      <% end %>
-    </div>
+    <%= battle_character(3, team) %>
   </div>
   <div class="back-row-formation-3">
-    <div class="battle-character">
-      <% if team.get_char(4).active %>
-        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(4) } %>
-      <% else %>
-        Knocked out.
-      <% end %>
-    </div>
+    <%= battle_character(4, team) %>
   </div>
 </div>
 

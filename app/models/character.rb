@@ -85,7 +85,7 @@ class Character
   end
 
   def get_priority(action_index)
-    self.ini - (action_index * 4) + rand(1..5)
+    self.final_ini - (action_index * 4) + rand(1..5)
   end
 
   def is_active?
@@ -113,6 +113,33 @@ class Character
 
   def final_tgh
     tgh
+  end
+
+  def final_ini
+    result = ini
+    if (effects.map {|x| x[0] }).include?(EFFECT_DIRT)
+      result = result * 0.5
+    end
+    result.round(0)
+  end
+
+  def get_effects_text
+    unique_effect_hash = {}
+    effects.each do |effect|
+      if !unique_effect_hash.has_key?(effect[0])
+        unique_effect_hash[effect[0]] = effect
+      else
+        if unique_effect_hash[effect[0]][1] < effect[1]
+          unique_effect_hash[effect[0]] = effect
+        end
+      end
+    end
+
+    result = ''
+    unique_effect_hash.each_pair do |effect_id, effect|
+      result += "<p>" + Constant.get_effect_name(effect_id) + " - " + effect[1].to_s + " turns</p>"
+    end
+    result
   end
 
   private

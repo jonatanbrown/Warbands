@@ -46,5 +46,11 @@ class Constant
       MELEE
     end
   end
+
+  def self.get_effect_name(effect_id)
+    if effect_id == 0
+      'Blinded'
+    end
+  end
 end
 

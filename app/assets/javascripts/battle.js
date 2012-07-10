@@ -2,6 +2,8 @@ $(document).ready(function() {
 
     update_timeout_clock();
 
+    $('.battle-character').popover({placement: 'bottom'})
+
     $('#submit-turn').on("click", submit_turn);
 
     $(".confirm-skill").on("click", function(event) {
@@ -67,10 +69,10 @@ function set_target_options(selector, skill_id, pos) {
     }
     else
     {
-        for (i in battle.op_chars_pos)
+        for (i in battle.op_chars)
         {
             var info = ""
-            var target = battle.op_chars_pos[i]
+            var target = battle.op_chars[i]
             if (battle.pos_targetability[target[1]][1] == 1)
                 info = "Slight penalty";
             else if (battle.pos_targetability[target[1]][1] == 2)

@@ -1,12 +1,6 @@
 <div class="back-row">
   <div class="back-row-formation-2">
-    <div class="battle-character">
-      <% if team.get_char(4).active %>
-        <%= render :partial => "characters/battle_character", :locals => { :character => team.get_char(4) } %>
-      <% else %>
-        Knocked out.
-      <% end %>
-    </div>
+    <%= battle_character(4, team) %>
   </div>
 </div>
 
