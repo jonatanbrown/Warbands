@@ -24,7 +24,7 @@ class Team
 
   def reset_battle_stats
     self.characters.each do |c|
-      c.update_attributes(current_hp: c.hp, active: true)
+      c.update_attributes(current_hp: c.hp, active: true, effects: [])
     end
   end
 

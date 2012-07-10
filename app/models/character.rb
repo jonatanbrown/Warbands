@@ -26,7 +26,7 @@ class Character
   field :projectile, :type => Integer
 
   #Defense
-  field :dodge, :type => Integer
+  field :defensive_posture, :type => Integer
   field :block, :type => Integer
 
   #Dirty Combat
@@ -44,6 +44,9 @@ class Character
   field :active, :type => Boolean, :default => 1
 
   field :position, :type => Integer
+
+  #Tuples in effects are in format [effect_id, duration, power]
+  field :effects, :type => Array, :default => []
 
 
   def roll_char
@@ -68,7 +71,7 @@ class Character
     self.thrown = roll_skill
     self.projectile = roll_skill
 
-    self.dodge = roll_skill
+    self.defensive_posture = roll_skill
     self.block = roll_skill
 
     self.poison = roll_skill
@@ -92,6 +95,24 @@ class Character
   def action_available?(skill_nr)
     #Should check if the character has learned the skill etc, now only checks if skill is a valid skill number at all.
     (0..MAX_SKILL_NUM) === skill_nr.to_i
+  end
+
+  #Functions for returning stats after current effects
+
+  def final_str
+    str
+  end
+
+  def final_dex
+    result = dex
+    if (effects.map {|x| x[0] }).include?(EFFECT_DIRT)
+      result = result * 0.5
+    end
+    result.round(0)
+  end
+
+  def final_tgh
+    tgh
   end
 
   private

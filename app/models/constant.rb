@@ -6,7 +6,8 @@ class Constant
     [
       ["#{get_skill_name(0)}", 0, get_skill_ap(0), get_skill_targeting(0)],
       ["#{get_skill_name(1)}", 1, get_skill_ap(1), get_skill_targeting(1)],
-      ["#{get_skill_name(2)}", 2, get_skill_ap(2), get_skill_targeting(2)]
+      ["#{get_skill_name(2)}", 2, get_skill_ap(2), get_skill_targeting(2)],
+      ["#{get_skill_name(3)}", 3, get_skill_ap(3), get_skill_targeting(3)]
     ].to_s
   end
 
@@ -17,6 +18,8 @@ class Constant
       'Throw'
     elsif skill_id == 2
       'Retreat'
+    elsif skill_id == 3
+      'Throw Dirt'
     end
   end
 
@@ -27,6 +30,8 @@ class Constant
       6
     elsif skill_id == 2
       0
+    elsif skill_id == 3
+      6
     end
   end
 
@@ -37,6 +42,8 @@ class Constant
       RANGED
     elsif skill_id == 2
       SELF
+    elsif skill_id == 3
+      MELEE
     end
   end
 end

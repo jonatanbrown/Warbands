@@ -36,6 +36,16 @@ class Battle
     check_if_lost(team1, team2)
     check_if_lost(team2, team1)
 
+    all_chars = team1.characters + team2.characters
+
+    all_chars.each do |char|
+      char.effects.delete_if do |effect|
+        effect[1] -= 1
+        effect[1] <= 0
+      end
+      char.save
+    end
+
     turn_events
 
   end
@@ -88,12 +98,12 @@ class Battle
 
         hit = true
 
-        if rand(1..100) <= (100*char.dex)/(100+char.dex)
+        if rand(1..100) <= (100*target.final_dex)/(100+target.final_dex)
           hit = false
         end
 
         if hit
-          damage = rand(7..13) + ((char.str + char.strike)/2.0).round(0) - (target.tgh/2.0).round(0)
+          damage = rand(4..8) + ((char.final_str + char.strike)/2.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
           end
@@ -113,7 +123,7 @@ class Battle
 
         hit = true
 
-        if rand(1..100) > (100*(char.dex + char.thrown))/(5+(char.dex + char.thrown))
+        if rand(1..100) > (100*(char.final_dex + char.thrown))/(5+(char.final_dex + char.thrown))
           hit = false
         end
 
@@ -129,7 +139,7 @@ class Battle
         end
 
         if hit
-          damage = rand(4..8) + ((char.str + char.thrown)/4.0).round(0) + ((char.dex + char.thrown)/4.0).round(0) - (target.tgh/2.0).round(0)
+          damage = rand(4..8) + ((char.final_str + char.thrown)/4.0).round(0) + ((char.final_dex + char.thrown)/4.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
           end
@@ -142,6 +152,23 @@ class Battle
           target.save
         else
           result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
+        end
+      #Kick Dirt
+      when '3'
+
+        hit = true
+
+        if rand(1..100) > (100*(char.final_dex + char.dirt))/(5+(char.final_dex + char.dirt))
+          hit = false
+        end
+
+        if hit
+          duration = rand(2..4)
+          target.effects << [EFFECT_DIRT, duration, nil]
+          target.save
+          result += "<p>#{char.name} throws dirt into the eyes of #{target.name}. <span class='red'>#{target.name} is blinded!</p></span>"
+        else
+          result += "<p>#{char.name} attempts to throw dirt into the eyes of #{target.name} but misses.</p>"
         end
       end
     end
