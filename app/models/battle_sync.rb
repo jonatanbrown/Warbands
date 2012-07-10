@@ -14,7 +14,11 @@ class BattleSync
   field :submit_time, :type => Time
 
   def seconds_since_submit
-    (Time.now - submit_time).to_i
+    if submit_time
+      (Time.now - submit_time).to_i
+    else
+      -1
+    end
   end
 
 end

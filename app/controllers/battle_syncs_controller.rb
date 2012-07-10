@@ -22,5 +22,17 @@ class BattleSyncsController < ApplicationController
     end
   end
 
+  def seconds_left
+    bs = current_user.battle_sync
+
+    result = bs.seconds_since_submit
+
+    if result != -1
+      render :text => (60 - result).to_s
+    else
+      render :text => -1
+    end
+  end
+
 end
 

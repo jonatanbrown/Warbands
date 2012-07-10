@@ -108,7 +108,7 @@ class BattlesController < ApplicationController
       if battle_sync
         turn_events = Battle.resolve_turn(@battle, @op_battle)
         bs = BattleSync.instantiate(battle_sync)
-        bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events, turn: bs.turn + 1)
+        bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events, turn: bs.turn + 1, submit_time: nil)
       end
 
     end

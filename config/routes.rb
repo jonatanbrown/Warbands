@@ -28,6 +28,7 @@ Warbands::Application.routes.draw do
     match 'teams/:id/in_battle/' => 'teams#in_battle'
 
     match 'battle_syncs/refresh_waiting_status' => 'battle_syncs#refresh_waiting_status'
+    match 'battle_syncs/seconds_left' => 'battle_syncs#seconds_left'
 
   end
 
