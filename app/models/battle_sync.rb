@@ -11,5 +11,11 @@ class BattleSync
 
   field :turn, :type => Integer, :default => 1
 
+  field :submit_time, :type => Time
+
+  def seconds_since_submit
+    (Time.now - submit_time).to_i
+  end
+
 end
 

@@ -27,7 +27,7 @@ Warbands::Application.routes.draw do
     match 'teams/:id/set_character_positions/' => 'teams#set_character_positions'
     match 'teams/:id/in_battle/' => 'teams#in_battle'
 
-    match 'battle_syncs/both_submitted' => 'battle_syncs#both_submitted'
+    match 'battle_syncs/refresh_waiting_status' => 'battle_syncs#refresh_waiting_status'
 
   end
 

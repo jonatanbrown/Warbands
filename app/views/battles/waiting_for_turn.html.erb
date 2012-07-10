@@ -3,7 +3,7 @@
   function(){
     $.ajax({
       type: "GET",
-      url: '/battle_syncs/both_submitted/',
+      url: '/battle_syncs/refresh_waiting_status/',
       success: function(data) {
         if(data == 'true')
           window.location.reload()

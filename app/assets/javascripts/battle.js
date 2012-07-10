@@ -105,10 +105,10 @@ function submit_turn() {
     $.ajax({
         url: 'confirm_turn',
         data: battle,
-        success: function() {
-            window.location.replace('/battles/waiting_for_turn');
+        success: function(data) {
+            window.location.replace(data);
         },
-        dataType: 'html'
+        dataType: 'text'
     });
     return false;
 }
