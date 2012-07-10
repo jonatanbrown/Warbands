@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    update_timeout_clock();
+
     $('#submit-turn').on("click", submit_turn);
 
     $(".confirm-skill").on("click", function(event) {
@@ -133,5 +135,31 @@ function skill_can_target_pos(skill_id, char_pos, formation, target_pos) {
     //Other skill
     else
         return true;
+}
+
+function update_timeout_clock(){
+  $.ajax({
+    type: "GET",
+    url: '/battle_syncs/seconds_left/',
+    success: function(data) {
+      if(data == '-1')
+        $('#submit-timer').html("Opponent has not yet confirmed actions.");
+      else
+      {
+        var int_data = parseInt(data);
+        $('#submit-timer').html("Timeout in " + int_data + " seconds.");
+        clearInterval(battle_actions_interval_id);
+        setInterval(
+          function(){
+            int_data -= 1;
+            $('#submit-timer').html("Timeout in " + int_data + " seconds.");
+          },
+          1000
+        );
+      }
+
+    },
+    dataType: 'text'
+  });
 }
 

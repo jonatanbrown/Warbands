@@ -15,35 +15,11 @@
   }
 
   var battle_actions_interval_id = setInterval(
-    function(){
-      $.ajax({
-        type: "GET",
-        url: '/battle_syncs/seconds_left/',
-        success: function(data) {
-          if(data == '-1')
-            $('#submit-timer').html("Opponent has not yet confirmed actions.");
-          else
-          {
-            var int_data = parseInt(data);
-            $('#submit-timer').html("Timeout in " + int_data + " seconds.");
-            clearInterval(battle_actions_interval_id);
-            setInterval(
-              function(){
-                int_data -= 1;
-                $('#submit-timer').html("Timeout in " + int_data + " seconds.");
-              },
-              1000
-            );
-          }
-
-        },
-        dataType: 'text'
-      });
-    },
+    update_timeout_clock,
     10000
   );
-
 </script>
+
 <div id="battle-info">
   <div class="left">
     <p>Doin battle against <%= @op_team.name %>!</p>
