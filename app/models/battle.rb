@@ -162,6 +162,17 @@ class Battle
           hit = false
         end
 
+        targetability = target.team.position_targetability_ranged(target.position)
+        if targetability == 1
+          if rand(1..4) > 3
+            hit = false
+          end
+        elsif targetability == 2
+          if rand(1..4) > 2
+            hit = false
+          end
+        end
+
         if hit
           duration = rand(2..4)
           target.effects << [EFFECT_DIRT, duration, nil]

@@ -43,7 +43,7 @@ class Constant
     elsif skill_id == 2
       SELF
     elsif skill_id == 3
-      MELEE
+      RANGED
     end
   end
 
