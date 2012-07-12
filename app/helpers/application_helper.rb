@@ -12,7 +12,12 @@ module ApplicationHelper
 
   def battle_character(pos, team)
     char = team.get_char(pos)
-    content = char.get_effects_text
+    content = ''
+    if current_user.team.characters.include?(char)
+      content += char.get_stats_text
+    end
+    content += "</br>"
+    content += char.get_effects_text
     result = '<div class="battle-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
       if team.get_char(pos).active
         result += render :partial => "characters/battle_character", :locals => { :character => char }

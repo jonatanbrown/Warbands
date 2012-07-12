@@ -52,5 +52,23 @@ class Constant
       'Blinded'
     end
   end
+
+  def self.effect_beneficial?(effect_id)
+    if [0].include?(effect_id)
+      false
+    else
+      true
+    end
+  end
+
+  def self.get_effect_color_tag(effect_id)
+    if [0].include?(effect_id)
+      "<span class='red'>"
+    elsif false
+      "<span class='green'>"
+    else
+      "<span>"
+    end
+  end
 end
 

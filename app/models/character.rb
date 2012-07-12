@@ -137,9 +137,46 @@ class Character
 
     result = ''
     unique_effect_hash.each_pair do |effect_id, effect|
-      result += "<p>" + Constant.get_effect_name(effect_id) + " - " + effect[1].to_s + " turns</p>"
+      result += "<p>" + Constant.get_effect_color_tag(effect_id) + Constant.get_effect_name(effect_id) + "</span>" +" - " + effect[1].to_s + " turns</p>"
     end
     result
+  end
+
+  def get_stats_text
+    result = ''
+
+    if final_str < str
+      result += "<p><span class='red'>Strength: " + final_str.to_s + "</span> (" + str.to_s + ")</p>"
+  elsif final_str > str
+      result += "<p><span class='green'>Strength: " + final_str.to_s + "</span> (" + str
+    else
+      result += "<p>Strength: " + final_str.to_s + "</p>"
+    end
+
+    if final_dex < dex
+      result += "<p><span class='red'>Dexterity: " + final_dex.to_s + "</span> (" + dex.to_s + ")</p>"
+    elsif final_dex > dex
+      result += "<p><span class='green'>Dexterity: " + final_dex.to_s + "</span> (" + dex.to_s + ")</p>"
+    else
+      result += "<p>Dexterity: " + final_dex.to_s + "</p>"
+    end
+
+    if final_tgh < tgh
+      result += "<p><span class='red'>Toughness: " + final_tgh.to_s + "</span> (" + tgh.to_s + ")</p>"
+    elsif final_tgh > tgh
+      result += "<p><span class='green'>Toughness: " + final_tgh.to_s + "</span> (" + tgh.to_s + ")</p>"
+    else
+      result += "<p>Toughness: " + final_tgh.to_s + "</p>"
+    end
+
+    if final_ini < ini
+      result += "<p><span class='red'>Initiative: " + final_ini.to_s + "</span> (" + ini.to_s + ")</p>"
+  elsif final_ini > ini
+      result += "<p><span class='green'>Initiative: " + final_ini.to_s + "</span> (" + ini.to_s + ")</p>"
+    else
+      result += "<p>Initiative: " + final_ini.to_s + "</p>"
+    end
+
   end
 
   private
