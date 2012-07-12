@@ -19,25 +19,46 @@ class Character
   #Skills
 
   #Melee Combat
-  field :strike, :type => Integer
+
+    #Basic
+      field :strike, :type => Integer
+      field :defensive_posture, :type => Integer
+
+    #Learnable
+      field :quick_strike, :type => Integer
+      field :heavy_strike, :type => Integer
+      field :accurate_strike, :type => Integer
+      field :finishing_strike, :type => Integer
+      field :protect, :type => Integer
+      field :shield_wall, :type => Integer
+      field :counterstrike, :type => Integer
 
   #Ranged
-  field :thrown, :type => Integer
-  field :projectile, :type => Integer
 
-  #Defense
-  field :defensive_posture, :type => Integer
-  field :block, :type => Integer
+    #Basic
+      field :thrown, :type => Integer
+      field :cover, :type => Integer
+
+    #Learnable
+      field :fling, :type => Integer
+      field :quick_throw, :type => Integer
+      field :accurate_thow, :type => Integer
+      field :take_aim, :type => Integer
+      field :undisturbed, :type => Integer
 
   #Dirty Combat
-  field :poison, :type => Integer
-  field :dirt, :type => Integer
+
+    #Basic
+      field :dirt, :type => Integer
+
+    #Learnable
+      field :bola, :type => Integer
+      field :aggravate, :type => Integer
+      field :mind_poison, :type => Integer
+      field :paralyzing_poison, :type => Integer
+      field :weakness_poison, :type => Integer
 
   #Magic
-  field :defensive, :type => Integer
-  field :destructive, :type => Integer
-  field :buffs, :type => Integer
-  field :debuffs, :type => Integer
 
   #Combat info
   field :current_hp, :type => Integer
@@ -67,21 +88,10 @@ class Character
 
   def roll_skills
     self.strike = roll_skill
-
-    self.thrown = roll_skill
-    self.projectile = roll_skill
-
     self.defensive_posture = roll_skill
-    self.block = roll_skill
-
-    self.poison = roll_skill
+    self.thrown = roll_skill
+    self.cover = roll_skill
     self.dirt = roll_skill
-
-    #Magic works as all other skills now, will later be done in some other way.
-    self.defensive = roll_skill
-    self.destructive = roll_skill
-    self.debuffs = roll_skill
-    self.buffs = roll_skill
   end
 
   def get_priority(action_index)
@@ -147,7 +157,7 @@ class Character
 
     if final_str < str
       result += "<p><span class='red'>Strength: " + final_str.to_s + "</span> (" + str.to_s + ")</p>"
-  elsif final_str > str
+    elsif final_str > str
       result += "<p><span class='green'>Strength: " + final_str.to_s + "</span> (" + str
     else
       result += "<p>Strength: " + final_str.to_s + "</p>"
@@ -171,12 +181,24 @@ class Character
 
     if final_ini < ini
       result += "<p><span class='red'>Initiative: " + final_ini.to_s + "</span> (" + ini.to_s + ")</p>"
-  elsif final_ini > ini
+    elsif final_ini > ini
       result += "<p><span class='green'>Initiative: " + final_ini.to_s + "</span> (" + ini.to_s + ")</p>"
     else
       result += "<p>Initiative: " + final_ini.to_s + "</p>"
     end
 
+    result += "<p>HP:" + current_hp.to_s + "</p>"
+
+  end
+
+  def get_skills_text
+    result = ''
+
+    result += "<p>Strike: #{strike}</p>"
+    result += "<p>Defensive Posture: #{defensive_posture}</p>"
+    result += "<p>Throw: #{thrown}</p>"
+    result += "<p>Cover: #{cover}</p>"
+    result += "<p>Throw Dirt: #{dirt}</p>"
   end
 
   private

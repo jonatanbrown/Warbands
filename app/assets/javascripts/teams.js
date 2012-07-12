@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    $('.edit-team-character').popover({placement: 'bottom'})
+
     $("#reroll-characters").on("click", function(event) {
         var team_id = $(this).attr('data-id')
         $.ajax({
@@ -20,6 +23,7 @@ $(document).ready(function() {
           url: '/teams/' + team_id + '/set_formation/' + formation_num,
           success: function(data) {
             $("#team-formation").html(data)
+            $('.edit-team-character').popover({placement: 'bottom'})
           },
           dataType: 'html'
         });
@@ -45,6 +49,15 @@ $(document).ready(function() {
           data: {positions: positions},
           success: function(data) {
             $("#char-positions").html(data)
+            $.ajax({
+              type: "GET",
+              url: '/teams/' + team_id + '/formation/',
+              success: function(data) {
+                $("#team-formation").html(data)
+                $('.battle-character').popover({placement: 'bottom'})
+              },
+              dataType: 'html'
+            });
           },
           dataType: 'html'
         });

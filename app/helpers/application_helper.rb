@@ -28,5 +28,19 @@ module ApplicationHelper
     result.html_safe
   end
 
+  def edit_team_character(pos, team)
+    char = team.get_char(pos)
+    content = ''
+
+    content += char.get_stats_text
+    content += "</br>"
+    content += char.get_skills_text
+
+    result = '<div class="edit-team-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
+      result += char.name
+    result += '</div>'
+    result.html_safe
+  end
+
 end
 

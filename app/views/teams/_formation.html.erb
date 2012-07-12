@@ -1,4 +1,5 @@
 <p><b>Current formation</b></p>
+<div style="text-align: center"><b>Front<b></div>
 
 <% if @team.errors.any? %>
   <span class="red">
@@ -10,12 +11,12 @@
 
 <% case @team.formation %>
   <% when 1 %>
-    <img src="/images/formation_1.png"/>
+    <%= render :partial => "formation1", :locals => {:team => @team} %>
   <% when 2 %>
-    <img src="/images/formation_2.png"/>
+    <%= render :partial => "formation2", :locals => {:team => @team} %>
   <% when 3 %>
-    <img src="/images/formation_3.png"/>
+    <%= render :partial => "formation3", :locals => {:team => @team} %>
   <% when 4 %>
-    <img src="/images/formation_4.png"/>
+    <%= render :partial => "formation4", :locals => {:team => @team} %>
 <% end %>
 

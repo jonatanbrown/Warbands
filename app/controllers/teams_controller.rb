@@ -57,5 +57,10 @@ class TeamsController < ApplicationController
       render :text => "false"
     end
   end
+
+  def formation
+    @team = Team.find(params[:id])
+    render "_formation", :layout => false
+  end
 end
 

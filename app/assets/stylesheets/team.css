@@ -1,0 +1,9 @@
+.edit-team-character{
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 100px;
+    min-height: 60px;
+    margin: 0px auto;
+}
+
