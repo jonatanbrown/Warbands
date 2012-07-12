@@ -1,14 +1,25 @@
+#Battle results
 BATTLE_UNDECIDED = 0
 BATTLE_LOST = 1
 BATTLE_WON = 2
 TIMED_OUT = 3
 OPPONENT_TIMED_OUT = 4
 
+#Targetability options
 SELF = 0
 MELEE = 1
 RANGED = 2
 
-MAX_SKILL_NUM = 3
+#Maximum skill number
+MAX_SKILL_NUM = 5
 
-EFFECT_DIRT = 0
+#Effect IDs
+EFFECT_BLINDED = 0
+EFFECT_DEFENSIVE_POSTURE = 1
+EFFECT_COVER = 2
+
+#Ranged targetability penalties
+NO_PENALTY = 0
+SLIGHT_PENALTY = 1
+SEVERE_PENALTY = 2
 

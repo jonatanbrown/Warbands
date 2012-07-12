@@ -7,7 +7,9 @@ class Constant
       ["#{get_skill_name(0)}", 0, get_skill_ap(0), get_skill_targeting(0)],
       ["#{get_skill_name(1)}", 1, get_skill_ap(1), get_skill_targeting(1)],
       ["#{get_skill_name(2)}", 2, get_skill_ap(2), get_skill_targeting(2)],
-      ["#{get_skill_name(3)}", 3, get_skill_ap(3), get_skill_targeting(3)]
+      ["#{get_skill_name(3)}", 3, get_skill_ap(3), get_skill_targeting(3)],
+      ["#{get_skill_name(4)}", 4, get_skill_ap(4), get_skill_targeting(4)],
+      ["#{get_skill_name(5)}", 5, get_skill_ap(5), get_skill_targeting(5)]
     ].to_s
   end
 
@@ -20,6 +22,10 @@ class Constant
       'Retreat'
     elsif skill_id == 3
       'Throw Dirt'
+    elsif skill_id == 4
+      'Defensive Posture'
+    elsif skill_id == 5
+      'Take Cover'
     end
   end
 
@@ -32,6 +38,10 @@ class Constant
       0
     elsif skill_id == 3
       6
+    elsif skill_id == 4
+      5
+    elsif skill_id == 5
+      5
     end
   end
 
@@ -44,6 +54,10 @@ class Constant
       SELF
     elsif skill_id == 3
       RANGED
+    elsif skill_id == 4
+      SELF
+    elsif skill_id == 5
+      SELF
     end
   end
 

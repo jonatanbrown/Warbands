@@ -115,7 +115,7 @@ class Character
 
   def final_dex
     result = dex
-    if (effects.map {|x| x[0] }).include?(EFFECT_DIRT)
+    if (effects.map {|x| x[0] }).include?(EFFECT_BLINDED)
       result = result * 0.5
     end
     result.round(0)
@@ -127,7 +127,7 @@ class Character
 
   def final_ini
     result = ini
-    if (effects.map {|x| x[0] }).include?(EFFECT_DIRT)
+    if (effects.map {|x| x[0] }).include?(EFFECT_BLINDED)
       result = result * 0.5
     end
     result.round(0)

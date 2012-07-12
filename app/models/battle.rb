@@ -88,6 +88,18 @@ class Battle
       when '2'
         char.update_attribute(:active, false)
         result += "<p>#{char.name} has retreated from combat.</p>"
+
+      #Defensive Posture
+      when '4'
+        char.effects << [EFFECT_DEFENSIVE_POSTURE, 1, nil]
+        char.save
+        result += "<p>#{char.name} takes on a defensive posture.</p>"
+
+      #Cover
+      when '5'
+        char.effects << [EFFECT_COVER, 1, nil]
+        char.save
+        result += "<p>#{char.name} takes cover.</p>"
       end
     end
 
@@ -96,13 +108,11 @@ class Battle
       #Strike
       when '0'
 
-        hit = true
-
         if rand(1..100) <= (100*target.final_dex)/(100+target.final_dex)
-          hit = false
-        end
-
-        if hit
+          result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
+        elsif (target.effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and rand(1..10) <= 3
+          result += "<p>#{char.name} strikes at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+        else
           damage = rand(4..8) + ((char.final_str + char.strike)/2.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
@@ -115,13 +125,12 @@ class Battle
             result += "<p>#{target.name} has been knocked out!</p>"
           end
           target.save
-        else
-          result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
         end
       #Throw
       when '1'
 
         hit = true
+        result_set = false
 
         if rand(1..100) > (100*(char.final_dex + char.thrown))/(5+(char.final_dex + char.thrown))
           hit = false
@@ -138,6 +147,17 @@ class Battle
           end
         end
 
+        #Check if char has cover and there are chars in front.
+        if (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
+          if target.team.position_targetability_ranged(target.position) != NO_PENALTY
+            hit = false
+            result_set = true
+            result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} has taken cover.</p>"
+          elsif hit
+            result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
+          end
+        end
+
         if hit
           damage = rand(4..8) + ((char.final_str + char.thrown)/4.0).round(0) + ((char.final_dex + char.thrown)/4.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
@@ -150,13 +170,14 @@ class Battle
             result += "<p>#{target.name} has been knocked out!</p>"
           end
           target.save
-        else
+        elsif !result_set
           result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
         end
       #Kick Dirt
       when '3'
 
         hit = true
+        result_set = false
 
         if rand(1..100) > (100*(char.final_dex + char.dirt))/(5+(char.final_dex + char.dirt))
           hit = false
@@ -173,12 +194,23 @@ class Battle
           end
         end
 
+        #Check if char has cover and there are chars in front.
+        if (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
+          if target.team.position_targetability_ranged(target.position) != NO_PENALTY
+            hit = false
+            result_set = true
+            result += "<p>#{char.name} throws dirt at #{target.name} but #{target.name} has taken cover.</p>"
+          elsif hit
+            result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
+          end
+        end
+
         if hit
           duration = rand(2..4)
-          target.effects << [EFFECT_DIRT, duration, nil]
+          target.effects << [EFFECT_BLINDED, duration, nil]
           target.save
           result += "<p>#{char.name} throws dirt into the eyes of #{target.name}. <span class='red'>#{target.name} is blinded!</p></span>"
-        else
+        elsif !result_set
           result += "<p>#{char.name} attempts to throw dirt into the eyes of #{target.name} but misses.</p>"
         end
       end
