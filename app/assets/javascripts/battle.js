@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-    update_timeout_clock();
-
     $('.battle-character').popover({placement: 'bottom'})
 
     $('#submit-turn').on("click", submit_turn);

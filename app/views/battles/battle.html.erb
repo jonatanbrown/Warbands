@@ -1,4 +1,11 @@
 <script type="text/javascript">
+
+  $(document).ready(function() {
+
+    update_timeout_clock();
+
+  });
+
   battle = {
     skills: <%= Constant.skills.html_safe %>,
     actions: {
