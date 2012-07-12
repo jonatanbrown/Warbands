@@ -14,7 +14,7 @@ class Character
 
   field :ap, :type => Integer
 
-  field :hp, :type => Integer, :default => 20
+  field :hp, :type => Integer, :default => 30
 
   #Skills
 
