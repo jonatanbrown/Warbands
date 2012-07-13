@@ -7,7 +7,7 @@
   </div>
 
   <select name="pos<%= pos %>-skill-selector" id="pos<%= pos %>-skill-selector" class="skill-selector" data-pos="<%= pos %>"></select>
-  <% characters_array = @op_chars.map { |char| ["#{char.name} - #{char.position}", char.position] } %>
+  <% characters_array = @op_chars.all.map { |char| ["#{char.name} - #{char.position}", char.position] } %>
   <%= select_tag("pos#{pos}-character-selector", options_for_select(characters_array), :class => "target-selector", "data-pos" => pos) %>
 
   <script type="text/javascript">

@@ -15,11 +15,10 @@
       '3': [],
       '4': []
     },
-    op_chars: <%= @op_chars.map { |char| ["#{char.name} - #{char.position}", char.position] }.to_s.html_safe %>,
+    op_chars: <%= @op_chars.all.map { |char| ["#{char.name} - #{char.position}", char.position] }.to_s.html_safe %>,
     formation: <%= @team.formation %>,
     pos_targetability: <%= (0..4).map { |pos| [@op_team.position_targetability_melee(pos), @op_team.position_targetability_ranged(pos)] } %>,
-    melee_range: <%= (0..4).map { |pos| @team.position_targetability_melee(pos) } %>,
-    chars: <%= @chars.map { |char| char.get_skills_array }.to_s.html_safe %>
+    melee_range: <%= (0..4).map { |pos| @team.position_targetability_melee(pos) } %>
   }
 
   var battle_actions_interval_id = setInterval(
@@ -78,6 +77,7 @@
   <% @chars.each do |char|%>
     <script type="text/javascript">
       battle.pos<%= char.position %>_ap = <%= char.ap %>
+      battle.pos<%= char.position %>_skills = <%= char.get_skills_array.to_s %>
     </script>
     <%= render :partial => "characters/char_action", :locals => { :character => char, :pos => char.position} %>
   <% end %>

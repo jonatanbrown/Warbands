@@ -90,7 +90,7 @@ function set_skill_options(selector, pos) {
     var ap = battle['pos' + pos + '_ap']
     for (i in battle.skills)
     {
-        if (ap >= battle.skills[i][2])
+        if (ap >= battle.skills[i][2] && battle['pos' + pos + '_skills'][i] > 0)
         {
             if (battle.skills[i][3] == 1 && !battle.melee_range[pos])
             {
@@ -98,7 +98,7 @@ function set_skill_options(selector, pos) {
             }
             else
             {
-                selector.append('<option value="' + battle.skills[i][1] + '" data-ap="' + battle.skills[i][2] + '">' + battle.skills[i][0] + ' - (' +  battle.chars[pos][i] + ') - ' + battle.skills[i][2] + ' AP</option>');
+                selector.append('<option value="' + battle.skills[i][1] + '" data-ap="' + battle.skills[i][2] + '">' + battle.skills[i][0] + ' - (' +  battle['pos' + pos + '_skills'][i] + ') - ' + battle.skills[i][2] + ' AP</option>');
             }
         }
     }

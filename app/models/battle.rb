@@ -108,11 +108,20 @@ class Battle
       #Strike
       when '0'
 
+        hit = true
+        result_set = false
+
         if rand(1..100) <= (100*target.final_dex)/(100+target.final_dex)
-          result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
-        elsif (target.effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and rand(1..10) <= 3
+          hit = false
+        end
+
+        if (target.effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and rand(1..10) <= 3
           result += "<p>#{char.name} strikes at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
-        else
+          hit = false
+          result_set = true
+        end
+
+        if
           damage = rand(4..8) + ((char.final_str + char.strike)/2.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
@@ -125,7 +134,10 @@ class Battle
             result += "<p>#{target.name} has been knocked out!</p>"
           end
           target.save
+        elsif !result_set
+          result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
         end
+
       #Throw
       when '1'
 
