@@ -59,7 +59,7 @@ class Battle
         char = battle.user.team.get_char(pos.to_i)
         index = 0
         actions.each do |num, action|
-          list.push({"target" => {"team" => target_team, "pos" => action['target']}, "skill" => action['action'],"char" => char, "prio" => char.get_priority(index, action['action'])})
+          list.push({"target" => {"team" => target_team, "pos" => action['target']}, "skill" => action['action'],"char" => char, "prio" => char.get_priority(index, action['action'].to_i)})
           index += 1
         end
       end

@@ -97,9 +97,9 @@ class Character
   def get_priority(action_index, skill_id)
     result = self.final_ini - (action_index * 4) + rand(1..5)
     if skill_id == SKILL_QUICK_STRIKE
-      result = (result * 1.3).round(0)
+      result = (result * 1.2).round(0)
     elsif skill_id == SKILL_HEAVY_STRIKE
-      result = (result * 0.7).round(0)
+      result = (result * 0.8).round(0)
     end
     result
   end
