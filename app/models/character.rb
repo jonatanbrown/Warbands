@@ -214,6 +214,11 @@ class Character
     result += "<p>Throw Dirt: #{dirt}</p>"
   end
 
+  #Returns skills in order of ID
+  def get_skills_array
+    [strike, thrown, 0, dirt, defensive_posture, cover]
+  end
+
   private
 
   def roll_stat

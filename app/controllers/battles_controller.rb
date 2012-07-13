@@ -35,8 +35,8 @@ class BattlesController < ApplicationController
     @team = current_user.team
     @op_team = User.find(@battle.opponent).team
 
-    @chars = @team.characters.where(:active => true)
-    @op_chars = @op_team.characters.where(:active => true)
+    @chars = @team.characters.where(:active => true).sort { |a, b| a.position <=> b.position }
+    @op_chars = @op_team.characters.where(:active => true).sort { |a, b| a.position <=> b.position }
 
     #Create battlesync unless it already exists
     BattleSync.collection.find_and_modify(query: { '$or' => [ { reference_id: current_user._id } , { reference_id: @battle.opponent } ] }, update: {'$set' => {reference_id: current_user._id}}, :upsert => true, :new => true)
