@@ -57,8 +57,9 @@ function update_action_list(pos) {
         var skill_id = battle['actions']['' + pos][i]['action'];
         var target_pos = battle['actions']['' + pos][i]['target'];
         var skill_name = battle['skills'][skill_id][0];
-        $('#pos' + pos + '-actions').append('<p>' + skill_name + ' at ' + target_pos + '</p>');
+        $('#pos' + pos + '-actions').append('<p>' + skill_name + ' at ' + target_pos + ' <a href="#" class="undo-action" data-action-index=' + i + ' data-pos=' + pos + '><span class="red">X</span></a>' + '</p>');
     }
+    $('.undo-action').on("click", undo_action);
 }
 
 function set_target_options(selector, skill_id, pos) {
@@ -86,7 +87,7 @@ function set_target_options(selector, skill_id, pos) {
 
 function set_skill_options(selector, pos) {
     selector.html(" ");
-    ap = battle['pos' + pos + '_ap']
+    var ap = battle['pos' + pos + '_ap']
     for (i in battle.skills)
     {
         if (ap >= battle.skills[i][2])
@@ -113,6 +114,29 @@ function submit_turn() {
         },
         dataType: 'text'
     });
+    return false;
+}
+
+function undo_action() {
+    var index = $(this).attr('data-action-index');
+    var pos = $(this).attr('data-pos');
+    var skill_id = battle['actions']['' + pos][index].action
+
+    var ap_cost = battle.skills[skill_id][2]
+
+    var skill_selector = $('#pos' + pos + '-skill-selector')
+    var target_selector = $('#pos' + pos + '-character-selector')
+
+    battle['pos' + pos + '_ap'] += ap_cost
+    $('#pos' + pos + '-ap').html('AP: ' + battle['pos' + pos + '_ap'])
+
+    battle['actions']['' + pos].splice(index, 1);
+
+    update_action_list(pos);
+
+    set_skill_options(skill_selector, pos);
+    set_target_options(target_selector, skill_selector.val(), pos)
+
     return false;
 }
 
