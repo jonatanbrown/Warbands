@@ -118,6 +118,7 @@ function submit_turn() {
 }
 
 function undo_action() {
+
     var index = $(this).attr('data-action-index');
     var pos = $(this).attr('data-pos');
     var skill_id = battle['actions']['' + pos][index].action
