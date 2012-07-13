@@ -54,7 +54,7 @@ $(document).ready(function() {
               url: '/teams/' + team_id + '/formation/',
               success: function(data) {
                 $("#team-formation").html(data)
-                $('.battle-character').popover({placement: 'bottom'})
+                $('.edit-team-character').popover({placement: 'bottom'})
               },
               dataType: 'html'
             });
