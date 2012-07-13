@@ -187,9 +187,22 @@ class Character
       result += "<p>Initiative: " + final_ini.to_s + "</p>"
     end
 
+    result += "</br>"
     result += "<p>HP:" + current_hp.to_s + "</p>"
 
   end
+
+  def get_cryptic_stats_text
+    result = ''
+    result += "<p>Strength: " + Constant.get_cryptic_str(final_str) + "</p>"
+    result += "<p>Dexterity: " + Constant.get_cryptic_dex(final_dex) + "</p>"
+    result += "<p>Toughness: " + Constant.get_cryptic_tgh(final_tgh) + "</p>"
+    result += "<p>Initiative: " + Constant.get_cryptic_ini(final_ini) + "</p>"
+    result += "</br>"
+    result += "<p>HP:" + current_hp.to_s + "</p>"
+
+  end
+
 
   def get_skills_text
     result = ''

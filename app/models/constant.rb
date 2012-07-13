@@ -84,5 +84,69 @@ class Constant
       "<span>"
     end
   end
+
+  def self.get_cryptic_str(str)
+    if str < 4
+      'Puny'
+    elsif str < 8
+      'Weak'
+    elsif str < 12
+      'Average'
+    elsif str < 16
+      'Strong'
+    elsif str < 20
+      'Herculean'
+    else
+      'Godlike'
+    end
+  end
+
+  def self.get_cryptic_dex(dex)
+    if dex < 4
+      'Immobile'
+    elsif dex < 8
+      'Clumsy'
+    elsif dex < 12
+      'Average'
+    elsif dex < 16
+      'Dexterous'
+    elsif dex < 20
+      'Graceful'
+    else
+      'Godlike'
+    end
+  end
+
+  def self.get_cryptic_tgh(tgh)
+    if tgh < 4
+      'Brittle'
+    elsif tgh < 8
+      'Vulnerable'
+    elsif tgh < 12
+      'Average'
+    elsif tgh < 16
+      'Tough'
+    elsif tgh < 20
+      'Ironman'
+    else
+      'Godlike'
+    end
+  end
+
+  def self.get_cryptic_ini(ini)
+    if ini < 4
+      'Slothlike'
+    elsif ini < 8
+      'Slow'
+    elsif ini < 12
+      'Average'
+    elsif ini < 16
+      'Fast'
+    elsif ini < 20
+      'Lizardish'
+    else
+      'Godlike'
+    end
+  end
 end
 

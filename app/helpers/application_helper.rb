@@ -15,6 +15,8 @@ module ApplicationHelper
     content = ''
     if current_user.team.characters.include?(char)
       content += char.get_stats_text
+    else
+      content += char.get_cryptic_stats_text
     end
     content += "</br>"
     content += char.get_effects_text
