@@ -59,7 +59,7 @@ class Battle
         char = battle.user.team.get_char(pos.to_i)
         index = 0
         actions.each do |num, action|
-          list.push({"target" => {"team" => target_team, "pos" => action['target']}, "skill" => action['action'],"char" => char, "prio" => char.get_priority(index)})
+          list.push({"target" => {"team" => target_team, "pos" => action['target']}, "skill" => action['action'],"char" => char, "prio" => char.get_priority(index, action['action'])})
           index += 1
         end
       end
@@ -122,7 +122,9 @@ class Battle
         end
 
         if hit
-          damage = rand(4..8) + ((char.final_str + char.strike)/2.0).round(0) - (target.final_tgh/2.0).round(0)
+          damage = (rand(4..8) + ((char.final_str + char.strike)/2.0)).round(0)
+          damage -= (target.final_tgh/2.0).round(0)
+
           if damage < 0
             damage = 0
           end
@@ -204,15 +206,117 @@ class Battle
 
       #Quick Strike
       when '6'
+        hit = true
+        result_set = false
+
+        if target.melee_dodge?
+          hit = false
+        end
+
+        if target.defensive_posture_dodge?
+          result += "<p>#{char.name} does a quick strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+          hit = false
+          result_set = true
+        end
+
+        if hit
+          damage = ((rand(4..8) + ((char.final_str + char.quick_strike)/2.0)) * 0.8).round(0)
+          damage -= (target.final_tgh/2.0).round(0)
+
+          if damage < 0
+            damage = 0
+          end
+
+          target.current_hp -= damage
+
+          result += "<p>#{char.name} quickly strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+          result += target.check_knockout
+
+        elsif !result_set
+          result += "<p>#{char.name} quickly strikes at #{target.name} but #{target.name} gets out of the way.</p>"
+        end
 
       #Heavy Strike
-      when '6'
+      when '7'
+        hit = true
+        result_set = false
+
+        if target.melee_dodge?
+          hit = false
+        end
+
+        if target.defensive_posture_dodge?
+          result += "<p>#{char.name} does a heavy strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+          hit = false
+          result_set = true
+        end
+
+        if hit
+          damage = ((rand(4..8) + ((char.final_str + char.heavy_strike)/2.0)) * 1.2).round(0)
+          damage -= (target.final_tgh/2.0).round(0)
+
+          if damage < 0
+            damage = 0
+          end
+
+          target.current_hp -= damage
+
+          result += "<p>#{char.name} does a heavy strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+          result += target.check_knockout
+
+        elsif !result_set
+          result += "<p>#{char.name} does a heavy strike at #{target.name} but #{target.name} gets out of the way.</p>"
+        end
 
       #Accurate Strike
-      when '6'
+      when '8'
+
+          damage = (rand(4..8) + ((char.final_str + char.accurate_strike)/2.0)).round(0)
+          damage -= (target.final_tgh/2.0).round(0)
+
+        if damage < 0
+          damage = 0
+        end
+
+        target.current_hp -= damage
+
+        result += "<p>#{char.name} does an accurate strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+        result += target.check_knockout
 
       #Finishing Strike
-      when '6'
+      when '9'
+        hit = true
+        result_set = false
+
+        if target.melee_dodge?
+          hit = false
+        end
+
+        if target.defensive_posture_dodge?
+          result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+          hit = false
+          result_set = true
+        end
+
+        if hit
+          damage = ((rand(4..8) + ((char.final_str + char.finishing_strike)/2.0)) * 1.7).round(0)
+          damage -= (target.final_tgh/2.0).round(0)
+
+          if damage < 0
+            damage = 0
+          end
+          target.current_hp -= damage
+
+          result += "<p>#{char.name} does a finishing strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+          result += target.check_knockout
+
+        elsif !result_set
+          result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name} gets out of the way.</p>"
+        end
       end
     end
 
