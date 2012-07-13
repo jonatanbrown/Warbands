@@ -11,7 +11,7 @@ MELEE = 1
 RANGED = 2
 
 #Maximum skill number
-MAX_SKILL_NUM = 5
+MAX_SKILL_NUM = 9
 
 #Effect IDs
 EFFECT_BLINDED = 0

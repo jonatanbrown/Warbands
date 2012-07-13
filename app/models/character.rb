@@ -216,7 +216,33 @@ class Character
 
   #Returns skill level in order of ID
   def get_skills_array
-    [strike, thrown, nil, dirt, defensive_posture, cover].map {|num| num == nil ? 0 : num}
+    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike].map {|num| num == nil ? 0 : num}
+  end
+
+  def melee_dodge?
+    rand(1..100) <= (100*final_dex)/(100+final_dex)
+  end
+
+  def defensive_posture_dodge?
+    (effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and rand(1..10) <= 3
+  end
+
+  def cover_dodge?(targetability)
+
+  end
+
+  def ranged_hit?
+    rand(1..100) <= (100*(final_dex + thrown))/(5+(final_dex + thrown))
+  end
+
+  def check_knockout
+    self.active = is_active?
+    self.save
+    if !active
+      "<p>#{name} has been knocked out!</p>"
+    else
+      ''
+    end
   end
 
   private

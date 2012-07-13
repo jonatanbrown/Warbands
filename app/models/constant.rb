@@ -9,7 +9,11 @@ class Constant
       ["#{get_skill_name(2)}", 2, get_skill_ap(2), get_skill_targeting(2)],
       ["#{get_skill_name(3)}", 3, get_skill_ap(3), get_skill_targeting(3)],
       ["#{get_skill_name(4)}", 4, get_skill_ap(4), get_skill_targeting(4)],
-      ["#{get_skill_name(5)}", 5, get_skill_ap(5), get_skill_targeting(5)]
+      ["#{get_skill_name(5)}", 5, get_skill_ap(5), get_skill_targeting(5)],
+      ["#{get_skill_name(6)}", 6, get_skill_ap(6), get_skill_targeting(6)],
+      ["#{get_skill_name(7)}", 7, get_skill_ap(7), get_skill_targeting(7)],
+      ["#{get_skill_name(8)}", 8, get_skill_ap(8), get_skill_targeting(8)],
+      ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9)]
     ].to_s
   end
 
@@ -26,6 +30,14 @@ class Constant
       'Defensive Posture'
     elsif skill_id == 5
       'Take Cover'
+    elsif skill_id == 6
+      'Quick Strike'
+    elsif skill_id == 7
+      'Heavy Strike'
+    elsif skill_id == 8
+      'Accurate Strike'
+    elsif skill_id == 9
+      'Finishing Strike'
     end
   end
 
@@ -42,6 +54,14 @@ class Constant
       5
     elsif skill_id == 5
       5
+    elsif skill_id == 6
+      4
+    elsif skill_id == 7
+      4
+    elsif skill_id == 8
+      6
+    elsif skill_id == 9
+      8
     end
   end
 
@@ -58,6 +78,14 @@ class Constant
       SELF
     elsif skill_id == 5
       SELF
+    elsif skill_id == 6
+      MELEE
+    elsif skill_id == 7
+      MELEE
+    elsif skill_id == 8
+      MELEE
+    elsif skill_id == 9
+      MELEE
     end
   end
 

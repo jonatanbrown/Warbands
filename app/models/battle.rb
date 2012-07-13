@@ -111,17 +111,17 @@ class Battle
         hit = true
         result_set = false
 
-        if rand(1..100) <= (100*target.final_dex)/(100+target.final_dex)
+        if target.melee_dodge?
           hit = false
         end
 
-        if (target.effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and rand(1..10) <= 3
+        if target.defensive_posture_dodge?
           result += "<p>#{char.name} strikes at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
           hit = false
           result_set = true
         end
 
-        if
+        if hit
           damage = rand(4..8) + ((char.final_str + char.strike)/2.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
@@ -129,11 +129,9 @@ class Battle
           target.current_hp -= damage
 
           result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
-          target.active = target.is_active?
-          if !target.active
-            result += "<p>#{target.name} has been knocked out!</p>"
-          end
-          target.save
+
+          result += target.check_knockout
+
         elsif !result_set
           result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
         end
@@ -144,20 +142,10 @@ class Battle
         hit = true
         result_set = false
 
-        if rand(1..100) > (100*(char.final_dex + char.thrown))/(5+(char.final_dex + char.thrown))
-          hit = false
-        end
+        hit = char.ranged_hit?
 
         targetability = target.team.position_targetability_ranged(target.position)
-        if targetability == 1
-          if rand(1..4) > 3
-            hit = false
-          end
-        elsif targetability == 2
-          if rand(1..4) > 2
-            hit = false
-          end
-        end
+        penalty_roll_miss?(targetability)
 
         #Check if char has cover and there are chars in front.
         if (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
@@ -177,11 +165,9 @@ class Battle
           end
           target.current_hp -= damage
           result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
-          target.active = target.is_active?
-          if !target.active
-            result += "<p>#{target.name} has been knocked out!</p>"
-          end
-          target.save
+
+          result += target.check_knockout
+
         elsif !result_set
           result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
         end
@@ -191,20 +177,10 @@ class Battle
         hit = true
         result_set = false
 
-        if rand(1..100) > (100*(char.final_dex + char.dirt))/(5+(char.final_dex + char.dirt))
-          hit = false
-        end
+        hit = char.ranged_hit?
 
         targetability = target.team.position_targetability_ranged(target.position)
-        if targetability == 1
-          if rand(1..4) > 3
-            hit = false
-          end
-        elsif targetability == 2
-          if rand(1..4) > 2
-            hit = false
-          end
-        end
+        penalty_roll_miss?(targetability)
 
         #Check if char has cover and there are chars in front.
         if (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
@@ -225,6 +201,18 @@ class Battle
         elsif !result_set
           result += "<p>#{char.name} attempts to throw dirt into the eyes of #{target.name} but misses.</p>"
         end
+
+      #Quick Strike
+      when '6'
+
+      #Heavy Strike
+      when '6'
+
+      #Accurate Strike
+      when '6'
+
+      #Finishing Strike
+      when '6'
       end
     end
 
@@ -271,5 +259,15 @@ class Battle
       true
     end
   end
+
+  def self.penalty_roll_miss?(targetability)
+    if targetability == 1 and rand(1..4) > 3
+      return false
+    elsif targetability == 2 and rand(1..4) > 2
+      return false
+    end
+    true
+  end
+
 end
 
