@@ -210,13 +210,13 @@ class Character
     result += "<p>Strike: #{strike}</p>"
     result += "<p>Defensive Posture: #{defensive_posture}</p>"
     result += "<p>Throw: #{thrown}</p>"
-    result += "<p>Cover: #{cover}</p>"
+    result += "<p>Take Cover: #{cover}</p>"
     result += "<p>Throw Dirt: #{dirt}</p>"
   end
 
-  #Returns skills in order of ID
+  #Returns skill level in order of ID
   def get_skills_array
-    [strike, thrown, 0, dirt, defensive_posture, cover]
+    [strike, thrown, nil, dirt, defensive_posture, cover].map {|num| num == nil ? 0 : num}
   end
 
   private
