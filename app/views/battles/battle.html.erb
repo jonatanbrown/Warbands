@@ -81,6 +81,7 @@
     <%= render :partial => "characters/char_action", :locals => { :character => char, :pos => char.position} %>
   <% end %>
   <a href="#" id="submit-turn">Confirm</a>
+  <div class="right"><a href="#" id="mass-retreat"><span class="red">Mass Retreat</span></a></div>
 </div>
 
 <div id="turn-events"><%= @turn_events.html_safe %></div>

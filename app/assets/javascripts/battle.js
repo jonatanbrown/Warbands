@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('.battle-character').popover({placement: 'bottom'})
 
     $('#submit-turn').on("click", submit_turn);
+    $('#mass-retreat').on("click", mass_retreat);
 
     $(".confirm-skill").on("click", function(event) {
 
@@ -112,6 +113,14 @@ function submit_turn() {
         },
         dataType: 'text'
     });
+    return false;
+}
+
+function mass_retreat() {
+    for (x = 0; x < 5; ++x){
+        battle['actions']['' + x].push({action: '2', target: null})
+    }
+    submit_turn()
     return false;
 }
 
