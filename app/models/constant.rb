@@ -13,79 +13,86 @@ class Constant
       ["#{get_skill_name(6)}", 6, get_skill_ap(6), get_skill_targeting(6)],
       ["#{get_skill_name(7)}", 7, get_skill_ap(7), get_skill_targeting(7)],
       ["#{get_skill_name(8)}", 8, get_skill_ap(8), get_skill_targeting(8)],
-      ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9)]
+      ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9)],
+      ["#{get_skill_name(10)}", 10, get_skill_ap(10), get_skill_targeting(10)]
     ].to_s
   end
 
   def self.get_skill_name(skill_id)
-    if skill_id == 0
+    if skill_id == SKILL_STRIKE
       'Strike'
-    elsif skill_id == 1
+    elsif skill_id == SKILL_THROWN
       'Throw'
-    elsif skill_id == 2
+    elsif skill_id == SKILL_RETREAT
       'Retreat'
-    elsif skill_id == 3
+    elsif skill_id == SKILL_DIRT
       'Throw Dirt'
-    elsif skill_id == 4
+    elsif skill_id == SKILL_DEFENSIVE_POSTURE
       'Defensive Posture'
-    elsif skill_id == 5
+    elsif skill_id == SKILL_COVER
       'Take Cover'
-    elsif skill_id == 6
+    elsif skill_id == SKILL_QUICK_STRIKE
       'Quick Strike'
-    elsif skill_id == 7
+    elsif skill_id == SKILL_HEAVY_STRIKE
       'Heavy Strike'
-    elsif skill_id == 8
+    elsif skill_id == SKILL_ACCURATE_STRIKE
       'Accurate Strike'
-    elsif skill_id == 9
+    elsif skill_id == SKILL_FINISHING_STRIKE
       'Finishing Strike'
+    elsif skill_id == SKILL_PROTECT
+      'Protect'
     end
   end
 
   def self.get_skill_ap(skill_id)
-    if skill_id == 0
+    if skill_id == SKILL_STRIKE
       4
-    elsif skill_id == 1
+    elsif skill_id == SKILL_THROWN
       6
-    elsif skill_id == 2
+    elsif skill_id == SKILL_RETREAT
       0
-    elsif skill_id == 3
+    elsif skill_id == SKILL_DIRT
       6
-    elsif skill_id == 4
+    elsif skill_id == SKILL_DEFENSIVE_POSTURE
       5
-    elsif skill_id == 5
+    elsif skill_id == SKILL_COVER
       5
-    elsif skill_id == 6
+    elsif skill_id == SKILL_QUICK_STRIKE
       4
-    elsif skill_id == 7
+    elsif skill_id == SKILL_HEAVY_STRIKE
       4
-    elsif skill_id == 8
+    elsif skill_id == SKILL_ACCURATE_STRIKE
       6
-    elsif skill_id == 9
+    elsif skill_id == SKILL_FINISHING_STRIKE
       8
+    elsif skill_id == SKILL_PROTECT
+      5
     end
   end
 
   def self.get_skill_targeting(skill_id)
-    if skill_id == 0
+    if skill_id == SKILL_STRIKE
       MELEE
-    elsif skill_id == 1
+    elsif skill_id == SKILL_THROWN
       RANGED
-    elsif skill_id == 2
+    elsif skill_id == SKILL_RETREAT
       SELF
-    elsif skill_id == 3
+    elsif skill_id == SKILL_DIRT
       RANGED
-    elsif skill_id == 4
+    elsif skill_id == SKILL_DEFENSIVE_POSTURE
       SELF
-    elsif skill_id == 5
+    elsif skill_id == SKILL_COVER
       SELF
-    elsif skill_id == 6
+    elsif skill_id == SKILL_QUICK_STRIKE
       MELEE
-    elsif skill_id == 7
+    elsif skill_id == SKILL_HEAVY_STRIKE
       MELEE
-    elsif skill_id == 8
+    elsif skill_id == SKILL_ACCURATE_STRIKE
       MELEE
-    elsif skill_id == 9
+    elsif skill_id == SKILL_FINISHING_STRIKE
       MELEE
+    elsif skill_id == SKILL_PROTECT
+      FRIENDLY_NONSELF
     end
   end
 

@@ -24,8 +24,8 @@ class Battle
 
     action_list = []
 
-    action_list += add_actions_to_list(battle1, team2)
-    action_list += add_actions_to_list(battle2, team1)
+    action_list += add_actions_to_list(battle1, team2, team1)
+    action_list += add_actions_to_list(battle2, team1, team2)
 
     action_list = sort_order(action_list)
 
@@ -52,14 +52,14 @@ class Battle
 
   private
 
-  def self.add_actions_to_list(battle, target_team)
+  def self.add_actions_to_list(battle, op_team, cur_team)
     list = []
     if battle.actions
       battle.actions.each do |pos, actions|
         char = battle.user.team.get_char(pos.to_i)
         index = 0
         actions.each do |num, action|
-          list.push({"target" => {"team" => target_team, "pos" => action['target']}, "skill" => action['action'],"char" => char, "prio" => char.get_priority(index, action['action'].to_i)})
+          list.push({"target" => {"team" => action['friendly'] == 'true' ? cur_team : op_team, "pos" => action['target']}, "skill" => action['action'],"char" => char, "prio" => char.get_priority(index, action['action'].to_i)})
           index += 1
         end
       end
@@ -91,13 +91,13 @@ class Battle
 
       #Defensive Posture
       when '4'
-        char.effects << [EFFECT_DEFENSIVE_POSTURE, 1, nil]
+        char.effects << [EFFECT_DEFENSIVE_POSTURE, 1, nil, nil]
         char.save
         result += "<p>#{char.name} takes on a defensive posture.</p>"
 
       #Cover
       when '5'
-        char.effects << [EFFECT_COVER, 1, nil]
+        char.effects << [EFFECT_COVER, 1, nil, nil]
         char.save
         result += "<p>#{char.name} takes cover.</p>"
       end
@@ -110,6 +110,11 @@ class Battle
 
         hit = true
         result_set = false
+
+        if new_target = target.is_protected?
+          result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
+          target = new_target
+        end
 
         if target.melee_dodge?
           hit = false
@@ -197,7 +202,7 @@ class Battle
 
         if hit
           duration = rand(2..4)
-          target.effects << [EFFECT_BLINDED, duration, nil]
+          target.effects << [EFFECT_BLINDED, duration, nil, nil]
           target.save
           result += "<p>#{char.name} throws dirt into the eyes of #{target.name}. <span class='red'>#{target.name} is blinded!</p></span>"
         elsif !result_set
@@ -208,6 +213,11 @@ class Battle
       when '6'
         hit = true
         result_set = false
+
+        if new_target = target.is_protected?
+          result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
+          target = new_target
+        end
 
         if target.melee_dodge?
           hit = false
@@ -242,6 +252,11 @@ class Battle
         hit = true
         result_set = false
 
+        if new_target = target.is_protected?
+          result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
+          target = new_target
+        end
+
         if target.melee_dodge?
           hit = false
         end
@@ -273,8 +288,13 @@ class Battle
       #Accurate Strike
       when '8'
 
-          damage = (rand(4..8) + ((char.final_str + char.accurate_strike)/2.0)).round(0)
-          damage -= (target.final_tgh/2.0).round(0)
+        if new_target = target.is_protected?
+          result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
+          target = new_target
+        end
+
+        damage = (rand(4..8) + ((char.final_str + char.accurate_strike)/2.0)).round(0)
+        damage -= (target.final_tgh/2.0).round(0)
 
         if damage < 0
           damage = 0
@@ -290,6 +310,11 @@ class Battle
       when '9'
         hit = true
         result_set = false
+
+        if new_target = target.is_protected?
+          result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
+          target = new_target
+        end
 
         if target.melee_dodge?
           hit = false
@@ -317,6 +342,12 @@ class Battle
         elsif !result_set
           result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name} gets out of the way.</p>"
         end
+
+      #Protect
+      when '10'
+        target.effects << [EFFECT_PROTECTED, 1, nil, char._id]
+        target.save
+        result += "<p>#{char.name} protects #{target.name}.</p>"
       end
     end
 

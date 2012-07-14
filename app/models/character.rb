@@ -66,7 +66,7 @@ class Character
 
   field :position, :type => Integer
 
-  #Tuples in effects are in format [effect_id, duration, power]
+  #Tuples in effects are in format [effect_id, duration, power, caster_id]
   field :effects, :type => Array, :default => []
 
 
@@ -222,7 +222,7 @@ class Character
 
   #Returns skill level in order of ID
   def get_skills_array
-    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike].map {|num| num == nil ? 0 : num}
+    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect].map {|num| num == nil ? 0 : num}
   end
 
   def melee_dodge?
@@ -233,8 +233,13 @@ class Character
     (effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and rand(1..10) <= 3
   end
 
-  def cover_dodge?(targetability)
-
+  def is_protected?
+    effects.each do |effect|
+      if effect[0] == EFFECT_PROTECTED and rand(1..10) <= 7
+        return Character.find(effect[3])
+      end
+    end
+    return false
   end
 
   def ranged_hit?

@@ -20,7 +20,10 @@ $(document).ready(function() {
             var skill_ap = $('#pos' + pos + '-skill-selector' + " option[value=" + skill_id + "]").attr('data-ap');
 
             //Add actions to battle orders
-            battle['actions']['' + pos].push({action: skill_id, target: target})
+            if (battle.skills[skill_id][3] == 3 || battle.skills[skill_id][3] == 4)
+                battle['actions']['' + pos].push({action: skill_id, target: target, friendly: true})
+            else
+                battle['actions']['' + pos].push({action: skill_id, target: target, friendly: false})
 
             //Recalculate remaining AP, and update display
             battle['pos' + pos + '_ap'] -= skill_ap
@@ -66,6 +69,17 @@ function set_target_options(selector, skill_id, pos) {
     selector.html(" ");
     if (battle.skills[skill_id][3] == 0)
     {
+    }
+    else if (battle.skills[skill_id][3] == 4)
+    {
+        for (i in battle.chars)
+        {
+            var target = battle.chars[i]
+            if (pos != target[1])
+            {
+                selector.append('<option value="' + target[1] + '">' + target[0] + '</option>');
+            }
+        }
     }
     else
     {
