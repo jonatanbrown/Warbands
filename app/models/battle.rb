@@ -100,6 +100,13 @@ class Battle
         char.effects << [EFFECT_COVER, 1, nil, nil]
         char.save
         result += "<p>#{char.name} takes cover.</p>"
+
+      #Shield Wall
+      when '11'
+        char.effects << [EFFECT_SHIELD_WALL, 1, nil, nil]
+        char.save
+        result += "<p>#{char.name} forms a shield wall.</p>"
+
       end
     end
 
@@ -149,10 +156,22 @@ class Battle
         hit = true
         result_set = false
 
-        hit = char.ranged_hit?
+        hit = char.ranged_hit?(1)
 
         targetability = target.team.position_targetability_ranged(target.position)
         penalty_roll_miss?(targetability)
+
+        if waller = target.behind_shield_wall?
+          result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
+          result_set = true
+          hit = false
+        end
+
+        if (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
+          result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} has a shield wall up.</p>"
+          hit = false
+          result_set = true
+        end
 
         #Check if char has cover and there are chars in front.
         if (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
@@ -184,7 +203,7 @@ class Battle
         hit = true
         result_set = false
 
-        hit = char.ranged_hit?
+        hit = char.ranged_hit?(3)
 
         targetability = target.team.position_targetability_ranged(target.position)
         penalty_roll_miss?(targetability)

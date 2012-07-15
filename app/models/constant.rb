@@ -14,7 +14,8 @@ class Constant
       ["#{get_skill_name(7)}", 7, get_skill_ap(7), get_skill_targeting(7)],
       ["#{get_skill_name(8)}", 8, get_skill_ap(8), get_skill_targeting(8)],
       ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9)],
-      ["#{get_skill_name(10)}", 10, get_skill_ap(10), get_skill_targeting(10)]
+      ["#{get_skill_name(10)}", 10, get_skill_ap(10), get_skill_targeting(10)],
+      ["#{get_skill_name(11)}", 11, get_skill_ap(11), get_skill_targeting(11)]
     ].to_s
   end
 
@@ -41,6 +42,8 @@ class Constant
       'Finishing Strike'
     elsif skill_id == SKILL_PROTECT
       'Protect'
+    elsif skill_id = SKILL_SHIELD_WALL
+      'Shield Wall'
     end
   end
 
@@ -66,6 +69,8 @@ class Constant
     elsif skill_id == SKILL_FINISHING_STRIKE
       8
     elsif skill_id == SKILL_PROTECT
+      5
+    elsif skill_id == SKILL_SHIELD_WALL
       5
     end
   end
@@ -93,6 +98,8 @@ class Constant
       MELEE
     elsif skill_id == SKILL_PROTECT
       FRIENDLY_NONSELF
+    elsif skill_id == SKILL_SHIELD_WALL
+      SELF
     end
   end
 
