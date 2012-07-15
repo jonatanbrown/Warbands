@@ -159,7 +159,7 @@ class Battle
         hit = char.ranged_hit?(1)
 
         targetability = target.team.position_targetability_ranged(target.position)
-        penalty_roll_miss?(targetability)
+        hit = penalty_roll_miss?(targetability)
 
         if waller = target.behind_shield_wall?
           result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
@@ -206,7 +206,19 @@ class Battle
         hit = char.ranged_hit?(3)
 
         targetability = target.team.position_targetability_ranged(target.position)
-        penalty_roll_miss?(targetability)
+        hit = penalty_roll_miss?(targetability)
+
+        if waller = target.behind_shield_wall?
+          result += "<p>#{char.name} kicks dirt at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
+          result_set = true
+          hit = false
+        end
+
+        if (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
+          result += "<p>#{char.name} kicks dirt at #{target.name} but #{target.name} has a shield wall up.</p>"
+          hit = false
+          result_set = true
+        end
 
         #Check if char has cover and there are chars in front.
         if (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
