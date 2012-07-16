@@ -67,7 +67,8 @@ function update_action_list(pos) {
 
 function set_target_options(selector, skill_id, pos) {
     selector.html(" ");
-    if (battle.skills[skill_id][3] == 0)
+    //Check what targets are legal
+    if (battle.skills[skill_id][3] == 0 || battle.skills[skill_id][3] == 5)
     {
     }
     else if (battle.skills[skill_id][3] == 4)

@@ -107,6 +107,57 @@ class Battle
         char.save
         result += "<p>#{char.name} forms a shield wall.</p>"
 
+      #Fling
+      when '13'
+
+        opponent_chars = User.find(char.team.user.battle.opponent).team.characters.where(:active => true)
+        if opponent_chars.any?
+          target = opponent_chars[rand(0..(opponent_chars.length - 1))]
+
+          hit = true
+
+          if hit and waller = target.behind_shield_wall?
+            hit = false
+            result += "<p>#{char.name} flings a stone at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
+          end
+
+          if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
+            hit = false
+            result += "<p>#{char.name} flings a stone at #{target.name} but #{target.name} has a shield wall up.</p>"
+          end
+
+          #Check if char has cover and there are chars in front.
+          if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
+            if target.team.position_targetability_ranged(target.position) != NO_PENALTY
+              hit = false
+              result += "<p>#{char.name} flings a stone at #{target.name} but #{target.name} has taken cover.</p>"
+            elsif hit
+              result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
+            end
+          end
+
+          if hit and !char.ranged_hit?(SKILL_FLING)
+            hit = false
+            result += "<p>#{char.name} flings a stone at #{target.name} but misses.</p>"
+          end
+
+          targetability = target.team.position_targetability_ranged(target.position)
+          if hit and penalty_roll_miss?(targetability)
+            hit = false
+            result += "<p>#{char.name} flings a stone at #{target.name} but misses.</p>"
+          end
+
+          if hit
+            damage = rand(4..8) + ((char.final_dex + char.fling)/4.0).round(0) + ((char.final_dex + char.fling)/4.0).round(0) - (target.final_tgh/2.0).round(0)
+            if damage < 0
+              damage = 0
+            end
+            target.current_hp -= damage
+            result += "<p>#{char.name} flings a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+            result += target.check_knockout
+          end
+        end
       end
     end
 
@@ -152,38 +203,40 @@ class Battle
       when '1'
 
         hit = true
-        result_set = false
 
-        hit = char.ranged_hit?(1)
-
-        targetability = target.team.position_targetability_ranged(target.position)
-        hit = penalty_roll_miss?(targetability)
-
-        if waller = target.behind_shield_wall?
-          result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
-          result_set = true
+        if hit and waller = target.behind_shield_wall?
           hit = false
+          result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
         end
 
-        if (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
-          result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} has a shield wall up.</p>"
+        if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
           hit = false
-          result_set = true
+          result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} has a shield wall up.</p>"
         end
 
         #Check if char has cover and there are chars in front.
-        if (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
+        if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
           if target.team.position_targetability_ranged(target.position) != NO_PENALTY
             hit = false
-            result_set = true
             result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} has taken cover.</p>"
           elsif hit
             result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
           end
         end
 
+        if hit and !char.ranged_hit?(SKILL_THROWN)
+          hit = false
+          result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
+        end
+
+        targetability = target.team.position_targetability_ranged(target.position)
+        if hit and penalty_roll_miss?(targetability)
+          hit = false
+          result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
+        end
+
         if hit
-          damage = rand(4..8) + ((char.final_str + char.thrown)/4.0).round(0) + ((char.final_dex + char.thrown)/4.0).round(0) - (target.final_tgh/2.0).round(0)
+          damage = rand(4..8) + ((char.final_dex + char.thrown)/4.0).round(0) + ((char.final_dex + char.thrown)/4.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
           end
@@ -191,42 +244,42 @@ class Battle
           result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
-
-        elsif !result_set
-          result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
         end
+
       #Kick Dirt
       when '3'
 
         hit = true
-        result_set = false
 
-        hit = char.ranged_hit?(3)
-
-        targetability = target.team.position_targetability_ranged(target.position)
-        hit = penalty_roll_miss?(targetability)
-
-        if waller = target.behind_shield_wall?
-          result += "<p>#{char.name} kicks dirt at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
-          result_set = true
+        if hit and waller = target.behind_shield_wall?
           hit = false
+          result += "<p>#{char.name} throws dirt at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
         end
 
-        if (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
-          result += "<p>#{char.name} kicks dirt at #{target.name} but #{target.name} has a shield wall up.</p>"
+        if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
           hit = false
-          result_set = true
+          result += "<p>#{char.name} throws dirt at #{target.name} but #{target.name} has a shield wall up.</p>"
         end
 
         #Check if char has cover and there are chars in front.
-        if (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
+        if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
           if target.team.position_targetability_ranged(target.position) != NO_PENALTY
             hit = false
-            result_set = true
             result += "<p>#{char.name} throws dirt at #{target.name} but #{target.name} has taken cover.</p>"
           elsif hit
             result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
           end
+        end
+
+        if hit and !char.ranged_hit?(SKILL_DIRT)
+          hit = false
+          result += "<p>#{char.name} throws dirt at #{target.name} but misses.</p>"
+        end
+
+        targetability = target.team.position_targetability_ranged(target.position)
+        if hit and penalty_roll_miss?(targetability)
+          hit = false
+          result += "<p>#{char.name} throws dirt at #{target.name} but misses.</p>"
         end
 
         if hit
@@ -234,8 +287,6 @@ class Battle
           target.effects << [EFFECT_BLINDED, duration, nil, nil]
           target.save
           result += "<p>#{char.name} throws dirt into the eyes of #{target.name}. <span class='red'>#{target.name} is blinded!</p></span>"
-        elsif !result_set
-          result += "<p>#{char.name} attempts to throw dirt into the eyes of #{target.name} but misses.</p>"
         end
 
       #Quick Strike
@@ -420,11 +471,11 @@ class Battle
 
   def self.penalty_roll_miss?(targetability)
     if targetability == 1 and rand(1..4) > 3
-      return false
+      return true
     elsif targetability == 2 and rand(1..4) > 2
-      return false
+      return true
     end
-    true
+    false
   end
 
   def self.check_counterstrike(char, target)

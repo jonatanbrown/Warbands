@@ -15,7 +15,11 @@ class Constant
       ["#{get_skill_name(8)}", 8, get_skill_ap(8), get_skill_targeting(8)],
       ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9)],
       ["#{get_skill_name(10)}", 10, get_skill_ap(10), get_skill_targeting(10)],
-      ["#{get_skill_name(11)}", 11, get_skill_ap(11), get_skill_targeting(11)]
+      ["#{get_skill_name(11)}", 11, get_skill_ap(11), get_skill_targeting(11)],
+      ["#{get_skill_name(12)}", 12, get_skill_ap(12), get_skill_targeting(12)],
+      ["#{get_skill_name(13)}", 13, get_skill_ap(13), get_skill_targeting(13)],
+      ["#{get_skill_name(14)}", 14, get_skill_ap(14), get_skill_targeting(14)],
+      ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15)]
     ].to_s
   end
 
@@ -42,8 +46,16 @@ class Constant
       'Finishing Strike'
     elsif skill_id == SKILL_PROTECT
       'Protect'
-    elsif skill_id = SKILL_SHIELD_WALL
+    elsif skill_id == SKILL_SHIELD_WALL
       'Shield Wall'
+    elsif skill_id == SKILL_COUNTERSTRIKE
+      'Counterstrike'
+    elsif skill_id == SKILL_FLING
+      'Fling'
+    elsif skill_id == SKILL_QUICK_THROW
+      'Quick Throw'
+    elsif skill_id == SKILL_HEAVY_THROW
+      'Heavy Throw'
     end
   end
 
@@ -72,6 +84,14 @@ class Constant
       5
     elsif skill_id == SKILL_SHIELD_WALL
       5
+    elsif skill_id == SKILL_COUNTERSTRIKE
+      0
+    elsif skill_id == SKILL_FLING
+      4
+    elsif skill_id == SKILL_QUICK_THROW
+      6
+    elsif skill_id == SKILL_HEAVY_THROW
+      6
     end
   end
 
@@ -100,6 +120,14 @@ class Constant
       FRIENDLY_NONSELF
     elsif skill_id == SKILL_SHIELD_WALL
       SELF
+    elsif skill_id == SKILL_COUNTERSTRIKE
+      SELF
+    elsif skill_id == SKILL_FLING
+      RANDOM_ENEMY
+    elsif skill_id == SKILL_QUICK_THROW
+      RANGED
+    elsif skill_id == SKILL_HEAVY_THROW
+      RANGED
     end
   end
 

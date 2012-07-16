@@ -42,7 +42,7 @@ class Character
     #Learnable
       field :fling, :type => Integer
       field :quick_throw, :type => Integer
-      field :accurate_thow, :type => Integer
+      field :heavy_throw, :type => Integer
       field :take_aim, :type => Integer
       field :undisturbed, :type => Integer
 
@@ -220,9 +220,9 @@ class Character
     result += "<p>Throw Dirt: #{dirt}</p>"
   end
 
-  #Returns skill level in order of ID
+  #Returns skill level in order of ID. Passives should be 0.
   def get_skills_array
-    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall].map {|num| num == nil ? 0 : num}
+    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw].map {|num| num == nil ? 0 : num}
   end
 
   def get_skill_value(skill_id)
@@ -248,10 +248,16 @@ class Character
       finishing_strike
     elsif skill_id == SKILL_PROTECT
       protect
-    elsif skill_id = SKILL_SHIELD_WALL
+    elsif skill_id == SKILL_SHIELD_WALL
       shield_wall
-    elsif skill_id = SKILL_COUNTERSTRIKE
+    elsif skill_id == SKILL_COUNTERSTRIKE
       counterstrike
+    elsif skill_id == SKILL_FLING
+      fling
+    elsif skill_id == SKILL_QUICK_THROW
+      quick_throw
+    elsif skill_id == SKILL_HEAVY_THROW
+      heavy_throw
     end
   end
 
