@@ -66,7 +66,7 @@ class Character
 
   field :position, :type => Integer
 
-  #Tuples in effects are in format [effect_id, duration, power, caster_id]
+  #Tuples in effects are in format [effect_id, duration, power, character_id]
   field :effects, :type => Array, :default => []
 
 
@@ -226,7 +226,7 @@ class Character
 
   #Returns skill level in order of ID. Passives should be 0.
   def get_skills_array
-    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw].map {|num| num == nil ? 0 : num}
+    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw, 0].map {|num| num == nil ? 0 : num}
   end
 
   def get_skill_value(skill_id)
@@ -262,6 +262,8 @@ class Character
       quick_throw
     elsif skill_id == SKILL_HEAVY_THROW
       heavy_throw
+    elsif skill_id == SKILL_TAKE_AIM
+      take_aim
     end
   end
 
@@ -282,16 +284,25 @@ class Character
     return false
   end
 
+  def aim_success?
+    effects.each do |effect|
+      if effect[0] == EFFECT_TAKEN_AIM and skill_roll_successful?(SKILL_TAKE_AIM)
+        return Character.find(effect[3])._id
+      end
+    end
+    return false
+  end
+
   def behind_shield_wall?
     if team.formation == 2 and position == 5
 
       waller = team.get_char(1)
-      if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+      if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
         return waller.name
       end
 
       waller = team.get_char(2)
-      if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+      if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
         return waller.name
       end
 
@@ -300,24 +311,24 @@ class Character
       if position == 3
 
         waller = team.get_char(0)
-        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
           return waller.name
         end
 
         waller = team.get_char(1)
-        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
           return waller.name
         end
 
       elsif position == 4
 
         waller = team.get_char(1)
-        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
           return waller.name
         end
 
         waller = team.get_char(2)
-        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
           return waller.name
         end
 
@@ -326,25 +337,25 @@ class Character
       if position == 2
 
         waller = team.get_char(0)
-        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
           return waller.name
         end
 
       elsif position == 3
 
         waller = team.get_char(0)
-        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
           return waller.name
         end
 
         waller = team.get_char(1)
-        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
           return waller.name
         end
 
       elsif position == 4
         waller = team.get_char(1)
-        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.shield_wall_successful?
+        if waller and (waller.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and waller.skill_roll_successful?(SKILL_SHIELD_WALL)
           return waller.name
         end
       end
@@ -368,8 +379,8 @@ class Character
     rand(1..100) <= (100*(final_dex + get_skill_value(skill_id)))/(5+(final_dex + get_skill_value(skill_id)))
   end
 
-  def shield_wall_successful?
-    rand(1..100) <= (100*shield_wall)/(5+shield_wall)
+  def skill_roll_successful?(skill_id)
+    rand(1..100) <= (100*get_skill_value(skill_id))/(5+get_skill_value(skill_id))
   end
 
   def check_knockout

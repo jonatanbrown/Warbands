@@ -116,7 +116,7 @@ class Battle
 
           hit = true
 
-          res = ranged_skill_miss(char, target, SKILL_FLING)
+          res = ranged_skill_hit(char, target, SKILL_FLING)
 
           hit = res[:hit]
           result += res[:text]
@@ -130,6 +130,9 @@ class Battle
             result += "<p>#{char.name} flings a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
             result += target.check_knockout
+
+            char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+            char.save
           end
         end
       end
@@ -171,7 +174,7 @@ class Battle
 
         hit = true
 
-        res = ranged_skill_miss(char, target, SKILL_THROWN)
+        res = ranged_skill_hit(char, target, SKILL_THROWN)
 
         hit = res[:hit]
         result += res[:text]
@@ -185,6 +188,11 @@ class Battle
           result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
+
+          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+
+          char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.save
         end
 
       #Kick Dirt
@@ -192,7 +200,7 @@ class Battle
 
         hit = true
 
-        res = ranged_skill_miss(char, target, SKILL_DIRT)
+        res = ranged_skill_hit(char, target, SKILL_DIRT)
 
         hit = res[:hit]
         result += res[:text]
@@ -202,6 +210,11 @@ class Battle
           target.effects << [EFFECT_BLINDED, duration, nil, nil]
           target.save
           result += "<p>#{char.name} throws dirt into the eyes of #{target.name}. <span class='red'>#{target.name} is blinded!</p></span>"
+
+          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+
+          char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.save
         end
 
       #Quick Strike
@@ -326,7 +339,7 @@ class Battle
 
         hit = true
 
-        res = ranged_skill_miss(char, target, SKILL_QUICK_THROW)
+        res = ranged_skill_hit(char, target, SKILL_QUICK_THROW)
 
         hit = res[:hit]
         result += res[:text]
@@ -341,6 +354,11 @@ class Battle
           result += "<p>#{char.name} quickly throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
+
+          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+
+          char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.save
         end
 
       #Heavy Throw
@@ -348,7 +366,7 @@ class Battle
 
         hit = true
 
-        res = ranged_skill_miss(char, target, SKILL_HEAVY_THROW)
+        res = ranged_skill_hit(char, target, SKILL_HEAVY_THROW)
 
         hit = res[:hit]
         result += res[:text]
@@ -363,6 +381,11 @@ class Battle
           result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
+
+          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+
+          char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.save
         end
 
       end
@@ -413,7 +436,7 @@ class Battle
   end
 
   #Function for checking standard ranged skill miss rolls.
-  def self.ranged_skill_miss(char, target, skill_id)
+  def self.ranged_skill_hit(char, target, skill_id)
 
     hit = true
     result = ''
@@ -423,7 +446,7 @@ class Battle
       result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
     end
 
-    if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
+    if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.skill_roll_successful?(SKILL_SHIELD_WALL)
       hit = false
       result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} has a shield wall up.</p>"
     end
@@ -438,15 +461,15 @@ class Battle
       end
     end
 
-    if hit and !char.ranged_hit?(skill_id)
-      hit = false
-      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but misses.</p>"
-    end
-
     targetability = target.team.position_targetability_ranged(target.position)
-    if hit and penalty_roll_miss?(targetability)
-      hit = false
-      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but misses.</p>"
+    if hit and (!char.ranged_hit?(skill_id) or penalty_roll_miss?(targetability))
+      aimed_char = char.aim_success?
+      if aimed_char and aimed_char == target._id
+        result += "<p>#{char.name} has taken aim at #{target.name} and hits thanks to it.</p>"
+      else
+        hit = false
+        result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but misses.</p>"
+      end
     end
 
     return {hit: hit, text: result}

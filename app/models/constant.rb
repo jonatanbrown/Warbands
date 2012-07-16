@@ -19,7 +19,8 @@ class Constant
       ["#{get_skill_name(12)}", 12, get_skill_ap(12), get_skill_targeting(12)],
       ["#{get_skill_name(13)}", 13, get_skill_ap(13), get_skill_targeting(13)],
       ["#{get_skill_name(14)}", 14, get_skill_ap(14), get_skill_targeting(14)],
-      ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15)]
+      ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15)],
+      ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16)]
     ].to_s
   end
 
@@ -56,6 +57,8 @@ class Constant
       'Quick Throw'
     elsif skill_id == SKILL_HEAVY_THROW
       'Heavy Throw'
+    elsif skill_id == SKILL_TAKE_AIM
+      'Take Aim'
     end
   end
 
@@ -92,6 +95,8 @@ class Constant
       6
     elsif skill_id == SKILL_HEAVY_THROW
       6
+    elsif skill_id == SKILL_TAKE_AIM
+      0
     end
   end
 
@@ -128,6 +133,8 @@ class Constant
       RANGED
     elsif skill_id == SKILL_HEAVY_THROW
       RANGED
+    elsif skill_id == SKILL_TAKE_AIM
+      SELF
     end
   end
 
@@ -165,6 +172,8 @@ class Constant
         'quickly throws a stone at'
       when SKILL_HEAVY_THROW
         'throws a stone heavily at'
+      when SKILL_TAKE_AIM
+        ''
     end
   end
 
