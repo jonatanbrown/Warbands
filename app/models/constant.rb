@@ -20,7 +20,8 @@ class Constant
       ["#{get_skill_name(13)}", 13, get_skill_ap(13), get_skill_targeting(13)],
       ["#{get_skill_name(14)}", 14, get_skill_ap(14), get_skill_targeting(14)],
       ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15)],
-      ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16)]
+      ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16)],
+      ["#{get_skill_name(17)}", 17, get_skill_ap(17), get_skill_targeting(17)]
     ].to_s
   end
 
@@ -59,6 +60,8 @@ class Constant
       'Heavy Throw'
     elsif skill_id == SKILL_TAKE_AIM
       'Take Aim'
+    elsif skill_id == SKILL_UNDISTURBED
+      'Undisturbed'
     end
   end
 
@@ -97,6 +100,8 @@ class Constant
       6
     elsif skill_id == SKILL_TAKE_AIM
       0
+    elsif skill_id == SKILL_UNDISTURBED
+      0
     end
   end
 
@@ -134,6 +139,8 @@ class Constant
     elsif skill_id == SKILL_HEAVY_THROW
       RANGED
     elsif skill_id == SKILL_TAKE_AIM
+      SELF
+    elsif skill_id == SKILL_UNDISTURBED
       SELF
     end
   end
@@ -174,30 +181,37 @@ class Constant
         'throws a stone heavily at'
       when SKILL_TAKE_AIM
         ''
+      when SKILL_UNDISTURBED
+        ''
     end
   end
 
   def self.get_effect_name(effect_id)
-    if effect_id == 0
-      'Blinded'
+    case effect_id
+      when 0
+        'Blinded'
+      when 6
+        'Undisturbed'
     end
   end
 
   def self.effect_beneficial?(effect_id)
-    if [0].include?(effect_id)
-      false
-    else
-      true
+    case effect_id
+      when EFFECT_BLINDED
+        false
+      else
+        true
     end
   end
 
   def self.get_effect_color_tag(effect_id)
-    if [0].include?(effect_id)
-      "<span class='red'>"
-    elsif false
-      "<span class='green'>"
-    else
-      "<span>"
+    case effect_id
+      when EFFECT_BLINDED
+        "<span class='red'>"
+      when EFFECT_UNDISTURBED
+        "<span class='green'>"
+      else
+        "<span>"
     end
   end
 

@@ -36,6 +36,7 @@ class Battle
     check_if_lost(team1, team2)
     check_if_lost(team2, team1)
 
+
     all_chars = team1.characters + team2.characters
 
     all_chars.each do |char|
@@ -43,6 +44,17 @@ class Battle
         effect[1] -= 1
         effect[1] <= 0
       end
+
+      if char.skill_available?(SKILL_UNDISTURBED) and !char.taken_damage
+        if char.skill_roll_successful?(SKILL_UNDISTURBED)
+          char.effects << [EFFECT_UNDISTURBED, 1, nil, nil]
+          turn_events += "<p>#{char.name} is undisturbed and his speed <span class='green'>increases</span> for the next turn.</p>"
+        else
+          turn_events += "<p>#{char.name} is undisturbed but <span class='red'>fails</span> to read the situation correctly.</p>"
+        end
+      end
+
+      char.taken_damage = false
       char.save
     end
 
@@ -127,9 +139,12 @@ class Battle
               damage = 0
             end
             target.current_hp -= damage
+            target.taken_damage = true
             result += "<p>#{char.name} flings a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
             result += target.check_knockout
+
+            char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
 
             char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
             char.save
@@ -163,6 +178,7 @@ class Battle
             damage = 0
           end
           target.current_hp -= damage
+          target.taken_damage = true
 
           result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -185,6 +201,7 @@ class Battle
             damage = 0
           end
           target.current_hp -= damage
+          target.taken_damage = true
           result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
@@ -241,6 +258,7 @@ class Battle
           end
 
           target.current_hp -= damage
+          target.taken_damage = true
 
           result += "<p>#{char.name} quickly strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -271,6 +289,7 @@ class Battle
           end
 
           target.current_hp -= damage
+          target.taken_damage = true
 
           result += "<p>#{char.name} does a heavy strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -293,6 +312,7 @@ class Battle
         end
 
         target.current_hp -= damage
+        target.taken_damage = true
 
         result += "<p>#{char.name} does an accurate strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -321,6 +341,7 @@ class Battle
             damage = 0
           end
           target.current_hp -= damage
+          target.taken_damage = true
 
           result += "<p>#{char.name} does a finishing strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -351,6 +372,7 @@ class Battle
             damage = 0
           end
           target.current_hp -= damage
+          target.taken_damage = true
           result += "<p>#{char.name} quickly throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
@@ -378,6 +400,7 @@ class Battle
             damage = 0
           end
           target.current_hp -= damage
+          target.taken_damage = true
           result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
@@ -407,10 +430,10 @@ class Battle
     if char_actions
       char_actions.each do |pos, actions|
         char = team.get_char(pos.to_i)
-        total_ap = char.ap
+        total_ap = char.final_ap
         actions.each do |num, action|
           #Check if char can use action
-          unless char.action_available?(action['action'].to_i)
+          unless char.skill_available?(action['action'].to_i)
             return false
           end
           if Constant.get_skill_targeting(action['action'].to_i) == MELEE

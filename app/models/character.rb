@@ -62,6 +62,7 @@ class Character
 
   #Combat info
   field :current_hp, :type => Integer
+  field :taken_damage, :type => Boolean
   field :active, :type => Boolean, :default => 1
 
   field :position, :type => Integer
@@ -112,9 +113,9 @@ class Character
     current_hp > 0
   end
 
-  def action_available?(skill_nr)
+  def skill_available?(skill_nr)
     #Should check if the character has learned the skill etc, now only checks if skill is a valid skill number at all.
-    (0..MAX_SKILL_NUM) === skill_nr.to_i
+    ((0..MAX_SKILL_NUM) === skill_nr.to_i and get_skill_value(skill_nr) != nil)
   end
 
   #Functions for returning stats after current effects
@@ -139,6 +140,14 @@ class Character
     result = ini
     if (effects.map {|x| x[0] }).include?(EFFECT_BLINDED)
       result = result * 0.5
+    end
+    result.round(0)
+  end
+
+  def final_ap
+    result = ap
+    if (effects.map {|x| x[0] }).include?(EFFECT_UNDISTURBED)
+      result = result * (1.3 + undisturbed/100)
     end
     result.round(0)
   end
@@ -198,6 +207,13 @@ class Character
     end
 
     result += "</br>"
+    if final_ap < ap
+      result += "<p><span class='red'>AP: " + final_ap.to_s + "</span> (" + ap.to_s + ")</p>"
+    elsif final_ap > ap
+      result += "<p><span class='green'>AP: " + final_ap.to_s + "</span> (" + ap.to_s + ")</p>"
+    else
+      result += "<p>Initiative: " + final_ap.to_s + "</p>"
+    end
     result += "<p>HP:" + current_hp.to_s + "</p>"
 
   end
@@ -226,7 +242,7 @@ class Character
 
   #Returns skill level in order of ID. Passives should be 0.
   def get_skills_array
-    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw, 0].map {|num| num == nil ? 0 : num}
+    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw, 0, 0].map {|num| num == nil ? 0 : num}
   end
 
   def get_skill_value(skill_id)
@@ -264,6 +280,8 @@ class Character
       heavy_throw
     elsif skill_id == SKILL_TAKE_AIM
       take_aim
+    elsif skill_id == SKILL_UNDISTURBED
+      undisturbed
     end
   end
 
