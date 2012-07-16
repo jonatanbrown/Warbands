@@ -116,7 +116,6 @@ class Battle
       when '0'
 
         hit = true
-        result_set = false
 
         if new_target = target.is_protected?
           result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
@@ -125,12 +124,14 @@ class Battle
 
         if target.melee_dodge?
           hit = false
+          result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
+          result += check_counterstrike(char, target)
         end
 
-        if target.defensive_posture_dodge?
-          result += "<p>#{char.name} strikes at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+        if hit and target.defensive_posture_dodge?
           hit = false
-          result_set = true
+          result += "<p>#{char.name} strikes at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+          result += check_counterstrike(char, target)
         end
 
         if hit
@@ -145,9 +146,6 @@ class Battle
           result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
-
-        elsif !result_set
-          result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
         end
 
       #Throw
@@ -243,7 +241,6 @@ class Battle
       #Quick Strike
       when '6'
         hit = true
-        result_set = false
 
         if new_target = target.is_protected?
           result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
@@ -252,12 +249,14 @@ class Battle
 
         if target.melee_dodge?
           hit = false
+          result += "<p>#{char.name} quickly strikes at #{target.name} but #{target.name} gets out of the way.</p>"
+          result += check_counterstrike(char, target)
         end
 
-        if target.defensive_posture_dodge?
-          result += "<p>#{char.name} does a quick strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+        if hit and target.defensive_posture_dodge?
           hit = false
-          result_set = true
+          result += "<p>#{char.name} does a quick strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+          result += check_counterstrike(char, target)
         end
 
         if hit
@@ -273,15 +272,11 @@ class Battle
           result += "<p>#{char.name} quickly strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
-
-        elsif !result_set
-          result += "<p>#{char.name} quickly strikes at #{target.name} but #{target.name} gets out of the way.</p>"
         end
 
       #Heavy Strike
       when '7'
         hit = true
-        result_set = false
 
         if new_target = target.is_protected?
           result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
@@ -290,12 +285,14 @@ class Battle
 
         if target.melee_dodge?
           hit = false
+          result += "<p>#{char.name} does a heavy strike at #{target.name} but #{target.name} gets out of the way.</p>"
+          result += check_counterstrike(char, target)
         end
 
-        if target.defensive_posture_dodge?
-          result += "<p>#{char.name} does a heavy strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+        if hit and target.defensive_posture_dodge?
           hit = false
-          result_set = true
+          result += "<p>#{char.name} does a heavy strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+          result += check_counterstrike(char, target)
         end
 
         if hit
@@ -311,9 +308,6 @@ class Battle
           result += "<p>#{char.name} does a heavy strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
-
-        elsif !result_set
-          result += "<p>#{char.name} does a heavy strike at #{target.name} but #{target.name} gets out of the way.</p>"
         end
 
       #Accurate Strike
@@ -340,7 +334,6 @@ class Battle
       #Finishing Strike
       when '9'
         hit = true
-        result_set = false
 
         if new_target = target.is_protected?
           result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
@@ -349,12 +342,14 @@ class Battle
 
         if target.melee_dodge?
           hit = false
+          result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name} gets out of the way.</p>"
+          result += check_counterstrike(char, target)
         end
 
-        if target.defensive_posture_dodge?
-          result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+        if hit and target.defensive_posture_dodge?
           hit = false
-          result_set = true
+          result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+          result += check_counterstrike(char, target)
         end
 
         if hit
@@ -369,9 +364,6 @@ class Battle
           result += "<p>#{char.name} does a finishing strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
-
-        elsif !result_set
-          result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name} gets out of the way.</p>"
         end
 
       #Protect
@@ -433,6 +425,17 @@ class Battle
       return false
     end
     true
+  end
+
+  def self.check_counterstrike(char, target)
+    cs_damage = target.counterstrike_damage(char)
+    result = ''
+    if cs_damage
+      result = "<p>#{target.name} counterstrikes #{char.name} for <span class='red'>#{cs_damage}</span> damage.</p>"
+      char.current_hp -= cs_damage
+      result += char.check_knockout
+    end
+    result
   end
 
 end

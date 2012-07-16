@@ -250,6 +250,8 @@ class Character
       protect
     elsif skill_id = SKILL_SHIELD_WALL
       shield_wall
+    elsif skill_id = SKILL_COUNTERSTRIKE
+      counterstrike
     end
   end
 
@@ -336,6 +338,18 @@ class Character
           return waller.name
         end
       end
+    end
+    false
+  end
+
+  def counterstrike_damage(target)
+    if counterstrike and rand(1..100) <= (100*counterstrike)/(5+counterstrike)
+      damage = (rand(4..8) + ((final_str + counterstrike)/2.0)).round(0)
+      damage -= (target.final_tgh/2.0).round(0)
+      if damage < 0
+        damage = 0
+      end
+      return damage
     end
     false
   end
