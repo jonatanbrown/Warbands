@@ -116,36 +116,10 @@ class Battle
 
           hit = true
 
-          if hit and waller = target.behind_shield_wall?
-            hit = false
-            result += "<p>#{char.name} flings a stone at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
-          end
+          res = ranged_skill_miss(char, target, SKILL_FLING)
 
-          if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
-            hit = false
-            result += "<p>#{char.name} flings a stone at #{target.name} but #{target.name} has a shield wall up.</p>"
-          end
-
-          #Check if char has cover and there are chars in front.
-          if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
-            if target.team.position_targetability_ranged(target.position) != NO_PENALTY
-              hit = false
-              result += "<p>#{char.name} flings a stone at #{target.name} but #{target.name} has taken cover.</p>"
-            elsif hit
-              result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
-            end
-          end
-
-          if hit and !char.ranged_hit?(SKILL_FLING)
-            hit = false
-            result += "<p>#{char.name} flings a stone at #{target.name} but misses.</p>"
-          end
-
-          targetability = target.team.position_targetability_ranged(target.position)
-          if hit and penalty_roll_miss?(targetability)
-            hit = false
-            result += "<p>#{char.name} flings a stone at #{target.name} but misses.</p>"
-          end
+          hit = res[:hit]
+          result += res[:text]
 
           if hit
             damage = rand(4..8) + ((char.final_dex + char.fling)/4.0).round(0) + ((char.final_dex + char.fling)/4.0).round(0) - (target.final_tgh/2.0).round(0)
@@ -166,24 +140,17 @@ class Battle
       #Strike
       when '0'
 
-        hit = true
-
         if new_target = target.is_protected?
           result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
           target = new_target
         end
 
-        if target.melee_dodge?
-          hit = false
-          result += "<p>#{char.name} strikes at #{target.name} but #{target.name} gets out of the way.</p>"
-          result += check_counterstrike(char, target)
-        end
+        hit = true
 
-        if hit and target.defensive_posture_dodge?
-          hit = false
-          result += "<p>#{char.name} strikes at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
-          result += check_counterstrike(char, target)
-        end
+        res = melee_skill_miss(char, target, SKILL_STRIKE)
+
+        hit = res[:hit]
+        result += res[:text]
 
         if hit
           damage = (rand(4..8) + ((char.final_str + char.strike)/2.0)).round(0)
@@ -204,36 +171,10 @@ class Battle
 
         hit = true
 
-        if hit and waller = target.behind_shield_wall?
-          hit = false
-          result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
-        end
+        res = ranged_skill_miss(char, target, SKILL_THROWN)
 
-        if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
-          hit = false
-          result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} has a shield wall up.</p>"
-        end
-
-        #Check if char has cover and there are chars in front.
-        if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
-          if target.team.position_targetability_ranged(target.position) != NO_PENALTY
-            hit = false
-            result += "<p>#{char.name} throws a stone at #{target.name} but #{target.name} has taken cover.</p>"
-          elsif hit
-            result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
-          end
-        end
-
-        if hit and !char.ranged_hit?(SKILL_THROWN)
-          hit = false
-          result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
-        end
-
-        targetability = target.team.position_targetability_ranged(target.position)
-        if hit and penalty_roll_miss?(targetability)
-          hit = false
-          result += "<p>#{char.name} throws a stone at #{target.name} but misses.</p>"
-        end
+        hit = res[:hit]
+        result += res[:text]
 
         if hit
           damage = rand(4..8) + ((char.final_dex + char.thrown)/4.0).round(0) + ((char.final_dex + char.thrown)/4.0).round(0) - (target.final_tgh/2.0).round(0)
@@ -251,36 +192,10 @@ class Battle
 
         hit = true
 
-        if hit and waller = target.behind_shield_wall?
-          hit = false
-          result += "<p>#{char.name} throws dirt at #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
-        end
+        res = ranged_skill_miss(char, target, SKILL_DIRT)
 
-        if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
-          hit = false
-          result += "<p>#{char.name} throws dirt at #{target.name} but #{target.name} has a shield wall up.</p>"
-        end
-
-        #Check if char has cover and there are chars in front.
-        if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
-          if target.team.position_targetability_ranged(target.position) != NO_PENALTY
-            hit = false
-            result += "<p>#{char.name} throws dirt at #{target.name} but #{target.name} has taken cover.</p>"
-          elsif hit
-            result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
-          end
-        end
-
-        if hit and !char.ranged_hit?(SKILL_DIRT)
-          hit = false
-          result += "<p>#{char.name} throws dirt at #{target.name} but misses.</p>"
-        end
-
-        targetability = target.team.position_targetability_ranged(target.position)
-        if hit and penalty_roll_miss?(targetability)
-          hit = false
-          result += "<p>#{char.name} throws dirt at #{target.name} but misses.</p>"
-        end
+        hit = res[:hit]
+        result += res[:text]
 
         if hit
           duration = rand(2..4)
@@ -291,24 +206,18 @@ class Battle
 
       #Quick Strike
       when '6'
-        hit = true
 
         if new_target = target.is_protected?
           result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
           target = new_target
         end
 
-        if target.melee_dodge?
-          hit = false
-          result += "<p>#{char.name} quickly strikes at #{target.name} but #{target.name} gets out of the way.</p>"
-          result += check_counterstrike(char, target)
-        end
+        hit = true
 
-        if hit and target.defensive_posture_dodge?
-          hit = false
-          result += "<p>#{char.name} does a quick strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
-          result += check_counterstrike(char, target)
-        end
+        res = melee_skill_miss(char, target, SKILL_QUICK_STRIKE)
+
+        hit = res[:hit]
+        result += res[:text]
 
         if hit
           damage = ((rand(4..8) + ((char.final_str + char.quick_strike)/2.0)) * 0.8).round(0)
@@ -327,24 +236,18 @@ class Battle
 
       #Heavy Strike
       when '7'
-        hit = true
 
         if new_target = target.is_protected?
           result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
           target = new_target
         end
 
-        if target.melee_dodge?
-          hit = false
-          result += "<p>#{char.name} does a heavy strike at #{target.name} but #{target.name} gets out of the way.</p>"
-          result += check_counterstrike(char, target)
-        end
+        hit = true
 
-        if hit and target.defensive_posture_dodge?
-          hit = false
-          result += "<p>#{char.name} does a heavy strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
-          result += check_counterstrike(char, target)
-        end
+        res = melee_skill_miss(char, target, SKILL_HEAVY_STRIKE)
+
+        hit = res[:hit]
+        result += res[:text]
 
         if hit
           damage = ((rand(4..8) + ((char.final_str + char.heavy_strike)/2.0)) * 1.2).round(0)
@@ -384,24 +287,18 @@ class Battle
 
       #Finishing Strike
       when '9'
-        hit = true
 
         if new_target = target.is_protected?
           result += "<p>#{new_target.name} protects #{target.name} and takes the hit from #{char.name}</p>"
           target = new_target
         end
 
-        if target.melee_dodge?
-          hit = false
-          result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name} gets out of the way.</p>"
-          result += check_counterstrike(char, target)
-        end
+        hit = true
 
-        if hit and target.defensive_posture_dodge?
-          hit = false
-          result += "<p>#{char.name} does a finishing strike at #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
-          result += check_counterstrike(char, target)
-        end
+        res = melee_skill_miss(char, target, SKILL_FINISHING_STRIKE)
+
+        hit = res[:hit]
+        result += res[:text]
 
         if hit
           damage = ((rand(4..8) + ((char.final_str + char.finishing_strike)/2.0)) * 1.7).round(0)
@@ -467,6 +364,69 @@ class Battle
     else
       true
     end
+  end
+
+  #Function for checking standard ranged skill miss rolls.
+  def self.ranged_skill_miss(char, target, skill_id)
+
+    hit = true
+    result = ''
+
+    if hit and waller = target.behind_shield_wall?
+      hit = false
+      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} is protected by a shield wall from #{waller}.</p>"
+    end
+
+    if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_SHIELD_WALL) and target.shield_wall_successful?
+      hit = false
+      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} has a shield wall up.</p>"
+    end
+
+    #Check if char has cover and there are chars in front.
+    if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
+      if target.team.position_targetability_ranged(target.position) != NO_PENALTY
+        hit = false
+        result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} has taken cover.</p>"
+      elsif hit
+        result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
+      end
+    end
+
+    if hit and !char.ranged_hit?(skill_id)
+      hit = false
+      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but misses.</p>"
+    end
+
+    targetability = target.team.position_targetability_ranged(target.position)
+    if hit and penalty_roll_miss?(targetability)
+      hit = false
+      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but misses.</p>"
+    end
+
+    return {hit: hit, text: result}
+
+  end
+
+  #Function for checking standard melee skill miss rolls.
+  def self.melee_skill_miss(char, target, skill_id)
+
+    hit = true
+    result = ''
+
+    if target.melee_dodge?
+      hit = false
+      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} gets out of the way.</p>"
+      result += check_counterstrike(char, target)
+    end
+
+    if hit and target.defensive_posture_dodge?
+      hit = false
+      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
+      result += check_counterstrike(char, target)
+    end
+
+    return {hit: hit, text: result}
+
   end
 
   def self.penalty_roll_miss?(targetability)

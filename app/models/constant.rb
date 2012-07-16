@@ -131,6 +131,43 @@ class Constant
     end
   end
 
+  def self.get_skill_text(skill_id)
+    case skill_id
+      when SKILL_STRIKE
+        'strikes'
+      when SKILL_THROWN
+        'throws a stone at'
+      when SKILL_RETREAT
+        ''
+      when SKILL_DIRT
+        'throws dirt at'
+      when SKILL_DEFENSIVE_POSTURE
+        ''
+      when SKILL_COVER
+        ''
+      when SKILL_QUICK_STRIKE
+        'quickly strikes'
+      when SKILL_HEAVY_STRIKE
+        'heavily strikes'
+      when SKILL_ACCURATE_STRIKE
+        'accurately strikes'
+      when SKILL_FINISHING_STRIKE
+        'does a finishing strike at'
+      when SKILL_PROTECT
+        ''
+      when SKILL_SHIELD_WALL
+        ''
+      when SKILL_COUNTERSTRIKE
+        ''
+      when SKILL_FLING
+        'flings a stone at'
+      when SKILL_QUICK_THROW
+        'quickly throws a stone at'
+      when SKILL_HEAVY_THROW
+        'heavily throws a stone at'
+    end
+  end
+
   def self.get_effect_name(effect_id)
     if effect_id == 0
       'Blinded'
