@@ -21,7 +21,8 @@ class Constant
       ["#{get_skill_name(14)}", 14, get_skill_ap(14), get_skill_targeting(14)],
       ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15)],
       ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16)],
-      ["#{get_skill_name(17)}", 17, get_skill_ap(17), get_skill_targeting(17)]
+      ["#{get_skill_name(17)}", 17, get_skill_ap(17), get_skill_targeting(17)],
+      ["#{get_skill_name(18)}", 18, get_skill_ap(18), get_skill_targeting(18)]
     ].to_s
   end
 
@@ -62,6 +63,8 @@ class Constant
       'Take Aim'
     elsif skill_id == SKILL_UNDISTURBED
       'Undisturbed'
+    elsif skill_id == SKILL_BOLA
+      'Bola'
     end
   end
 
@@ -102,6 +105,8 @@ class Constant
       0
     elsif skill_id == SKILL_UNDISTURBED
       0
+    elsif skill_id == SKILL_BOLA
+      6
     end
   end
 
@@ -142,6 +147,8 @@ class Constant
       SELF
     elsif skill_id == SKILL_UNDISTURBED
       SELF
+    elsif skill_id == SKILL_BOLA
+      RANGED
     end
   end
 
@@ -183,6 +190,8 @@ class Constant
         ''
       when SKILL_UNDISTURBED
         ''
+      when SKILL_BOLA
+        'throws a bola at'
     end
   end
 

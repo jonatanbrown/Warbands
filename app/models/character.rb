@@ -53,7 +53,6 @@ class Character
 
     #Learnable
       field :bola, :type => Integer
-      field :aggravate, :type => Integer
       field :mind_poison, :type => Integer
       field :paralyzing_poison, :type => Integer
       field :weakness_poison, :type => Integer
@@ -242,7 +241,7 @@ class Character
 
   #Returns skill level in order of ID. Passives should be 0.
   def get_skills_array
-    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw, 0, 0].map {|num| num == nil ? 0 : num}
+    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw, 0, 0, bola].map {|num| num == nil ? 0 : num}
   end
 
   def get_skill_value(skill_id)
@@ -282,6 +281,8 @@ class Character
       take_aim
     elsif skill_id == SKILL_UNDISTURBED
       undisturbed
+     elsif skill_id == SKILL_BOLA
+      bola
     end
   end
 

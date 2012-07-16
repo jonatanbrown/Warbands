@@ -93,6 +93,22 @@ class Battle
 
     result = ''
 
+    entangled = false
+    char.effects.delete_if do |effect|
+      if effect[0] == EFFECT_BOLA
+        entangled = true
+        true
+      else
+        false
+      end
+    end
+
+    #If entangled by bola, ignore action completely.
+    if entangled
+      char.save
+      return "<p>#{char.name} was entangled by a bola and took some time to get untangled.</p>"
+    end
+
     if char.active
       case action['skill']
 
@@ -404,6 +420,27 @@ class Battle
           result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_knockout
+
+          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+
+          char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.save
+        end
+
+      #Bola
+      when '18'
+
+        hit = true
+
+        res = ranged_skill_hit(char, target, SKILL_BOLA)
+
+        hit = res[:hit]
+        result += res[:text]
+
+        if hit
+          target.effects << [EFFECT_BOLA, 1, nil, nil]
+          target.save
+          result += "<p>#{char.name} throws a bola at #{target.name}. <span class='red'>#{target.name} is entangled!</p></span>"
 
           char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
 
