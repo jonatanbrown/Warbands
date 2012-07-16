@@ -100,6 +100,10 @@ class Character
       result = (result * 1.2).round(0)
     elsif skill_id == SKILL_HEAVY_STRIKE
       result = (result * 0.8).round(0)
+    elsif skill_id == SKILL_QUICK_THROW
+      result = (result * 1.2).round(0)
+    elsif skill_id == SKILL_HEAVY_THROW
+      result = (result * 0.8).round(0)
     end
     result
   end

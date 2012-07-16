@@ -177,7 +177,7 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = rand(4..8) + ((char.final_dex + char.thrown)/4.0).round(0) + ((char.final_dex + char.thrown)/4.0).round(0) - (target.final_tgh/2.0).round(0)
+          damage = rand(4..8) + ((char.final_dex + char.thrown)/2.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
           end
@@ -319,6 +319,52 @@ class Battle
         target.effects << [EFFECT_PROTECTED, 1, nil, char._id]
         target.save
         result += "<p>#{char.name} protects #{target.name}.</p>"
+
+
+      #Quick Throw
+      when '14'
+
+        hit = true
+
+        res = ranged_skill_miss(char, target, SKILL_QUICK_THROW)
+
+        hit = res[:hit]
+        result += res[:text]
+
+        if hit
+          damage = ((rand(4..8) + ((char.final_dex + char.quick_throw)/2.0)) * 0.8).round(0)
+          damage -= (target.final_tgh/2.0).round(0)
+          if damage < 0
+            damage = 0
+          end
+          target.current_hp -= damage
+          result += "<p>#{char.name} quickly throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+          result += target.check_knockout
+        end
+
+      #Heavy Throw
+      when '15'
+
+        hit = true
+
+        res = ranged_skill_miss(char, target, SKILL_HEAVY_THROW)
+
+        hit = res[:hit]
+        result += res[:text]
+
+        if hit
+          damage = ((rand(4..8) + ((char.final_dex + char.heavy_throw)/2.0)) * 1.2).round(0)
+          damage -= (target.final_tgh/2.0).round(0)
+          if damage < 0
+            damage = 0
+          end
+          target.current_hp -= damage
+          result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+          result += target.check_knockout
+        end
+
       end
     end
 

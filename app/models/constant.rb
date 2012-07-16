@@ -164,7 +164,7 @@ class Constant
       when SKILL_QUICK_THROW
         'quickly throws a stone at'
       when SKILL_HEAVY_THROW
-        'heavily throws a stone at'
+        'throws a stone heavily at'
     end
   end
 
