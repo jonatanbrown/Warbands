@@ -383,7 +383,7 @@ class Character
   end
 
   def counterstrike_damage(target)
-    if counterstrike and rand(1..100) <= (100*counterstrike)/(5+counterstrike)
+    if counterstrike and skill_roll_successful?(SKILL_COUNTERSTRIKE)
       damage = (rand(4..8) + ((final_str + counterstrike)/2.0)).round(0)
       damage -= (target.final_tgh/2.0).round(0)
       if damage < 0
