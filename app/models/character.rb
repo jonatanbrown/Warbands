@@ -120,7 +120,11 @@ class Character
   #Functions for returning stats after current effects
 
   def final_str
-    str
+    result = str
+    if (effects.map {|x| x[0] }).include?(EFFECT_WEAKNESS_POISON)
+      result = result * 0.5
+    end
+    result.round(0)
   end
 
   def final_dex
@@ -132,7 +136,11 @@ class Character
   end
 
   def final_tgh
-    tgh
+    result = tgh
+    if (effects.map {|x| x[0] }).include?(EFFECT_WEAKNESS_POISON)
+      result = result * 0.5
+    end
+    result.round(0)
   end
 
   def final_ini
@@ -143,10 +151,29 @@ class Character
     result.round(0)
   end
 
+  def get_final_int
+    result = int
+    if (effects.map {|x| x[0] }).include?(EFFECT_MIND_POISON)
+      result = result * 0.5
+    end
+    result.round(0)
+  end
+
+  def get_final_mem
+    result = mem
+    if (effects.map {|x| x[0] }).include?(EFFECT_MIND_POISON)
+      result = result * 0.5
+    end
+    result.round(0)
+  end
+
   def final_ap
     result = ap
     if (effects.map {|x| x[0] }).include?(EFFECT_UNDISTURBED)
       result = result * (1.3 + undisturbed/100)
+    end
+    if (effects.map {|x| x[0] }).include?(EFFECT_PARALYZING_POISON)
+      result = result * 0.8
     end
     result.round(0)
   end
@@ -211,7 +238,7 @@ class Character
     elsif final_ap > ap
       result += "<p><span class='green'>AP: " + final_ap.to_s + "</span> (" + ap.to_s + ")</p>"
     else
-      result += "<p>Initiative: " + final_ap.to_s + "</p>"
+      result += "<p>AP: " + final_ap.to_s + "</p>"
     end
     result += "<p>HP:" + current_hp.to_s + "</p>"
 
@@ -241,7 +268,7 @@ class Character
 
   #Returns skill level in order of ID. Passives should be 0.
   def get_skills_array
-    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw, 0, 0, bola].map {|num| num == nil ? 0 : num}
+    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw, 0, 0, bola, mind_poison, paralyzing_poison, weakness_poison].map {|num| num == nil ? 0 : num}
   end
 
   def get_skill_value(skill_id)
@@ -281,8 +308,14 @@ class Character
       take_aim
     elsif skill_id == SKILL_UNDISTURBED
       undisturbed
-     elsif skill_id == SKILL_BOLA
+    elsif skill_id == SKILL_BOLA
       bola
+    elsif skill_id == SKILL_MIND_POISON
+      mind_poison
+    elsif skill_id == SKILL_PARALYZING_POISON
+      paralyzing_poison
+    elsif skill_id == SKILL_WEAKNESS_POISON
+      weakness_poison
     end
   end
 
@@ -310,6 +343,38 @@ class Character
       end
     end
     return false
+  end
+
+  def check_if_poisoned(char)
+    result = ''
+    if (char.effects.map {|x| x[0] }).include?(EFFECT_APPLIED_MIND_POISON)
+      if char.skill_roll_successful?(SKILL_MIND_POISON)
+        result += "<p>#{name} has been <span class='red'>poisoned</span> with mind numbing poison.</p>"
+        effects << [EFFECT_MIND_POISON, rand(2..4), nil, nil]
+      else
+        result += "<p>The poison applied is not potent enough and #{name} avoids being poisoned.</p>"
+      end
+    end
+
+    if (char.effects.map {|x| x[0] }).include?(EFFECT_APPLIED_PARALYZING_POISON)
+      if char.skill_roll_successful?(SKILL_PARALYZING_POISON)
+        result += "<p>#{name} has been <span class='red'>poisoned</span> with paralyzing poison.</p>"
+        effects << [EFFECT_PARALYZING_POISON, rand(2..4), nil, nil]
+      else
+        result += "<p>The poison applied is not potent enough and #{name} avoids being poisoned.</p>"
+      end
+    end
+
+    if (char.effects.map {|x| x[0] }).include?(EFFECT_APPLIED_WEAKNESS_POISON)
+      if char.skill_roll_successful?(SKILL_WEAKNESS_POISON)
+        result += "<p>#{name} has been <span class='red'>poisoned</span> with weakness poison.</p>"
+        effects << [EFFECT_WEAKNESS_POISON, rand(2..4), nil, nil]
+      else
+        result += "<p>The poison applied is not potent enough and #{name} avoids being poisoned.</p>"
+      end
+    end
+
+    result
   end
 
   def behind_shield_wall?

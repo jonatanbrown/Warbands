@@ -22,7 +22,10 @@ class Constant
       ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15)],
       ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16)],
       ["#{get_skill_name(17)}", 17, get_skill_ap(17), get_skill_targeting(17)],
-      ["#{get_skill_name(18)}", 18, get_skill_ap(18), get_skill_targeting(18)]
+      ["#{get_skill_name(18)}", 18, get_skill_ap(18), get_skill_targeting(18)],
+      ["#{get_skill_name(19)}", 19, get_skill_ap(19), get_skill_targeting(19)],
+      ["#{get_skill_name(20)}", 20, get_skill_ap(20), get_skill_targeting(20)],
+      ["#{get_skill_name(21)}", 21, get_skill_ap(21), get_skill_targeting(21)]
     ].to_s
   end
 
@@ -65,6 +68,12 @@ class Constant
       'Undisturbed'
     elsif skill_id == SKILL_BOLA
       'Bola'
+    elsif skill_id == SKILL_MIND_POISON
+      'Mind Numbing Poison'
+    elsif skill_id == SKILL_PARALYZING_POISON
+      'Paralyzing Poison'
+    elsif skill_id == SKILL_WEAKNESS_POISON
+      'Weakness Poison'
     end
   end
 
@@ -107,6 +116,12 @@ class Constant
       0
     elsif skill_id == SKILL_BOLA
       6
+    elsif skill_id == SKILL_MIND_POISON
+      5
+    elsif skill_id == SKILL_PARALYZING_POISON
+      5
+    elsif skill_id == SKILL_WEAKNESS_POISON
+      5
     end
   end
 
@@ -149,6 +164,12 @@ class Constant
       SELF
     elsif skill_id == SKILL_BOLA
       RANGED
+    elsif skill_id == SKILL_MIND_POISON
+      SELF
+    elsif skill_id == SKILL_PARALYZING_POISON
+      SELF
+    elsif skill_id == SKILL_WEAKNESS_POISON
+      SELF
     end
   end
 
@@ -192,15 +213,33 @@ class Constant
         ''
       when SKILL_BOLA
         'throws a bola at'
+      when SKILL_MIND_POISON
+        ''
+      when SKILL_PARALYZING_POISON
+        ''
+      when SKILL_WEAKNESS_POISON
+        ''
     end
   end
 
   def self.get_effect_name(effect_id)
     case effect_id
-      when 0
+      when EFFECT_BLINDED
         'Blinded'
-      when 6
+      when EFFECT_UNDISTURBED
         'Undisturbed'
+      when EFFECT_MIND_POISON
+        'Unfocused'
+      when EFFECT_PARALYZING_POISON
+        'Paralyzed'
+      when EFFECT_WEAKNESS_POISON
+        'Weakened'
+      when EFFECT_APPLIED_MIND_POISON
+        'Mind Numbing Attacks'
+      when EFFECT_APPLIED_PARALYZING_POISON
+        'Paralyzing Attacks'
+      when EFFECT_APPLIED_WEAKNESS_POISON
+        'Weakness Attacks'
     end
   end
 
@@ -208,6 +247,18 @@ class Constant
     case effect_id
       when EFFECT_BLINDED
         false
+      when EFFECT_MIND_POISON
+        false
+      when EFECT_PARALYZING_POISON
+        false
+      when EFFECT_WEAKNESS_POISON
+        false
+      when EFFECT_APPLIED_MIND_POISON
+        true
+      when EFFECT_APPLIED_PARALYZING_POISON
+        true
+      when EFFECT_APPLIED_WEAKNESS_POISON
+        true
       else
         true
     end
@@ -217,7 +268,19 @@ class Constant
     case effect_id
       when EFFECT_BLINDED
         "<span class='red'>"
+      when EFFECT_MIND_POISON
+        "<span class='red'>"
+      when EFFECT_PARALYZING_POISON
+        "<span class='red'>"
+      when EFFECT_WEAKNESS_POISON
+        "<span class='red'>"
       when EFFECT_UNDISTURBED
+        "<span class='green'>"
+      when EFFECT_APPLIED_MIND_POISON
+        "<span class='green'>"
+      when EFFECT_APPLIED_PARALYZING_POISON
+        "<span class='green'>"
+      when EFFECT_APPLIED_WEAKNESS_POISON
         "<span class='green'>"
       else
         "<span>"

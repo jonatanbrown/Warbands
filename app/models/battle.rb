@@ -156,7 +156,9 @@ class Battle
             end
             target.current_hp -= damage
             target.taken_damage = true
+
             result += "<p>#{char.name} flings a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+            result += target.check_if_poisoned(char)
 
             result += target.check_knockout
 
@@ -166,6 +168,36 @@ class Battle
             char.save
           end
         end
+      #Mind Poison
+      when '19'
+        if char.skill_roll_successful?(SKILL_MIND_POISON)
+          char.effects << [EFFECT_APPLIED_MIND_POISON, rand(3..5), nil, nil]
+          char.save
+          result += "<p>#{char.name} applies mind poison.</p>"
+        else
+          result += "<p>#{char.name} attempts do apply mind poison but fails.</p>"
+        end
+
+      #Paralyzing Poison
+      when '20'
+        if char.skill_roll_successful?(SKILL_PARALYZING_POISON)
+          char.effects << [EFFECT_APPLIED_PARALYZING_POISON, rand(3..5), nil, nil]
+          char.save
+          result += "<p>#{char.name} applies paralyzing poison.</p>"
+        else
+          result += "<p>#{char.name} attempts do apply paralyzing poison but fails.</p>"
+        end
+
+      #Weakness Poison
+      when '21'
+        if char.skill_roll_successful?(SKILL_WEAKNESS_POISON)
+          char.effects << [EFFECT_APPLIED_WEAKNESS_POISON, rand(3..5), nil, nil]
+          char.save
+          result += "<p>#{char.name} applies weakness poison.</p>"
+        else
+          result += "<p>#{char.name} attempts do apply weakness poison but fails.</p>"
+        end
+
       end
     end
 
@@ -198,6 +230,8 @@ class Battle
 
           result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
+          result += target.check_if_poisoned(char)
+
           result += target.check_knockout
         end
 
@@ -219,6 +253,8 @@ class Battle
           target.current_hp -= damage
           target.taken_damage = true
           result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+          result += target.check_if_poisoned(char)
 
           result += target.check_knockout
 
@@ -278,6 +314,8 @@ class Battle
 
           result += "<p>#{char.name} quickly strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
+          result += target.check_if_poisoned(char)
+
           result += target.check_knockout
         end
 
@@ -309,6 +347,8 @@ class Battle
 
           result += "<p>#{char.name} does a heavy strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
+          result += target.check_if_poisoned(char)
+
           result += target.check_knockout
         end
 
@@ -331,6 +371,8 @@ class Battle
         target.taken_damage = true
 
         result += "<p>#{char.name} does an accurate strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+        result += target.check_if_poisoned(char)
 
         result += target.check_knockout
 
@@ -360,6 +402,8 @@ class Battle
           target.taken_damage = true
 
           result += "<p>#{char.name} does a finishing strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+          result += target.check_if_poisoned(char)
 
           result += target.check_knockout
         end
@@ -391,6 +435,8 @@ class Battle
           target.taken_damage = true
           result += "<p>#{char.name} quickly throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
+          result += target.check_if_poisoned(char)
+
           result += target.check_knockout
 
           char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
@@ -418,6 +464,8 @@ class Battle
           target.current_hp -= damage
           target.taken_damage = true
           result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+
+          result += target.check_if_poisoned(char)
 
           result += target.check_knockout
 
