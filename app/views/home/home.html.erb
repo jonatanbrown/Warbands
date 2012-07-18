@@ -1,9 +1,10 @@
 <% if @user.team %>
   <% if current_user.battle %>
-    <%= battle_button("Already in battle") %>
+    <p><%= battle_button("Already in battle") %></p>
   <% else %>
-    <%= link_to "Queue for match", queue_path(@user) %>
+    <p><%= link_to "Queue for match", queue_path(@user) %></p>
   <% end %>
+  <p><%= link_to "Smithy", smithy_path %></p>
 <% else %>
  <p>You have no teams, create one here!</p>
  <%= link_to "Create Team", new_team_path %>

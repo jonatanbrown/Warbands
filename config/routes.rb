@@ -11,6 +11,8 @@ Warbands::Application.routes.draw do
       end
     end
 
+    match 'home/smithy' => 'home#smithy', :as => "smithy"
+
     resources :rankings, :only => 'index'
 
     match 'battles/queue' => 'battles#queue', :as => "queue"
@@ -27,6 +29,7 @@ Warbands::Application.routes.draw do
     match 'teams/:id/set_character_positions/' => 'teams#set_character_positions'
     match 'teams/:id/in_battle/' => 'teams#in_battle'
     match 'teams/:id/formation/' => 'teams#formation'
+    match 'teams/:id/purchase_item/:item' => 'teams#purchase_item'
 
     match 'battle_syncs/refresh_waiting_status' => 'battle_syncs#refresh_waiting_status'
     match 'battle_syncs/seconds_left' => 'battle_syncs#seconds_left'

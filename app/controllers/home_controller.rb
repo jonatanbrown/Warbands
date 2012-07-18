@@ -5,5 +5,9 @@ class HomeController < ApplicationController
   def home
     @user = current_user
   end
+
+  def smithy
+    @team = current_user.team
+  end
 end
 

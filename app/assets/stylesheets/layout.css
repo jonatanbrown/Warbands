@@ -20,3 +20,17 @@
     float: right;
 }
 
+#top-navigation{
+    height: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#team-info{
+    margin-top: 10px;
+}
+
+.main-content {
+    margin-left: 20px;
+}
+

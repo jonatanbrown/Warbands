@@ -3,11 +3,15 @@ class Team
   belongs_to :user
   has_many :characters
 
+  has_many :equipments
+
   field :name, :type => String
 
   field :formation, :type => Integer, :default => 1
 
   field :points, :type => Integer, :default => 0
+
+  field :gold, :type => Integer, :default => 100
 
   def create_characters
     5.times do |i|

@@ -2,6 +2,8 @@ class Character
   include Mongoid::Document
   belongs_to :team
 
+  has_many :equipments
+
   field :name, :type => String
 
   #Stats

@@ -62,5 +62,19 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     render "_formation", :layout => false
   end
+
+  def purchase_item
+    @team = Team.find(params[:id])
+    cost = Equipment.get_cost(params[:item])
+    if cost > @team.gold
+      @result = '<span class="red">Not enough gold.</span>'
+    else
+      @team.gold -= cost
+      @team.save
+      item = Equipment.create_item(params[:item], @team)
+      @result = "Purchased #{item.name} for #{cost} gold."
+    end
+    render "purchase_item"
+  end
 end
 
