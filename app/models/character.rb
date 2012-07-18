@@ -524,6 +524,53 @@ class Character
     false
   end
 
+  def change_item(equipment)
+    if equipments.include?(equipment)
+      equipment.character = nil
+      equipment.save
+    elsif equipment.weapon?
+      if weapon = equipped_weapon
+        weapon.character = nil
+        weapon.save
+      end
+      equipment.character = self
+      equipment.save
+
+    elsif equipment.shield?
+      if shield = equipped_shield
+        shield.character = nil
+        shield.save
+      end
+      equipment.character = self
+      equipment.save
+
+    elsif equipment.head?
+      if head = equipped_head
+        head.character = nil
+        head.save
+      end
+      equipment.character = self
+      equipment.save
+
+    elsif equipment.chest?
+      if chest = equipped_chest
+        chest.character = nil
+        chest.save
+      end
+      equipment.character = self
+      equipment.save
+
+    elsif equipment.legs?
+      if legs = equipped_legs
+        legs.character = nil
+        legs.save
+      end
+      equipment.character = self
+      equipment.save
+
+    end
+  end
+
   #PRIVATE METHODS FROM HERE
   private
 

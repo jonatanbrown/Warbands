@@ -1,4 +1,4 @@
-<h4><%= equipment.name %></h4>
+<h4><%= equipment.name %> <a class="unequip-item" href="#" data-id="<%= equipment._id %>"><span class="red">X</span></a></h4>
 <% if equipment.weapon? %>
   <p>Class: <%= equipment.get_class_name %></p>
   <% if equipment.ranged? %>

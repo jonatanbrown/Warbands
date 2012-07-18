@@ -1,0 +1,47 @@
+<div id="character-equipment-top">
+  <div id="character-equipment-head">
+    <% if head = @character.equipped_head %>
+      <%= render :partial => "equipments/equipment", :locals => { :equipment => head } %>
+    <% else %>
+      No Helm
+    <% end %>
+    <%= select_tag(:select_char_head, options_for_select(@unused_head.collect{ |item| [item.name, item.id] }.insert(0,"Choose an item")), :class => 'equipment-selector') %>
+  </div>
+</div>
+<div id="character-equipment-middle">
+  <div id="character-equipment-weapon">
+    <% if weapon = @character.equipped_weapon %>
+      <%= render :partial => "equipments/equipment", :locals => { :equipment => weapon } %>
+    <% else %>
+      No Weapon
+    <% end %>
+    <%= select_tag(:select_char_weapon, options_for_select(@unused_weapons.collect{ |item| [item.name, item.id] }.insert(0,"Choose an item")), :class => 'equipment-selector') %>
+  </div>
+  <div id="character-equipment-chest">
+    <% if chest = @character.equipped_chest %>
+      <%= render :partial => "equipments/equipment", :locals => { :equipment => chest } %>
+    <% else %>
+      No Chest Armor
+    <% end %>
+    <%= select_tag(:select_char_chest, options_for_select(@unused_chest.collect{ |item| [item.name, item.id] }.insert(0,"Choose an item")), :class => 'equipment-selector') %>
+  </div>
+  <div id="character-equipment-shield">
+    <% if shield = @character.equipped_shield %>
+      <%= render :partial => "equipments/equipment", :locals => { :equipment => shield } %>
+    <% else %>
+      No Shield
+    <% end %>
+    <%= select_tag(:select_char_shield, options_for_select(@unused_shields.collect{ |item| [item.name, item.id] }.insert(0,"Choose an item")), :class => 'equipment-selector') %>
+  </div>
+</div>
+<div id="character-equipment-bottom">
+  <div id="character-equipment-legs">
+    <% if legs = @character.equipped_legs %>
+      <%= render :partial => "equipments/equipment", :locals => { :equipment => legs } %>
+    <% else %>
+      No Leg Armor
+    <% end %>
+    <%= select_tag :select_char_legs, options_for_select(@unused_legs.collect{ |item| [item.name, item.id] }.insert(0,"Choose an item")), :class => 'equipment-selector' %>
+  </div>
+</div>
+

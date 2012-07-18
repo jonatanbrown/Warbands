@@ -138,13 +138,13 @@ function get_item_description(item) {
         result += '<p><b>Cost: 25 Gold</b></p>'
         break;
     case 'studded_leather_pants':
-        result += '<h3>Chest Plate</h3>';
+        result += '<h3>Studded Leather Pants</h3>';
         result += '<p>Armor: 2</p>'
         result += '<p>Required Str: 1</p>'
         result += '<p><b>Cost: 75 Gold</b></p>'
         break;
     case 'chainmail_breeches':
-        result += '<h3>Chest Plate</h3>';
+        result += '<h3>Chainmail Breeches</h3>';
         result += '<p>Armor: 5</p>'
         result += '<p>Required Str: 4</p>'
         result += '<p><b>Cost: 220 Gold</b></p>'

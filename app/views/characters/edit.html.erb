@@ -13,47 +13,8 @@
   <p>Cover: <%= @character.cover %></p>
   <p>Throw Dirt: <%= @character.dirt %></p>
 </div>
-<div id="character-equipment" class="left">
-  <div id="character-equipment-top">
-    <div id="character-equipment-head">
-      <% if head = @character.equipped_head %>
-        <%= render :partial => "equipments/equipment", :locals => { :equipment => head } %>
-      <% else %>
-        No Helm
-      <% end %>
-    </div>
-  </div>
-  <div id="character-equipment-middle">
-    <div id="character-equipment-weapon">
-      <% if weapon = @character.equipped_weapon %>
-        <%= render :partial => "equipments/equipment", :locals => { :equipment => weapon } %>
-      <% else %>
-        No Weapon
-      <% end %>
-    </div>
-    <div id="character-equipment-chest">
-      <% if chest = @character.equipped_chest %>
-        <%= render :partial => "equipments/equipment", :locals => { :equipment => chest } %>
-      <% else %>
-        No Chest Armor
-      <% end %>
-    </div>
-    <div id="character-equipment-shield">
-      <% if shield = @character.equipped_shield %>
-        <%= render :partial => "equipments/equipment", :locals => { :equipment => shield } %>
-      <% else %>
-        No Shield
-      <% end %>
-    </div>
-  </div>
-  <div id="character-equipment-bottom">
-    <div id="character-equipment-legs">
-      <% if legs = @character.equipped_legs %>
-        <%= render :partial => "equipments/equipment", :locals => { :equipment => legs } %>
-      <% else %>
-        No Leg Armor
-      <% end %>
-    </div>
-  </div>
+
+<div id="character-equipment" class="left" data-id="<%= @character._id %>">
+  <%= render :partial => 'equipment' %>
 </div>
 

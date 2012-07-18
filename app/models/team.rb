@@ -206,7 +206,7 @@ class Team
   end
 
   def unused_equipment
-    equipments.where(:character => nil)
+    equipments.where(:character_id => nil)
   end
 end
 
