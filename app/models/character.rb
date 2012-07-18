@@ -479,6 +479,52 @@ class Character
     end
   end
 
+  def equipped_weapon
+    equipments.each do |equipment|
+      if equipment.weapon?
+        return equipment
+      end
+    end
+    false
+  end
+
+  def equipped_shield
+    equipments.each do |equipment|
+      if equipment.shield?
+        return equipment
+      end
+    end
+    false
+  end
+
+  def equipped_head
+    equipments.each do |equipment|
+      if equipment.head?
+        return equipment
+      end
+    end
+    false
+  end
+
+  def equipped_chest
+    equipments.each do |equipment|
+      if equipment.chest?
+        return equipment
+      end
+    end
+    false
+  end
+
+  def equipped_legs
+    equipments.each do |equipment|
+      if equipment.legs?
+        return equipment
+      end
+    end
+    false
+  end
+
+  #PRIVATE METHODS FROM HERE
   private
 
   def roll_stat
@@ -499,6 +545,5 @@ class Character
     #Returning 1..10 for now, will fix later.
     rand(1..10)
   end
-
 end
 

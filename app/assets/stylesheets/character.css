@@ -1,0 +1,53 @@
+#character-stats {
+    margin-right: 100px;
+}
+
+#character-equipment {
+    width: 500px;
+}
+
+#character-equipment-top {
+    width: 500px;
+    min-height: 150px;
+}
+
+#character-equipment-middle {
+    width: 500px;
+    position: relative;
+    min-height: 150px;
+}
+
+#character-equipment-bottom {
+    width: 500px;
+    min-height: 150px;
+}
+
+#character-equipment-head {
+    width: 100px;
+    margin: 0px auto;
+}
+
+#character-equipment-weapon {
+    width: 100px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+#character-equipment-chest {
+    width: 100px;
+    margin: 0px auto;
+}
+
+#character-equipment-shield {
+    width: 100px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+#character-equipment-legs {
+    width: 100px;
+    margin: 0px auto;
+}
+

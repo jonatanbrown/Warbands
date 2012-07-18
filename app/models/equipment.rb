@@ -22,6 +22,22 @@ class Equipment
     (0..6) === eq_type
   end
 
+  def shield?
+    eq_type == EQUIPMENT_SHIELD
+  end
+
+  def head?
+    eq_type == EQUIPMENT_HEAD
+  end
+
+  def chest?
+    eq_type == EQUIPMENT_CHEST
+  end
+
+  def legs?
+    eq_type == EQUIPMENT_LEGS
+  end
+
   def ranged?
     (4..6) === eq_type
   end

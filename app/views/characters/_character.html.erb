@@ -1,6 +1,6 @@
 <tr>
   <td>
-    <h4><%= character.name %></h4>
+    <h4><%= link_to character.name, edit_character_path(character) %></h4>
     <p>
       Strength: <%= character.str %>
       Dexterity: <%= character.dex %>
