@@ -12,10 +12,45 @@ class Equipment
   field :max_damage, :type => Integer
 
   field :armor, :type => Integer
-  field :str_req, :type => Integer
+  field :str_req, :type => Integer, :default => 0
 
   def equipped?
     character != nil
+  end
+
+  def weapon?
+    (0..6) === eq_type
+  end
+
+  def ranged?
+    (4..6) === eq_type
+  end
+
+  def get_class_name
+    case eq_type
+    when EQUIPMENT_SWORD
+      'Sword'
+    when EQUIPMENT_MACE
+      'Mace'
+    when EQUIPMENT_AXE
+      'Axe'
+    when EQUIPMENT_SPEAR
+      'Spear'
+    when EQUIPMENT_THROWING_KNIVES
+      'Knife'
+    when EQUIPMENT_JAVELINS
+      'Javelin'
+    when EQUIPMENT_THROWING_AXES
+      'Axe'
+    when EQUIPMENT_SHIELD
+      'Shield'
+    when EQUIPMENT_HEAD
+      'Head Armor'
+    when EQUIPMENT_CHEST
+      'Chest Armor'
+    when EQUIPMENT_LEGS
+      'Leg Armor'
+    end
   end
 
   def self.get_cost(item)

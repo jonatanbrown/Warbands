@@ -1,0 +1,19 @@
+<tr>
+  <td>
+    <h4><%= equipment.name %></h4>
+      <% if equipment.weapon? %>
+        <p>Class: <%= equipment.get_class_name%></p>
+        <% if equipment.ranged? %>
+          <p>Range: Ranged </p>
+        <% else %>
+          <p>Range: Melee </p>
+        <% end %>
+        <p>Damage: <%= "#{equipment.min_damage} - #{equipment.max_damage}"%></p>
+      <% else %>
+        <p>Class: <%= equipment.get_class_name %></p>
+        <p>Armor: <%= equipment.armor %></p>
+        <p>Str Req: <%= equipment.str_req %></p>
+      <% end %>
+  </td>
+</tr>
+

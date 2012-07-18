@@ -204,5 +204,9 @@ class Team
       end
     end
   end
+
+  def unused_equipment
+    equipments.where(:character => nil)
+  end
 end
 

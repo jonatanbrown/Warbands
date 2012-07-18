@@ -5,6 +5,7 @@
     <p><%= link_to "Queue for match", queue_path(@user) %></p>
   <% end %>
   <p><%= link_to "Smithy", smithy_path %></p>
+  <p><%= link_to "Barracks", team_path(current_user.team) %></p>
 <% else %>
  <p>You have no teams, create one here!</p>
  <%= link_to "Create Team", new_team_path %>

@@ -1,9 +1,16 @@
 <h2><%= @team.name %></h2>
-
-<h3>Warband members:</h3>
-<table id="characters-table">
+<div><%= link_to "Edit team details", edit_team_path %></div>
+</br>
+<div id="team-char-list" class="left">
+  <h3>Warband members:</h3>
+  <table id="characters-table">
     <%= render :partial => "characters/character", :collection => @team.characters %>
-</table>
-
-<%= link_to "Edit", edit_team_path %>
+  </table>
+</div>
+<div id="team-equipment-list" class="left">
+  <h3>Unused Gear</h3>
+  <table>
+    <%= render :partial => "equipments/equipment", :collection => @team.unused_equipment %>
+  </table>
+</div>
 
