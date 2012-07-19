@@ -23,6 +23,7 @@ class CharactersController < ApplicationController
     @character = Character.find(params[:id])
     equipment = Equipment.find(params[:equipment_id])
     @character.change_item(equipment)
+    @character = Character.find(params[:id])
     @team = current_user.team
     unused_equipment = @team.unused_equipment
     @unused_weapons = unused_equipment.where(:eq_type => 0..6)
