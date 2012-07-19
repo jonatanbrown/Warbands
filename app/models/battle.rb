@@ -22,12 +22,26 @@ class Battle
     team1 = battle1.user.team
     team2 = battle2.user.team
 
+    active_chars = team1.characters.where(:active => true) + team2.characters.where(:active => true)
+
     action_list = []
 
     action_list += add_actions_to_list(battle1, team2, team1)
     action_list += add_actions_to_list(battle2, team1, team2)
 
     action_list = sort_order(action_list)
+
+    #Do pre-action combat events.
+    active_chars.each do |char|
+      char.effects.each do |effect|
+        if effect[0] == EFFECT_BLEEDING
+          damage = rand(2..4)
+          char.current_hp -= damage
+          turn_events += "<p>#{char.name} bleeds for <span class='red'>#{damage}</span> damage.</p>"
+          turn_events += char.check_knockout
+        end
+      end
+    end
 
     action_list.each do |a|
       turn_events += resolve_action(a)
@@ -36,10 +50,7 @@ class Battle
     check_if_lost(team1, team2)
     check_if_lost(team2, team1)
 
-
-    all_chars = team1.characters + team2.characters
-
-    all_chars.each do |char|
+    active_chars.each do |char|
       char.effects.delete_if do |effect|
         effect[1] -= 1
         effect[1] <= 0
@@ -232,11 +243,7 @@ class Battle
 
           result += target.check_if_poisoned(char)
 
-          if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
-            target.effects << [EFFECT_STUNNED, 1, nil, nil]
-            target.save
-            result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
-          end
+          result += check_weapon_procs(char, target)
 
           result += target.check_knockout
 
@@ -323,11 +330,7 @@ class Battle
 
           result += target.check_if_poisoned(char)
 
-          if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
-            target.effects << [EFFECT_STUNNED, 1, nil, nil]
-            target.save
-            result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
-          end
+          result += check_weapon_procs(char, target)
 
           result += target.check_knockout
         end
@@ -362,11 +365,7 @@ class Battle
 
           result += target.check_if_poisoned(char)
 
-          if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
-            target.effects << [EFFECT_STUNNED, 1, nil, nil]
-            target.save
-            result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
-          end
+          result += check_weapon_procs(char, target)
 
           result += target.check_knockout
         end
@@ -393,11 +392,7 @@ class Battle
 
         result += target.check_if_poisoned(char)
 
-        if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
-          target.effects << [EFFECT_STUNNED, 1, nil, nil]
-          target.save
-          result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
-        end
+        result += check_weapon_procs(char, target)
 
         result += target.check_knockout
 
@@ -430,11 +425,7 @@ class Battle
 
           result += target.check_if_poisoned(char)
 
-          if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
-            target.effects << [EFFECT_STUNNED, 1, nil, nil]
-            target.save
-            result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
-          end
+          result += check_weapon_procs(char, target)
 
           result += target.check_knockout
         end
@@ -640,6 +631,20 @@ class Battle
 
     return {hit: hit, text: result}
 
+  end
+
+  def self.check_weapon_procs(char, target)
+    result = ''
+    if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
+      target.effects << [EFFECT_STUNNED, 1, nil, nil]
+      target.save
+      result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
+    elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_AXE and rand(1..20) == 1
+      target.effects << [EFFECT_BLEEDING, rand(3..5), nil, nil]
+      target.save
+      result += "<p>#{target.name} takes a serious hit and is <span class='red'>bleeding!</span></p>"
+    end
+    result
   end
 
   def self.penalty_roll_miss?(targetability)

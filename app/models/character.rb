@@ -404,7 +404,7 @@ class Character
   end
 
   def parry_roll
-    rand(1..100) <= 15
+    rand(1..100) <= 10
   end
 
   def is_protected?

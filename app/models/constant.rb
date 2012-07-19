@@ -240,6 +240,8 @@ class Constant
         'Paralyzing Attacks'
       when EFFECT_APPLIED_WEAKNESS_POISON
         'Weakness Attacks'
+      when EFFECT_BLEEDING
+        'Bleeding'
     end
   end
 
@@ -252,6 +254,8 @@ class Constant
       when EFECT_PARALYZING_POISON
         false
       when EFFECT_WEAKNESS_POISON
+        false
+      when EFFECT_BLEEDING
         false
       when EFFECT_APPLIED_MIND_POISON
         true
@@ -273,6 +277,8 @@ class Constant
       when EFFECT_PARALYZING_POISON
         "<span class='red'>"
       when EFFECT_WEAKNESS_POISON
+        "<span class='red'>"
+      when EFFECT_BLEEDING
         "<span class='red'>"
       when EFFECT_UNDISTURBED
         "<span class='green'>"
