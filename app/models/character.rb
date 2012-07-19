@@ -114,6 +114,7 @@ class Character
     elsif Constant.weapon_based_attack?(skill_id) and weapon = equipped_weapon and weapon.eq_type == EQUIPMENT_THROWING_KNIVES
       result = (result * 1.1).round(0)
     end
+    result
   end
 
   def is_active?
