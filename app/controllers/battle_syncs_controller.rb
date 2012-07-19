@@ -12,9 +12,9 @@ class BattleSyncsController < ApplicationController
 
         bs.update_attribute(:turn_events, "")
         op_battle.update_attribute(:result, TIMED_OUT)
-        opponent.team.update_attribute(:points, opponent.team.points - 1)
+        opponent.team.update_attributes(:points => (opponent.team.points - 1), :gold => (opponent.team.gold + 10))
         battle.update_attribute(:result, OPPONENT_TIMED_OUT)
-        current_user.team.update_attribute(:points, current_user.team.points + 1)
+        current_user.team.update_attributes(:points => (current_user.team.points + 1), :gold => (current_user.team.gold + 50))
         render :text => "true"
       else
         render :text => "false"

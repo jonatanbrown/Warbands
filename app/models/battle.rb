@@ -47,8 +47,17 @@ class Battle
       turn_events += resolve_action(a)
     end
 
-    check_if_lost(team1, team2)
-    check_if_lost(team2, team1)
+    if rand(0..1) == 0
+      lost = check_if_lost(team1, team2)
+      unless lost
+        check_if_lost(team2, team1)
+      end
+    else
+      lost = check_if_lost(team2, team1)
+      unless lost
+        check_if_lost(team1, team2)
+      end
+    end
 
     active_chars = team1.characters.where(:active => true) + team2.characters.where(:active => true)
 
@@ -553,10 +562,12 @@ class Battle
   def self.check_if_lost(team, op_team)
     if !team.characters.where(:active => true).any?
       team.user.battle.update_attribute(:result, BATTLE_LOST)
-      team.update_attribute(:points, team.points - 1)
+      team.update_attributes(:points => (team.points - 1), :gold => (team.gold + 10))
       op_team.user.battle.update_attribute(:result, BATTLE_WON)
-      op_team.update_attribute(:points, op_team.points + 1)
+      op_team.update_attributes(:points => (op_team.points + 1), :gold => (op_team.gold + 50))
+      return true
     end
+    false
   end
 
   def self.validate_actions(char_actions, team, op_team)
