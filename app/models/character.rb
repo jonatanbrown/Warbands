@@ -98,6 +98,7 @@ class Character
 
   def get_priority(action_index, skill_id)
     result = self.final_ini - (action_index * 4) + rand(1..5)
+
     if skill_id == SKILL_QUICK_STRIKE
       result = (result * 1.2).round(0)
     elsif skill_id == SKILL_HEAVY_STRIKE
@@ -107,7 +108,12 @@ class Character
     elsif skill_id == SKILL_HEAVY_THROW
       result = (result * 0.8).round(0)
     end
-    result
+
+    if Constant.weapon_based_attack?(skill_id) and weapon = equipped_weapon and weapon.eq_type == EQUIPMENT_SPEAR
+      result = (result * 1.1).round(0)
+    elsif Constant.weapon_based_attack?(skill_id) and weapon = equipped_weapon and weapon.eq_type == EQUIPMENT_THROWING_KNIVES
+      result = (result * 1.1).round(0)
+    end
   end
 
   def is_active?
@@ -418,7 +424,7 @@ class Character
 
   def aim_success?
     effects.each do |effect|
-      if effect[0] == EFFECT_TAKEN_AIM and skill_roll_successful?(SKILL_TAKE_AIM)
+      if effect[0] == EFFECT_TAKEN_AIM and skill_available?(SKILL_TAKE_AIM) and skill_roll_successful?(SKILL_TAKE_AIM)
         return Character.find(effect[3])._id
       end
     end

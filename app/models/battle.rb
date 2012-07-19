@@ -50,6 +50,8 @@ class Battle
     check_if_lost(team1, team2)
     check_if_lost(team2, team1)
 
+    active_chars = team1.characters.where(:active => true) + team2.characters.where(:active => true)
+
     active_chars.each do |char|
       char.effects.delete_if do |effect|
         effect[1] -= 1
@@ -596,6 +598,8 @@ class Battle
       aimed_char = char.aim_success?
       if aimed_char and aimed_char == target._id
         result += "<p>#{char.name} has taken aim at #{target.name} and hits thanks to it.</p>"
+      elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_JAVELINS and rand(1..10) == 1
+        #Hit thanks to using javelin. No need for extra text.
       else
         hit = false
         result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but misses.</p>"

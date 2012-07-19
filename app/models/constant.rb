@@ -268,6 +268,10 @@ class Constant
     end
   end
 
+  def self.weapon_based_attack?(skill_id)
+    [SKILL_STRIKE, SKILL_THROWN, SKILL_QUICK_STRIKE, SKILL_HEAVY_STRIKE, SKILL_ACCURATE_STRIKE, SKILL_FINISHING_STRIKE, SKILL_FLING, SKILL_QUICK_THROW, SKILL_HEAVY_THROW].include?(skill_id)
+  end
+
   def self.get_effect_color_tag(effect_id)
     case effect_id
       when EFFECT_BLINDED
