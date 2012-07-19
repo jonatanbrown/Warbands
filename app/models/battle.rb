@@ -173,6 +173,8 @@ class Battle
             result += "<p>#{char.name} flings a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
             result += target.check_if_poisoned(char)
 
+            result += check_weapon_procs(char, target)
+
             result += target.check_knockout
 
             char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
@@ -271,6 +273,8 @@ class Battle
           result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
+
+          result += check_weapon_procs(char, target)
 
           result += target.check_knockout
 
@@ -461,6 +465,8 @@ class Battle
 
           result += target.check_if_poisoned(char)
 
+          result += check_weapon_procs(char, target)
+
           result += target.check_knockout
 
           char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
@@ -490,6 +496,8 @@ class Battle
           result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
+
+          result += check_weapon_procs(char, target)
 
           result += target.check_knockout
 
@@ -644,6 +652,10 @@ class Battle
       target.save
       result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
     elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_AXE and rand(1..20) == 1
+      target.effects << [EFFECT_BLEEDING, rand(3..5), nil, nil]
+      target.save
+      result += "<p>#{target.name} takes a serious hit and is <span class='red'>bleeding!</span></p>"
+    elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_THROWING_AXES and rand(1..20) == 1
       target.effects << [EFFECT_BLEEDING, rand(3..5), nil, nil]
       target.save
       result += "<p>#{target.name} takes a serious hit and is <span class='red'>bleeding!</span></p>"
