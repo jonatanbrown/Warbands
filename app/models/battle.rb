@@ -93,20 +93,20 @@ class Battle
 
     result = ''
 
-    entangled = false
+    stunned = false
     char.effects.delete_if do |effect|
-      if effect[0] == EFFECT_BOLA
-        entangled = true
+      if effect[0] == EFFECT_STUNNED
+        stunned = true
         true
       else
         false
       end
     end
 
-    #If entangled by bola, ignore action completely.
-    if entangled
+    #If stunned, ignore action completely.
+    if stunned
       char.save
-      return "<p>#{char.name} was entangled by a bola and took some time to get untangled.</p>"
+      return "<p>#{char.name} was incapacitated and took some time to recover.</p>"
     end
 
     if char.active
@@ -213,7 +213,7 @@ class Battle
 
         hit = true
 
-        res = melee_skill_miss(char, target, SKILL_STRIKE)
+        res = melee_skill_miss_roll(char, target, SKILL_STRIKE)
 
         hit = res[:hit]
         result += res[:text]
@@ -232,7 +232,14 @@ class Battle
 
           result += target.check_if_poisoned(char)
 
+          if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
+            target.effects << [EFFECT_STUNNED, 1, nil, nil]
+            target.save
+            result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
+          end
+
           result += target.check_knockout
+
         end
 
       #Throw
@@ -296,7 +303,7 @@ class Battle
 
         hit = true
 
-        res = melee_skill_miss(char, target, SKILL_QUICK_STRIKE)
+        res = melee_skill_miss_roll(char, target, SKILL_QUICK_STRIKE)
 
         hit = res[:hit]
         result += res[:text]
@@ -316,6 +323,12 @@ class Battle
 
           result += target.check_if_poisoned(char)
 
+          if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
+            target.effects << [EFFECT_STUNNED, 1, nil, nil]
+            target.save
+            result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
+          end
+
           result += target.check_knockout
         end
 
@@ -329,7 +342,7 @@ class Battle
 
         hit = true
 
-        res = melee_skill_miss(char, target, SKILL_HEAVY_STRIKE)
+        res = melee_skill_miss_roll(char, target, SKILL_HEAVY_STRIKE)
 
         hit = res[:hit]
         result += res[:text]
@@ -348,6 +361,12 @@ class Battle
           result += "<p>#{char.name} does a heavy strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
+
+          if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
+            target.effects << [EFFECT_STUNNED, 1, nil, nil]
+            target.save
+            result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
+          end
 
           result += target.check_knockout
         end
@@ -374,6 +393,12 @@ class Battle
 
         result += target.check_if_poisoned(char)
 
+        if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
+          target.effects << [EFFECT_STUNNED, 1, nil, nil]
+          target.save
+          result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
+        end
+
         result += target.check_knockout
 
       #Finishing Strike
@@ -386,7 +411,7 @@ class Battle
 
         hit = true
 
-        res = melee_skill_miss(char, target, SKILL_FINISHING_STRIKE)
+        res = melee_skill_miss_roll(char, target, SKILL_FINISHING_STRIKE)
 
         hit = res[:hit]
         result += res[:text]
@@ -404,6 +429,12 @@ class Battle
           result += "<p>#{char.name} does a finishing strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
+
+          if weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_MACE and rand(1..20) == 1
+            target.effects << [EFFECT_STUNNED, 1, nil, nil]
+            target.save
+            result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
+          end
 
           result += target.check_knockout
         end
@@ -486,7 +517,7 @@ class Battle
         result += res[:text]
 
         if hit
-          target.effects << [EFFECT_BOLA, 1, nil, nil]
+          target.effects << [EFFECT_STUNNED, 1, nil, nil]
           target.save
           result += "<p>#{char.name} throws a bola at #{target.name}. <span class='red'>#{target.name} is entangled!</p></span>"
 
@@ -585,7 +616,7 @@ class Battle
   end
 
   #Function for checking standard melee skill miss rolls.
-  def self.melee_skill_miss(char, target, skill_id)
+  def self.melee_skill_miss_roll(char, target, skill_id)
 
     hit = true
     result = ''
@@ -600,6 +631,11 @@ class Battle
       hit = false
       result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name}'s defensive posture allows a dodge.</p>"
       result += check_counterstrike(char, target)
+    end
+
+    if hit and weapon = target.equipped_weapon and weapon.eq_type == EQUIPMENT_SWORD and target.parry_roll
+      hit = false
+      result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} parries the attack.</p>"
     end
 
     return {hit: hit, text: result}

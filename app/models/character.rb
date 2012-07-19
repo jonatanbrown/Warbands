@@ -403,6 +403,10 @@ class Character
     (effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and rand(1..10) <= 3
   end
 
+  def parry_roll
+    rand(1..100) <= 15
+  end
+
   def is_protected?
     effects.each do |effect|
       if effect[0] == EFFECT_PROTECTED and rand(1..10) <= 7
