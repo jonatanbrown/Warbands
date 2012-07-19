@@ -199,6 +199,7 @@ class Character
 
   def get_effects_text
     unique_effect_hash = {}
+    stack_hash = {}
     effects.each do |effect|
       if !unique_effect_hash.has_key?(effect[0])
         unique_effect_hash[effect[0]] = effect
@@ -206,12 +207,21 @@ class Character
         if unique_effect_hash[effect[0]][1] < effect[1]
           unique_effect_hash[effect[0]] = effect
         end
+        if stack_hash.has_key?("#{effect[0]}-stack")
+          stack_hash["#{effect[0]}-stack"] += 1
+        else
+          stack_hash["#{effect[0]}-stack"] = 2
+        end
       end
     end
 
     result = ''
     unique_effect_hash.each_pair do |effect_id, effect|
-      result += "<p>" + Constant.get_effect_color_tag(effect_id) + Constant.get_effect_name(effect_id) + "</span>" +" - " + effect[1].to_s + " turns</p>"
+      stack = ''
+      if stack_hash.has_key?("#{effect[0]}-stack")
+        stack = '(' + stack_hash["#{effect[0]}-stack"].to_s + ') '
+      end
+      result += "<p>" + Constant.get_effect_color_tag(effect_id) + stack + Constant.get_effect_name(effect_id) + "</span>" +" - " + effect[1].to_s + " turns</p>"
     end
     result
   end
