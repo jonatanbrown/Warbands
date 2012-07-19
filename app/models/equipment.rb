@@ -38,6 +38,10 @@ class Equipment
     eq_type == EQUIPMENT_LEGS
   end
 
+  def melee?
+    (0..3) === eq_type
+  end
+
   def ranged?
     (4..6) === eq_type
   end

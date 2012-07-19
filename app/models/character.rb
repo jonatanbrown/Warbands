@@ -116,7 +116,7 @@ class Character
 
   def skill_available?(skill_nr)
     #Should check if the character has learned the skill etc, now only checks if skill is a valid skill number at all.
-    ((0..MAX_SKILL_NUM) === skill_nr.to_i and get_skill_value(skill_nr) != nil)
+    ((0..MAX_SKILL_NUM) === skill_nr.to_i and get_final_skill_value(skill_nr) != nil)
   end
 
   #Functions for returning stats after current effects
@@ -270,7 +270,81 @@ class Character
 
   #Returns skill level in order of ID. Passives should be 0.
   def get_skills_array
-    [strike, thrown, 1, dirt, defensive_posture, cover, quick_strike, heavy_strike, accurate_strike, finishing_strike, protect, shield_wall, 0, fling, quick_throw, heavy_throw, 0, 0, bola, mind_poison, paralyzing_poison, weakness_poison].map {|num| num == nil ? 0 : num}
+    result = []
+    (0..MAX_SKILL_NUM).each do |skill_num|
+      result << get_final_skill_value(skill_num)
+    end
+    result.map {|num| num == nil ? 0 : num}
+  end
+
+  def get_final_skill_value(skill_id)
+    case skill_id
+    when SKILL_STRIKE
+      if (weapon = equipped_weapon) and weapon.melee?
+        return strike
+      end
+    when SKILL_THROWN
+      if (weapon = equipped_weapon) and weapon.ranged?
+        return thrown
+      end
+    when SKILL_RETREAT
+      return 1
+    when SKILL_DIRT
+      return dirt
+    when SKILL_DEFENSIVE_POSTURE
+      return defensive_posture
+    when SKILL_COVER
+      return cover
+    when SKILL_QUICK_STRIKE
+      if (weapon = equipped_weapon) and weapon.melee?
+        return quick_strike
+      end
+    when SKILL_HEAVY_STRIKE
+      if (weapon = equipped_weapon) and weapon.melee?
+        return heavy_strike
+      end
+    when SKILL_ACCURATE_STRIKE
+      if (weapon = equipped_weapon) and weapon.melee?
+        return accurate_strike
+      end
+    when SKILL_FINISHING_STRIKE
+      if (weapon = equipped_weapon) and weapon.melee?
+        return finishing_strike
+      end
+    when SKILL_PROTECT
+      return protect
+    when SKILL_SHIELD_WALL
+      return shield_wall
+    when SKILL_COUNTERSTRIKE
+      return counterstrike
+    when SKILL_FLING
+      if (weapon = equipped_weapon) and weapon.ranged?
+        return fling
+      end
+    when SKILL_QUICK_THROW
+      if (weapon = equipped_weapon) and weapon.ranged?
+        return quick_throw
+      end
+    when SKILL_HEAVY_THROW
+      if (weapon = equipped_weapon) and weapon.ranged?
+        return heavy_throw
+      end
+    when SKILL_TAKE_AIM
+      return take_aim
+    when SKILL_UNDISTURBED
+      return undisturbed
+    when SKILL_BOLA
+      return bola
+    when SKILL_MIND_POISON
+      return mind_poison
+    when SKILL_PARALYZING_POISON
+      return paralyzing_poison
+    when SKILL_WEAKNESS_POISON
+      return weakness_poison
+    end
+
+    nil
+
   end
 
   def get_skill_value(skill_id)
@@ -462,11 +536,11 @@ class Character
   end
 
   def ranged_hit?(skill_id)
-    rand(1..100) <= (100*(final_dex + get_skill_value(skill_id)))/(5+(final_dex + get_skill_value(skill_id)))
+    rand(1..100) <= (100*(final_dex + get_final_skill_value(skill_id)))/(5+(final_dex + get_final_skill_value(skill_id)))
   end
 
   def skill_roll_successful?(skill_id)
-    rand(1..100) <= (100*get_skill_value(skill_id))/(5+get_skill_value(skill_id))
+    rand(1..100) <= (100*get_final_skill_value(skill_id))/(5+get_final_skill_value(skill_id))
   end
 
   def check_knockout
