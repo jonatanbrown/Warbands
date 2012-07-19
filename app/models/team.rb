@@ -11,7 +11,7 @@ class Team
 
   field :points, :type => Integer, :default => 0
 
-  field :gold, :type => Integer, :default => 100
+  field :gold, :type => Integer, :default => 200
 
   def create_characters
     5.times do |i|
