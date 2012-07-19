@@ -21,9 +21,13 @@ class CharactersController < ApplicationController
 
   def change_item
     @character = Character.find(params[:id])
-    equipment = Equipment.find(params[:equipment_id])
-    @character.change_item(equipment)
-    @character = Character.find(params[:id])
+    if !current_user.battle
+      equipment = Equipment.find(params[:equipment_id])
+      @character.change_item(equipment)
+      @character = Character.find(params[:id])
+    else
+      @character.errors.add(:equipments, "Cannot change equipment during battle.")
+    end
     @team = current_user.team
     unused_equipment = @team.unused_equipment
     @unused_weapons = unused_equipment.where(:eq_type => 0..6)
@@ -32,7 +36,6 @@ class CharactersController < ApplicationController
     @unused_chest = unused_equipment.where(:eq_type => EQUIPMENT_CHEST)
     @unused_legs = unused_equipment.where(:eq_type => EQUIPMENT_LEGS)
     @unused_equipment = unused_equipment
-
     render "_equipment", :layout => false
   end
 end

@@ -45,3 +45,11 @@
   </div>
 </div>
 
+<% if @character.errors.any? %>
+  <span class="red">
+    <% @character.errors.messages.each do |msg| %>
+      <p><%= msg[1][0] %></p>
+    <% end %>
+  </span>
+<% end %>
+
