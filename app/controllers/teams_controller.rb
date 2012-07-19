@@ -1,5 +1,9 @@
 class TeamsController < ApplicationController
   def new
+    if current_user.team
+      current_user.team.characters.destroy_all
+      current_user.team.destroy
+    end
     @team = Team.new
     current_user.team = @team
     @team.update_attribute(:name, "The Team")
@@ -14,7 +18,7 @@ class TeamsController < ApplicationController
       c.roll_char
       c.save
     end
-    render :partial => "character", :collection => @team.characters
+    render :partial => "characters/character", :collection => @team.characters
   end
 
   def show
