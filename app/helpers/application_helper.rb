@@ -12,20 +12,21 @@ module ApplicationHelper
 
   def battle_character(pos, team)
     char = team.get_char(pos)
-    content = ''
-    if current_user.team.characters.include?(char)
-      content += char.get_stats_text
-    else
-      content += char.get_cryptic_stats_text
-    end
-    content += "</br>"
-    content += char.get_effects_text
-    result = '<div class="battle-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
-      if team.get_char(pos).active
-        result += render :partial => "characters/battle_character", :locals => { :character => char }
+    if team.get_char(pos).active
+      content = ''
+      if current_user.team.characters.include?(char)
+        content += char.get_stats_text
       else
-        result += 'Knocked out.'
+        content += char.get_cryptic_stats_text
       end
+      content += "</br>"
+      content += char.get_effects_text
+      result = '<div class="battle-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
+      result += render :partial => "characters/battle_character", :locals => { :character => char }
+    else
+      result = '<div class="battle-character">'
+      result += 'Knocked out.'
+    end
     result += '</div>'
     result.html_safe
   end
