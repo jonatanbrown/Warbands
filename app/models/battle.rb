@@ -163,10 +163,13 @@ class Battle
           result += res[:text]
 
           if hit
-            damage = char.equipped_weapon.roll_damage + ((char.final_dex + char.fling)/4.0).round(0) + ((char.final_dex + char.fling)/4.0).round(0) - (target.final_tgh/2.0).round(0)
+            damage = char.equipped_weapon.roll_damage + ((char.final_dex + char.fling)/2.0)
+            damage -= (target.final_tgh/2.0)
+            damage -= (target.armor/2.0)
             if damage < 0
               damage = 0
             end
+            damage = damage.round(0)
             target.current_hp -= damage
             target.taken_damage = true
 
@@ -234,12 +237,14 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = (char.equipped_weapon.roll_damage + ((char.final_str + char.strike)/2.0)).round(0)
-          damage -= (target.final_tgh/2.0).round(0)
+          damage = (char.equipped_weapon.roll_damage + ((char.final_str + char.strike)/2.0))
+          damage -= (target.final_tgh/2.0)
+          damage -= (target.armor/2.0)
 
           if damage < 0
             damage = 0
           end
+          damage = damage.round(0)
           target.current_hp -= damage
           target.taken_damage = true
 
@@ -264,10 +269,13 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = char.equipped_weapon.roll_damage + ((char.final_dex + char.thrown)/2.0).round(0) - (target.final_tgh/2.0).round(0)
+          damage = char.equipped_weapon.roll_damage + ((char.final_dex + char.thrown)/2.0)
+          damage -= (target.final_tgh/2.0)
+          damage -= (target.armor/2.0)
           if damage < 0
             damage = 0
           end
+          damage = damage.round(0)
           target.current_hp -= damage
           target.taken_damage = true
           result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
@@ -322,13 +330,13 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.quick_strike)/2.0)) * 0.8).round(0)
-          damage -= (target.final_tgh/2.0).round(0)
-
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.quick_strike)/2.0)) * 0.8)
+          damage -= (target.final_tgh/2.0)
+          damage -= (target.armor/2.0)
           if damage < 0
             damage = 0
           end
-
+          damage = damage.round(0)
           target.current_hp -= damage
           target.taken_damage = true
 
@@ -357,13 +365,14 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.heavy_strike)/2.0)) * 1.2).round(0)
-          damage -= (target.final_tgh/2.0).round(0)
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.heavy_strike)/2.0)) * 1.2)
+          damage -= (target.final_tgh/2.0)
+          damage -= (target.armor/2.0)
 
           if damage < 0
             damage = 0
           end
-
+          damage = damage.round(0)
           target.current_hp -= damage
           target.taken_damage = true
 
@@ -384,13 +393,14 @@ class Battle
           target = new_target
         end
 
-        damage = (char.equipped_weapon.roll_damage + ((char.final_str + char.accurate_strike)/2.0)).round(0)
-        damage -= (target.final_tgh/2.0).round(0)
+        damage = (char.equipped_weapon.roll_damage + ((char.final_str + char.accurate_strike)/2.0))
+        damage -= (target.final_tgh/2.0).
+        damage -= (target.armor/2.0)
 
         if damage < 0
           damage = 0
         end
-
+        damage = damage.round(0)
         target.current_hp -= damage
         target.taken_damage = true
 
@@ -418,12 +428,14 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.finishing_strike)/2.0)) * 1.7).round(0)
-          damage -= (target.final_tgh/2.0).round(0)
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.finishing_strike)/2.0)) * 1.7)
+          damage -= (target.final_tgh/2.0)
+          damage -= (target.armor/2.0)
 
           if damage < 0
             damage = 0
           end
+          damage = damage.round(0)
           target.current_hp -= damage
           target.taken_damage = true
 
@@ -454,11 +466,13 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((char.equipped_weapon.roll_damage + ((char.final_dex + char.quick_throw)/2.0)) * 0.8).round(0)
-          damage -= (target.final_tgh/2.0).round(0)
+          damage = (char.equipped_weapon.roll_damage + ((char.final_dex + char.quick_throw)/2.0)) * 0.8
+          damage -= (target.final_tgh/2.0)
+          damage -= (target.armor/2.0)
           if damage < 0
             damage = 0
           end
+          damage = damage.round(0)
           target.current_hp -= damage
           target.taken_damage = true
           result += "<p>#{char.name} quickly throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
@@ -486,11 +500,13 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((char.equipped_weapon.roll_damage + ((char.final_dex + char.heavy_throw)/2.0)) * 1.2).round(0)
-          damage -= (target.final_tgh/2.0).round(0)
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_dex + char.heavy_throw)/2.0)) * 1.2)
+          damage -= (target.final_tgh/2.0)
+          damage -= (target.armor/2.0)
           if damage < 0
             damage = 0
           end
+          damage = damage.round(0)
           target.current_hp -= damage
           target.taken_damage = true
           result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"

@@ -175,6 +175,16 @@ class Character
     result.round(0)
   end
 
+  def armor
+    result = 0
+    equipments.each do |item|
+      if item.armor
+        result += item.armor
+      end
+    end
+    result
+  end
+
   def final_ap
     result = ap
     if (effects.map {|x| x[0] }).include?(EFFECT_UNDISTURBED)
