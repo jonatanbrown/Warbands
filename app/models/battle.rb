@@ -610,8 +610,12 @@ class Battle
     #Check if char has cover and there are chars in front.
     if hit and (target.effects.map {|x| x[0] }).include?(EFFECT_COVER)
       if target.team.position_targetability_ranged(target.position) != NO_PENALTY
-        hit = false
-        result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} has taken cover.</p>"
+        if target.skill_roll_successful?(SKILL_COVER)
+          hit = false
+          result += "<p>#{char.name} #{Constant.get_skill_text(skill_id)} #{target.name} but #{target.name} has taken cover.</p>"
+        else
+          result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but fails.</p>"
+        end
       elsif hit
         result += "<p>#{target.name} attempts to take cover from #{char.name}'s attack but there is no one to hide behind!</p>"
       end

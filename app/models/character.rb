@@ -402,7 +402,7 @@ class Character
       undisturbed
     elsif skill_id == SKILL_BOLA
       bola
-    elsif skill_id == SKILL_MIND_POISON
+  elsif skill_id == SKILL_MIND_POISON
       mind_poison
     elsif skill_id == SKILL_PARALYZING_POISON
       paralyzing_poison
@@ -416,7 +416,7 @@ class Character
   end
 
   def defensive_posture_dodge?
-    (effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and rand(1..10) <= 3
+    (effects.map {|x| x[0] }).include?(EFFECT_DEFENSIVE_POSTURE) and skill_roll_successful?(SKILL_DEFENSIVE_POSTURE)
   end
 
   def parry_roll
@@ -425,8 +425,11 @@ class Character
 
   def is_protected?
     effects.each do |effect|
-      if effect[0] == EFFECT_PROTECTED and rand(1..10) <= 7
-        return Character.find(effect[3])
+      if effect[0] == EFFECT_PROTECTED
+        char = Character.find(effect[3])
+        if char.skill_roll_successful?(SKILL_PROTECT)
+          return char
+        end
       end
     end
     return false
