@@ -73,6 +73,10 @@ class Equipment
     end
   end
 
+  def roll_damage
+    rand(min_damage..max_damage)
+  end
+
   def self.get_cost(item)
     case item
       when 'short_sword'

@@ -150,7 +150,7 @@ class Battle
           result += res[:text]
 
           if hit
-            damage = rand(4..8) + ((char.final_dex + char.fling)/4.0).round(0) + ((char.final_dex + char.fling)/4.0).round(0) - (target.final_tgh/2.0).round(0)
+            damage = char.equipped_weapon.roll_damage + ((char.final_dex + char.fling)/4.0).round(0) + ((char.final_dex + char.fling)/4.0).round(0) - (target.final_tgh/2.0).round(0)
             if damage < 0
               damage = 0
             end
@@ -219,7 +219,7 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = (rand(4..8) + ((char.final_str + char.strike)/2.0)).round(0)
+          damage = (char.equipped_weapon.roll_damage + ((char.final_str + char.strike)/2.0)).round(0)
           damage -= (target.final_tgh/2.0).round(0)
 
           if damage < 0
@@ -246,7 +246,7 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = rand(4..8) + ((char.final_dex + char.thrown)/2.0).round(0) - (target.final_tgh/2.0).round(0)
+          damage = char.equipped_weapon.roll_damage + ((char.final_dex + char.thrown)/2.0).round(0) - (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
           end
@@ -302,7 +302,7 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((rand(4..8) + ((char.final_str + char.quick_strike)/2.0)) * 0.8).round(0)
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.quick_strike)/2.0)) * 0.8).round(0)
           damage -= (target.final_tgh/2.0).round(0)
 
           if damage < 0
@@ -335,7 +335,7 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((rand(4..8) + ((char.final_str + char.heavy_strike)/2.0)) * 1.2).round(0)
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.heavy_strike)/2.0)) * 1.2).round(0)
           damage -= (target.final_tgh/2.0).round(0)
 
           if damage < 0
@@ -360,7 +360,7 @@ class Battle
           target = new_target
         end
 
-        damage = (rand(4..8) + ((char.final_str + char.accurate_strike)/2.0)).round(0)
+        damage = (char.equipped_weapon.roll_damage + ((char.final_str + char.accurate_strike)/2.0)).round(0)
         damage -= (target.final_tgh/2.0).round(0)
 
         if damage < 0
@@ -392,7 +392,7 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((rand(4..8) + ((char.final_str + char.finishing_strike)/2.0)) * 1.7).round(0)
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.finishing_strike)/2.0)) * 1.7).round(0)
           damage -= (target.final_tgh/2.0).round(0)
 
           if damage < 0
@@ -426,7 +426,7 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((rand(4..8) + ((char.final_dex + char.quick_throw)/2.0)) * 0.8).round(0)
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_dex + char.quick_throw)/2.0)) * 0.8).round(0)
           damage -= (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
@@ -456,7 +456,7 @@ class Battle
         result += res[:text]
 
         if hit
-          damage = ((rand(4..8) + ((char.final_dex + char.heavy_throw)/2.0)) * 1.2).round(0)
+          damage = ((char.equipped_weapon.roll_damage + ((char.final_dex + char.heavy_throw)/2.0)) * 1.2).round(0)
           damage -= (target.final_tgh/2.0).round(0)
           if damage < 0
             damage = 0
