@@ -360,5 +360,25 @@ class Constant
       'Godlike'
     end
   end
+
+  def self.get_cryptic_armor(armor)
+    if armor == 0
+      'Unarmored'
+    elsif armor < 5
+      'Hardly Armored'
+    elsif armor < 10
+      'Slightly Armored'
+    elsif armor < 15
+      'Armored'
+    elsif armor < 20
+      'Well Armored'
+    elsif armor < 25
+      'Heavily Armored'
+    elsif armor < 30
+      'Like a Tank'
+    else
+      'Invulnerable'
+    end
+  end
 end
 

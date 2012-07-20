@@ -269,7 +269,8 @@ class Character
     else
       result += "<p>AP: " + final_ap.to_s + "</p>"
     end
-    result += "<p>HP:" + current_hp.to_s + "</p>"
+    result += "<p>HP: " + current_hp.to_s + "</p>"
+    result += "<p>Armor: " + armor.to_s + "</p>"
 
   end
 
@@ -280,7 +281,8 @@ class Character
     result += "<p>Toughness: " + Constant.get_cryptic_tgh(final_tgh) + "</p>"
     result += "<p>Initiative: " + Constant.get_cryptic_ini(final_ini) + "</p>"
     result += "</br>"
-    result += "<p>HP:" + current_hp.to_s + "</p>"
+    result += "<p>HP: " + current_hp.to_s + "</p>"
+    result += "<p>Armor: " + Constant.get_cryptic_armor(armor) + "</p>"
 
   end
 
