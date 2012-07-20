@@ -283,7 +283,6 @@ class Character
     result += "</br>"
     result += "<p>HP: " + current_hp.to_s + "</p>"
     result += "<p>Armor: " + Constant.get_cryptic_armor(armor) + "</p>"
-
   end
 
 
@@ -295,6 +294,26 @@ class Character
     result += "<p>Throw: #{thrown}</p>"
     result += "<p>Take Cover: #{cover}</p>"
     result += "<p>Throw Dirt: #{dirt}</p>"
+  end
+
+  def get_gear_text
+    result = ''
+    if (weapon = equipped_weapon)
+      result += "<p>Weapon: #{weapon.name}</p>"
+    end
+    if (shield = equipped_shield)
+      result += "<p>Shield: #{shield.name}</p>"
+    end
+    if (head = equipped_head)
+      result += "<p>Helm: #{head.name}</p>"
+    end
+    if (chest = equipped_chest)
+      result += "<p>Chest Armor: #{chest.name}</p>"
+    end
+    if (legs = equipped_legs)
+      result += "<p>Leg Armor: #{legs.name}</p>"
+    end
+    result
   end
 
   #Returns skill level in order of ID. Passives should be 0.
