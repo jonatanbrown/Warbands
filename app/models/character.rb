@@ -337,12 +337,12 @@ class Character
 
   def get_skills_text
     result = ''
-
-    result += "<p>Strike: #{strike}</p>"
-    result += "<p>Defensive Posture: #{defensive_posture}</p>"
-    result += "<p>Throw: #{thrown}</p>"
-    result += "<p>Take Cover: #{cover}</p>"
-    result += "<p>Throw Dirt: #{dirt}</p>"
+    get_skills_array.each_with_index do |skill_level, index|
+      if skill_level != 0
+        result += "<p>#{Constant.get_skill_name(index)}: #{get_skill_value(index)}</p>"
+      end
+    end
+    result
   end
 
   def get_gear_text
@@ -366,10 +366,18 @@ class Character
   end
 
   #Returns skill level in order of ID. Passives should be 0.
-  def get_skills_array
+  def get_final_skills_array
     result = []
     (0..MAX_SKILL_NUM).each do |skill_num|
       result << get_final_skill_value(skill_num)
+    end
+    result.map {|num| num == nil ? 0 : num}
+  end
+
+  def get_skills_array
+    result = []
+    (0..MAX_SKILL_NUM).each do |skill_num|
+      result << get_skill_value(skill_num)
     end
     result.map {|num| num == nil ? 0 : num}
   end

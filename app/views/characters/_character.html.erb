@@ -10,11 +10,11 @@
       Memory: <%= character.mem %>
     </p>
     <p>
-      Strike: <%= character.strike %>
-      Defensive Posture: <%= character.defensive_posture %>
-      Throw: <%= character.thrown %>
-      Cover: <%= character.cover %>
-      Throw Dirt: <%= character.dirt %>
+      <% character.get_skills_array.each_with_index do |skill_level, index| %>
+        <% if skill_level != 0%>
+          <%= "#{Constant.get_skill_name(index)}: #{character.get_skill_value(index)}" %>
+        <% end %>
+      <% end %>
     </p>
   </td>
 </tr>

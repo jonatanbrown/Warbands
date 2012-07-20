@@ -78,7 +78,7 @@
   <% @chars.each do |char|%>
     <script type="text/javascript">
       battle.pos<%= char.position %>_ap = <%= char.final_ap %>
-      battle.pos<%= char.position %>_skills = <%= char.get_skills_array.to_s %>
+      battle.pos<%= char.position %>_skills = <%= char.get_final_skills_array.to_s %>
     </script>
     <%= render :partial => "characters/char_action", :locals => { :character => char, :pos => char.position} %>
   <% end %>
