@@ -133,6 +133,9 @@ class Character
     if (effects.map {|x| x[0] }).include?(EFFECT_WEAKNESS_POISON)
       result = result * 0.5
     end
+    if result < 0
+      result = 0
+    end
     result.round(0)
   end
 
@@ -140,6 +143,10 @@ class Character
     result = dex
     if (effects.map {|x| x[0] }).include?(EFFECT_BLINDED)
       result = result * 0.5
+    end
+    result -= (weight_penalty/2.0).round(0)
+    if result < 0
+      result = 0
     end
     result.round(0)
   end
@@ -149,6 +156,9 @@ class Character
     if (effects.map {|x| x[0] }).include?(EFFECT_WEAKNESS_POISON)
       result = result * 0.5
     end
+    if result < 0
+      result = 0
+    end
     result.round(0)
   end
 
@@ -156,6 +166,9 @@ class Character
     result = ini
     if (effects.map {|x| x[0] }).include?(EFFECT_BLINDED)
       result = result * 0.5
+    end
+    if result < 0
+      result = 0
     end
     result.round(0)
   end
@@ -165,6 +178,9 @@ class Character
     if (effects.map {|x| x[0] }).include?(EFFECT_MIND_POISON)
       result = result * 0.5
     end
+    if result < 0
+      result = 0
+    end
     result.round(0)
   end
 
@@ -172,6 +188,24 @@ class Character
     result = mem
     if (effects.map {|x| x[0] }).include?(EFFECT_MIND_POISON)
       result = result * 0.5
+    end
+    if result < 0
+      result = 0
+    end
+    result.round(0)
+  end
+
+  def final_ap
+    result = ap
+    if (effects.map {|x| x[0] }).include?(EFFECT_UNDISTURBED)
+      result = result * (1.3 + undisturbed/100)
+    end
+    if (effects.map {|x| x[0] }).include?(EFFECT_PARALYZING_POISON)
+      result = result * 0.8
+    end
+    result -= (weight_penalty/2.0).round(0)
+    if result < 0
+      result = 0
     end
     result.round(0)
   end
@@ -183,18 +217,27 @@ class Character
         result += item.armor
       end
     end
+    if result < 0
+      result = 0
+    end
     result
   end
 
-  def final_ap
-    result = ap
-    if (effects.map {|x| x[0] }).include?(EFFECT_UNDISTURBED)
-      result = result * (1.3 + undisturbed/100)
+  def str_req
+    result = 0
+    equipments.each do |item|
+      if item.str_req
+        result += item.str_req
+      end
     end
-    if (effects.map {|x| x[0] }).include?(EFFECT_PARALYZING_POISON)
-      result = result * 0.8
+    result
+  end
+
+  def weight_penalty
+    if (diff = str_req - final_str) > 0
+      return diff
     end
-    result.round(0)
+    0
   end
 
   def get_effects_text

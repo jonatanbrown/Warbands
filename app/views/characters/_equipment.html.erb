@@ -45,6 +45,11 @@
   </div>
 </div>
 
+<b><p>Total Strength Required: <%= @character.str_req %></p></b>
+<% if (penalty = @character.weight_penalty) > 0 %>
+  <p><span class="red">Carrying too much, AP and Dexterity reduced by <%= (penalty/2.0).round(0)%></span><p>
+<% end %>
+
 <% if @character.errors.any? %>
   <span class="red">
     <% @character.errors.messages.each do |msg| %>
