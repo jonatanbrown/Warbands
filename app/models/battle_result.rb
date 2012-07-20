@@ -7,5 +7,7 @@ class BattleResult
 
   field :result, :type => Integer
 
+  field :learning_results, :type => String
+
 end
 

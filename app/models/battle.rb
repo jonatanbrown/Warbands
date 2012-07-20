@@ -15,6 +15,8 @@ class Battle
 
   field :formation, :type => Integer, :default => 0
 
+  field :learning_results, :type => String
+
   def self.resolve_turn(battle1, battle2)
 
     turn_events = ""
@@ -70,6 +72,7 @@ class Battle
       if char.skill_available?(SKILL_UNDISTURBED) and !char.taken_damage
         if char.skill_roll_successful?(SKILL_UNDISTURBED)
           char.effects << [EFFECT_UNDISTURBED, 1, nil, nil]
+          char.roll_learning(SKILL_UNDISTURBED)
           turn_events += "<p>#{char.name} is undisturbed and his speed <span class='green'>increases</span> for the next turn.</p>"
         else
           turn_events += "<p>#{char.name} is undisturbed but <span class='red'>fails</span> to read the situation correctly.</p>"
@@ -142,18 +145,21 @@ class Battle
       #Defensive Posture
       when '4'
         char.effects << [EFFECT_DEFENSIVE_POSTURE, 1, nil, nil]
+        char.roll_learning(SKILL_DEFENSIVE_POSTURE)
         char.save
         result += "<p>#{char.name} takes on a defensive posture.</p>"
 
       #Cover
       when '5'
         char.effects << [EFFECT_COVER, 1, nil, nil]
+        char.roll_learning(SKILL_COVER)
         char.save
         result += "<p>#{char.name} takes cover.</p>"
 
       #Shield Wall
       when '11'
         char.effects << [EFFECT_SHIELD_WALL, 1, nil, nil]
+        char.roll_learning(SKILL_SHIELD_WALL)
         char.save
         result += "<p>#{char.name} forms a shield wall.</p>"
 
@@ -187,11 +193,14 @@ class Battle
 
             result += check_weapon_procs(char, target)
 
+            char.roll_learning(SKILL_FLING)
+
             result += target.check_knockout
 
             char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
 
             char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+            char.roll_learning(SKILL_TAKE_AIM)
             char.save
           end
         end
@@ -199,6 +208,7 @@ class Battle
       when '19'
         if char.skill_roll_successful?(SKILL_MIND_POISON)
           char.effects << [EFFECT_APPLIED_MIND_POISON, rand(3..5), nil, nil]
+          char.roll_learning(SKILL_MIND_POISON)
           char.save
           result += "<p>#{char.name} applies mind poison.</p>"
         else
@@ -209,6 +219,7 @@ class Battle
       when '20'
         if char.skill_roll_successful?(SKILL_PARALYZING_POISON)
           char.effects << [EFFECT_APPLIED_PARALYZING_POISON, rand(3..5), nil, nil]
+          char.roll_learning(SKILL_PARALYZING_POISON)
           char.save
           result += "<p>#{char.name} applies paralyzing poison.</p>"
         else
@@ -219,6 +230,7 @@ class Battle
       when '21'
         if char.skill_roll_successful?(SKILL_WEAKNESS_POISON)
           char.effects << [EFFECT_APPLIED_WEAKNESS_POISON, rand(3..5), nil, nil]
+          char.roll_learning(SKILL_WEAKNESS_POISON)
           char.save
           result += "<p>#{char.name} applies weakness poison.</p>"
         else
@@ -263,7 +275,10 @@ class Battle
 
           result += check_weapon_procs(char, target)
 
+          char.roll_learning(SKILL_STRIKE)
+
           result += target.check_knockout
+          char.save
 
         end
 
@@ -293,11 +308,14 @@ class Battle
 
           result += check_weapon_procs(char, target)
 
+          char.roll_learning(SKILL_THROWN)
+
           result += target.check_knockout
 
           char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
 
           char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.roll_learning(SKILL_TAKE_AIM)
           char.save
         end
 
@@ -319,7 +337,10 @@ class Battle
 
           char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
 
+          char.roll_learning(SKILL_DIRT)
+
           char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.roll_learning(SKILL_TAKE_AIM)
           char.save
         end
 
@@ -355,7 +376,10 @@ class Battle
 
           result += check_weapon_procs(char, target)
 
+          char.roll_learning(SKILL_QUICK_STRIKE)
+
           result += target.check_knockout
+          char.save
         end
 
       #Heavy Strike
@@ -391,7 +415,10 @@ class Battle
 
           result += check_weapon_procs(char, target)
 
+          char.roll_learning(SKILL_HEAVY_STRIKE)
+
           result += target.check_knockout
+          char.save
         end
 
       #Accurate Strike
@@ -419,7 +446,10 @@ class Battle
 
         result += check_weapon_procs(char, target)
 
+        char.roll_learning(SKILL_ACCURATE_STRIKE)
+
         result += target.check_knockout
+        char.save
 
       #Finishing Strike
       when '9'
@@ -454,12 +484,18 @@ class Battle
 
           result += check_weapon_procs(char, target)
 
+          char.roll_learning(SKILL_FINISHING_STRIKE)
+
           result += target.check_knockout
+          char.save
+
         end
 
       #Protect
       when '10'
         target.effects << [EFFECT_PROTECTED, 1, nil, char._id]
+        char.roll_learning(SKILL_PROTECT)
+        char.save
         target.save
         result += "<p>#{char.name} protects #{target.name}.</p>"
 
@@ -490,11 +526,14 @@ class Battle
 
           result += check_weapon_procs(char, target)
 
+          char.roll_learning(SKILL_QUICK_THROW)
+
           result += target.check_knockout
 
           char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
 
           char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.roll_learning(SKILL_TAKE_AIM)
           char.save
         end
 
@@ -524,11 +563,14 @@ class Battle
 
           result += check_weapon_procs(char, target)
 
+          char.roll_learning(SKILL_HEAVY_THROW)
+
           result += target.check_knockout
 
           char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
 
           char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.roll_learning(SKILL_TAKE_AIM)
           char.save
         end
 
@@ -549,7 +591,10 @@ class Battle
 
           char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
 
+          char.roll_learning(SKILL_BOLA)
+
           char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
+          char.roll_learning(SKILL_TAKE_AIM)
           char.save
         end
 
@@ -561,9 +606,22 @@ class Battle
 
   def self.check_if_lost(team, op_team)
     if !team.characters.where(:active => true).any?
-      team.user.battle.update_attribute(:result, BATTLE_LOST)
+
+      result = ''
+      team.characters.each do |char|
+        result += char.apply_learnings
+        char.save
+      end
+      team.user.battle.update_attributes(:result => BATTLE_LOST, :learning_results => result)
       team.update_attributes(:points => (team.points - 1), :gold => (team.gold + 10))
-      op_team.user.battle.update_attribute(:result, BATTLE_WON)
+
+      result = ''
+      op_team.characters.each do |char|
+        result += char.apply_learnings
+        char.learnings = []
+        char.save
+      end
+      op_team.user.battle.update_attributes(:result => BATTLE_WON, :learning_results => result)
       op_team.update_attributes(:points => (op_team.points + 1), :gold => (op_team.gold + 50))
       return true
     end
@@ -637,7 +695,7 @@ class Battle
       aimed_char = char.aim_success?
       if aimed_char and aimed_char == target._id
         result += "<p>#{char.name} has taken aim at #{target.name} and hits thanks to it.</p>"
-      elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_JAVELINS and rand(1..10) == 1
+    elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_JAVELINS and rand(1..10) == 1
         #Hit thanks to using javelin. No need for extra text.
       else
         hit = false
@@ -709,6 +767,8 @@ class Battle
     if cs_damage
       result = "<p>#{target.name} counterstrikes #{char.name} for <span class='red'>#{cs_damage}</span> damage.</p>"
       char.current_hp -= cs_damage
+      target.roll_learning(SKILL_COUNTERSTRIKE)
+      target.save
       result += char.check_knockout
     end
     result

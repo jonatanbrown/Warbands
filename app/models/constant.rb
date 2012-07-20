@@ -30,7 +30,13 @@ class Constant
   end
 
   def self.get_skill_name(skill_id)
-    if skill_id == SKILL_STRIKE
+    if skill_id == DISCIPLINE_MELEE_COMBAT
+      'Melee Combat'
+    elsif skill_id == DISCIPLINE_RANGED_COMBAT
+      'Ranged Combat'
+    elsif skill_id == DISCIPLINE_DIRTY_COMBAT
+      'Dirty Combat'
+    elsif skill_id == SKILL_STRIKE
       'Strike'
     elsif skill_id == SKILL_THROWN
       'Throw'
@@ -378,6 +384,76 @@ class Constant
       'Like a Tank'
     else
       'Invulnerable'
+    end
+  end
+
+  def self.get_discipline(skill_id)
+    case skill_id
+      when SKILL_STRIKE
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_THROWN
+        DISCIPLINE_RANGED_COMBAT
+
+      when SKILL_RETREAT
+        DISCIPLINE_NONE
+
+      when SKILL_DIRT
+        DISCIPLINE_DIRTY_COMBAT
+
+      when SKILL_DEFENSIVE_POSTURE
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_COVER
+        DISCIPLINE_RANGED_COMBAT
+
+      when SKILL_QUICK_STRIKE
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_HEAVY_STRIKE
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_ACCURATE_STRIKE
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_FINISHING_STRIKE
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_PROTECT
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_SHIELD_WALL
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_COUNTERSTRIKE
+        DISCIPLINE_MELEE_COMBAT
+
+      when SKILL_FLING
+        DISCIPLINE_RANGED_COMBAT
+
+      when SKILL_QUICK_THROW
+        DISCIPLINE_RANGED_COMBAT
+
+      when SKILL_HEAVY_THROW
+        DISCIPLINE_RANGED_COMBAT
+
+      when SKILL_TAKE_AIM
+        DISCIPLINE_RANGED_COMBAT
+
+      when SKILL_UNDISTURBED
+        DISCIPLINE_RANGED_COMBAT
+
+      when SKILL_BOLA
+        DISCIPLINE_DIRTY_COMBAT
+
+      when SKILL_MIND_POISON
+        DISCIPLINE_DIRTY_COMBAT
+
+      when SKILL_PARALYZING_POISON
+        DISCIPLINE_DIRTY_COMBAT
+
+      when SKILL_WEAKNESS_POISON
+        DISCIPLINE_DIRTY_COMBAT
     end
   end
 end

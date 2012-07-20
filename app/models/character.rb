@@ -20,6 +20,10 @@ class Character
 
   #Skills
 
+      field :melee_combat, :type => Integer, :default => 1
+      field :ranged_combat, :type => Integer, :default => 1
+      field :dirty_combat, :type => Integer, :default => 1
+
   #Melee Combat
 
     #Basic
@@ -67,6 +71,8 @@ class Character
   field :active, :type => Boolean, :default => 1
 
   field :position, :type => Integer
+
+  field :learnings, :type => Array, :default => []
 
   #Tuples in effects are in format [effect_id, duration, power, character_id]
   field :effects, :type => Array, :default => []
@@ -477,12 +483,23 @@ class Character
       undisturbed
     elsif skill_id == SKILL_BOLA
       bola
-  elsif skill_id == SKILL_MIND_POISON
+    elsif skill_id == SKILL_MIND_POISON
       mind_poison
     elsif skill_id == SKILL_PARALYZING_POISON
       paralyzing_poison
     elsif skill_id == SKILL_WEAKNESS_POISON
       weakness_poison
+    end
+  end
+
+  def get_discipline_value(discipline_id)
+    case discipline_id
+    when DISCIPLINE_MELEE_COMBAT
+      melee_combat
+    when DISCIPLINE_RANGED_COMBAT
+      ranged_combat
+    when DISCIPLINE_DIRTY_COMBAT
+      dirty_combat
     end
   end
 
@@ -732,7 +749,7 @@ class Character
       equipment.character = self
       equipment.save
 
-    elsif equipment.legs?
+  elsif equipment.legs?
       if legs = equipped_legs
         legs.character = nil
         legs.save
@@ -740,6 +757,98 @@ class Character
       equipment.character = self
       equipment.save
 
+    end
+  end
+
+  def roll_learning(skill_id)
+    discipline = Constant.get_discipline(skill_id)
+    if discipline != DISCIPLINE_NONE
+      roll_discipline_increase(discipline)
+    end
+    if skill_id != SKILL_RETREAT
+      roll_skill_increase(skill_id)
+    end
+  end
+
+  def roll_discipline_increase(discipline_id)
+    if rand(1..100) == 1 and rand(1..50) > get_discipline_value(discipline_id)
+      learnings << discipline_id
+    end
+  end
+
+  def roll_skill_increase(skill_id)
+    if rand(1..100) == 1
+      skill_value = get_skill_value(skill_id)
+      if skill_value >= 20
+        if rand(1..(20 * (skill_value - 19))) == 1
+          learnings << skill_id
+        end
+      elsif rand(1..20) > skill_value
+        learnings << skill_id
+      end
+    end
+  end
+
+  def apply_learnings
+    result = ''
+    learnings.each do |id|
+      increment_skill(id)
+      result += "<p><span class='green'>#{name} has become better at #{Constant.get_skill_name(id)}.</span><p>"
+    end
+    result
+  end
+
+  def increment_skill(skill_id)
+    case skill_id
+      when DISCIPLINE_MELEE_COMBAT
+        update_attribute(:melee_combat, melee_combat + 1)
+      when DISCIPLINE_RANGED_COMBAT
+        update_attribute(:ranged_combat, ranged_combat + 1)
+      when DISCIPLINE_DIRTY_COMBAT
+        update_attribute(:dirty_combat, dirty_combat + 1)
+      when SKILL_STRIKE
+        update_attribute(:strike, strike + 1)
+      when SKILL_THROWN
+        update_attribute(:thrown, thrown + 1)
+      when SKILL_RETREAT
+      when SKILL_DIRT
+        update_attribute(:dirt, dirt + 1)
+      when SKILL_DEFENSIVE_POSTURE
+        update_attribute(:defensive_posture, defensive_posture + 1)
+      when SKILL_COVER
+        update_attribute(:cover, cover + 1)
+      when SKILL_QUICK_STRIKE
+        update_attribute(:quick_strike, quick_strike + 1)
+      when SKILL_HEAVY_STRIKE
+        update_attribute(:heavy_strike, heavy_strike + 1)
+      when SKILL_ACCURATE_STRIKE
+        update_attribute(:accurate_strike, accurate_strike + 1)
+      when SKILL_FINISHING_STRIKE
+        update_attribute(:finishing_strike, finishing_strike + 1)
+      when SKILL_PROTECT
+        update_attribute(:protect, protect + 1)
+      when SKILL_SHIELD_WALL
+        update_attribute(:shield_wall, shield_wall + 1)
+      when SKILL_COUNTERSTRIKE
+        update_attribute(:counterstrike, counterstrike + 1)
+      when SKILL_FLING
+        update_attribute(:fling, fling + 1)
+      when SKILL_QUICK_THROW
+        update_attribute(:quick_throw, quick_throw + 1)
+      when SKILL_HEAVY_THROW
+        update_attribute(:heavy_throw, heavy_throw + 1)
+      when SKILL_TAKE_AIM
+        update_attribute(:take_aim, take_aim + 1)
+      when SKILL_UNDISTURBED
+        update_attribute(:undisturbed, undisturbed + 1)
+      when SKILL_BOLA
+        update_attribute(:bola, bola + 1)
+      when SKILL_MIND_POISON
+        update_attribute(:mind_poison, mind_poison + 1)
+      when SKILL_PARALYZING_POISON
+        update_attribute(:paralyzing_poison, paralyzing_poison + 1)
+      when SKILL_WEAKNESS_POISON
+        update_attribute(:weakness_poison, weakness_poison + 1)
     end
   end
 

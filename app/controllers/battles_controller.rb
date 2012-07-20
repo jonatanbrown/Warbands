@@ -138,7 +138,7 @@ class BattlesController < ApplicationController
     else
       bs = current_user.battle_sync
       battle = current_user.battle
-      battle_result = BattleResult.create(last_turn_events: bs.turn_events, result: battle.result)
+      battle_result = BattleResult.create(last_turn_events: bs.turn_events, result: battle.result, learning_results: battle.learning_results)
       current_user.battle_result = battle_result
       current_user.battle_sync = nil
       current_user.battle = nil
@@ -150,6 +150,7 @@ class BattlesController < ApplicationController
       current_user.team.reset_battle_stats
     end
 
+    @learning_results = battle_result.learning_results
     @turn_events = battle_result.last_turn_events
     if battle_result.result == BATTLE_WON
       render 'won_battle'
