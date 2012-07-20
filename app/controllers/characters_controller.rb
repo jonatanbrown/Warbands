@@ -38,5 +38,16 @@ class CharactersController < ApplicationController
     @unused_equipment = unused_equipment
     render "_equipment", :layout => false
   end
+
+  def skillup
+    @character = Character.find(params[:id])
+  end
+
+  def select_skill
+    character = Character.find(params[:id])
+    character.select_skill(params[:skill_id].to_i)
+    character.save
+    render :nothing => true
+  end
 end
 

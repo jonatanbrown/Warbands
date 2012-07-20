@@ -13,6 +13,19 @@ $(document).ready(function() {
         return false;
     });
 
+    $(".select-skill-button").on("click", function(event) {
+        $.ajax({
+          type: "POST",
+          url: '/characters/' + character_id + '/select_skill',
+          data: 'skill_id=' + $(this).attr('data-skill-id'),
+          success: function(data) {
+            window.location.reload()
+          },
+          dataType: 'html'
+        });
+        return false;
+    });
+
     register_equipment_listeners();
 });
 

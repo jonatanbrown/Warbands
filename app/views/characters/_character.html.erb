@@ -1,6 +1,11 @@
 <tr>
   <td>
-    <h4><%= link_to character.name, edit_character_path(character) %></h4>
+    <h4>
+      <%= link_to character.name, edit_character_path(character) %>
+      <% if character.points_to_spend? %>
+        - <%= link_to "Unspent skill points", skillup_character_path(character) %>
+      <% end %>
+    </h4>
     <p>
       Strength: <%= character.str %>
       Dexterity: <%= character.dex %>

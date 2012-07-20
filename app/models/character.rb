@@ -18,11 +18,18 @@ class Character
 
   field :hp, :type => Integer, :default => 30
 
-  #Skills
+
+  #Disciplines
+
+      field :melee_combat_points, :type => Integer, :default => 0
+      field :ranged_combat_points, :type => Integer, :default => 0
+      field :dirty_combat_points, :type => Integer, :default => 0
 
       field :melee_combat, :type => Integer, :default => 1
       field :ranged_combat, :type => Integer, :default => 1
       field :dirty_combat, :type => Integer, :default => 1
+
+  #Skills
 
   #Melee Combat
 
@@ -500,6 +507,53 @@ class Character
     end
   end
 
+  def set_skill_value(skill_id, value)
+    if skill_id == SKILL_STRIKE
+      update_attribute(:strike, 4)
+    elsif skill_id == SKILL_THROWN
+      update_attribute(:thrown, 4)
+    elsif skill_id == SKILL_RETREAT
+    elsif skill_id == SKILL_DIRT
+      update_attribute(:dirt, 4)
+    elsif skill_id == SKILL_DEFENSIVE_POSTURE
+      update_attribute(:defensive_posture, 4)
+    elsif skill_id == SKILL_COVER
+      update_attribute(:cover, 4)
+    elsif skill_id == SKILL_QUICK_STRIKE
+      update_attribute(:quick_strike, 4)
+    elsif skill_id == SKILL_HEAVY_STRIKE
+      update_attribute(:heavy_strike, 4)
+    elsif skill_id == SKILL_ACCURATE_STRIKE
+      update_attribute(:accurate_strike, 4)
+    elsif skill_id == SKILL_FINISHING_STRIKE
+      update_attribute(:finishing_strike, 4)
+    elsif skill_id == SKILL_PROTECT
+      update_attribute(:protect, 4)
+    elsif skill_id == SKILL_SHIELD_WALL
+      update_attribute(:shield_wall, 4)
+    elsif skill_id == SKILL_COUNTERSTRIKE
+      update_attribute(:counterstrike, 4)
+    elsif skill_id == SKILL_FLING
+      update_attribute(:fling, 4)
+    elsif skill_id == SKILL_QUICK_THROW
+      update_attribute(:quick_throw, 4)
+    elsif skill_id == SKILL_HEAVY_THROW
+      update_attribute(:heavy_throw, 4)
+    elsif skill_id == SKILL_TAKE_AIM
+      update_attribute(:take_aim, 4)
+    elsif skill_id == SKILL_UNDISTURBED
+      update_attribute(:undisturbed, 4)
+    elsif skill_id == SKILL_BOLA
+      update_attribute(:bola, 4)
+    elsif skill_id == SKILL_MIND_POISON
+      update_attribute(:mind_poison, 4)
+    elsif skill_id == SKILL_PARALYZING_POISON
+      update_attribute(:paralyzing_poison, 4)
+    elsif skill_id == SKILL_WEAKNESS_POISON
+      update_attribute(:weakness_poison, 4)
+    end
+  end
+
   def get_discipline_value(discipline_id)
     case discipline_id
     when DISCIPLINE_MELEE_COMBAT
@@ -659,11 +713,11 @@ class Character
   end
 
   def ranged_hit?(skill_id)
-    rand(1..100) <= (100*(final_dex + get_final_skill_value(skill_id)))/(5+(final_dex + get_final_skill_value(skill_id)))
+    rand(1..100) <= (100*(final_dex + get_final_skill_value(skill_id)))/(7+(final_dex + get_final_skill_value(skill_id)))
   end
 
   def skill_roll_successful?(skill_id)
-    rand(1..100) <= (100*get_final_skill_value(skill_id))/(5+get_final_skill_value(skill_id))
+    rand(1..100) <= (100*get_final_skill_value(skill_id))/(7+get_final_skill_value(skill_id))
   end
 
   def check_knockout
@@ -810,10 +864,19 @@ class Character
     case skill_id
       when DISCIPLINE_MELEE_COMBAT
         update_attribute(:melee_combat, melee_combat + 1)
+        if melee_combat.divmod(5)[1] == 0
+          update_attribute(:melee_combat_points, melee_combat_points + 1)
+        end
       when DISCIPLINE_RANGED_COMBAT
         update_attribute(:ranged_combat, ranged_combat + 1)
+        if ranged_combat.divmod(5)[1] == 0
+          update_attribute(:ranged_combat_points, ranged_combat_points + 1)
+        end
       when DISCIPLINE_DIRTY_COMBAT
         update_attribute(:dirty_combat, dirty_combat + 1)
+        if dirty_combat.divmod(5)[1] == 0
+          update_attribute(:dirty_combat_points, dirty_combat_points + 1)
+        end
       when SKILL_STRIKE
         update_attribute(:strike, strike + 1)
       when SKILL_THROWN
@@ -857,6 +920,23 @@ class Character
         update_attribute(:paralyzing_poison, paralyzing_poison + 1)
       when SKILL_WEAKNESS_POISON
         update_attribute(:weakness_poison, weakness_poison + 1)
+    end
+  end
+
+  def points_to_spend?
+    (melee_combat_points + ranged_combat_points + dirty_combat_points > 0)
+  end
+
+  def select_skill(skill_id)
+    if Constant.get_discipline(skill_id) == DISCIPLINE_MELEE_COMBAT and self.melee_combat_points > 0
+      self.melee_combat_points -= 1
+      set_skill_value(skill_id, 4)
+  elsif Constant.get_discipline(skill_id) == DISCIPLINE_RANGED_COMBAT and self.ranged_combat_points > 0
+      self.ranged_combat_points -= 1
+      set_skill_value(skill_id, 4)
+  elsif Constant.get_discipline(skill_id) == DISCIPLINE_DIRTY_COMBAT and self.dirty_combat_points > 0
+      self.dirty_combat_points -= 1
+      set_skill_value(skill_id, 4)
     end
   end
 
