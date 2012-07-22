@@ -607,23 +607,9 @@ class Battle
   def self.check_if_lost(team, op_team)
     if !team.characters.where(:active => true).any?
 
-      result = ''
-      team.characters.each do |char|
-        result += char.apply_learnings
-        char.save
-      end
-      team.user.battle.update_attributes(:result => BATTLE_LOST, :learning_results => result)
-      team.update_attributes(:points => (team.points - 1), :gold => (team.gold + 10))
-
-      result = ''
-      op_team.characters.each do |char|
-        result += char.apply_learnings
-        char.learnings = []
-        char.save
-      end
-      op_team.user.battle.update_attributes(:result => BATTLE_WON, :learning_results => result)
-      op_team.update_attributes(:points => (op_team.points + 1), :gold => (op_team.gold + 50))
+      do_battle_results(team, op_team, BATTLE_LOST, BATTLE_WON)
       return true
+
     end
     false
   end
@@ -774,5 +760,33 @@ class Battle
     result
   end
 
+  def self.do_battle_results(loser, winner, loss_result, win_result)
+    result = ''
+      loser.characters.each do |char|
+        result += char.apply_learnings
+        char.save
+      end
+
+      rating_change_loser = calc_rating_change(0, winner.rating - loser.rating)
+      rating_change_winner = calc_rating_change(1, loser.rating - winner.rating)
+
+      loser.user.battle.update_attributes(:result => loss_result, :learning_results => result)
+      loser.update_attributes(:rating => (loser.rating + rating_change_loser), :gold => (loser.gold + 10))
+
+      result = ''
+      winner.characters.each do |char|
+        result += char.apply_learnings
+        char.learnings = []
+        char.save
+      end
+
+      winner.user.battle.update_attributes(:result => win_result, :learning_results => result)
+      winner.update_attributes(:rating => (winner.rating + rating_change_winner), :gold => (winner.gold + 50))
+  end
+
+  def self.calc_rating_change(score, diff)
+    change = 16.0 * (score - ( 1.0/(1.0 + (10.0 ** (diff/400.0)))))
+    change.round(0)
+  end
 end
 

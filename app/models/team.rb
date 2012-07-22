@@ -9,7 +9,7 @@ class Team
 
   field :formation, :type => Integer, :default => 1
 
-  field :points, :type => Integer, :default => 0
+  field :rating, :type => Integer, :default => 1000
 
   field :gold, :type => Integer, :default => 200
 

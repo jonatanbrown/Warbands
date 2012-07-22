@@ -6,15 +6,11 @@ class BattleSyncsController < ApplicationController
       render :text => "true"
     else
       if bs.seconds_since_submit > 60 and current_user.battle.submitted
-        battle = current_user.battle
-        opponent = User.find(battle.opponent)
-        op_battle = opponent.battle
+        team = current_user.team
+        op_team = User.find(team.user.battle.opponent).team
 
         bs.update_attribute(:turn_events, "")
-        op_battle.update_attribute(:result, TIMED_OUT)
-        opponent.team.update_attributes(:points => (opponent.team.points - 1), :gold => (opponent.team.gold + 10))
-        battle.update_attribute(:result, OPPONENT_TIMED_OUT)
-        current_user.team.update_attributes(:points => (current_user.team.points + 1), :gold => (current_user.team.gold + 50))
+        Battle.do_battle_results(op_team, team, TIMED_OUT, OPPONENT_TIMED_OUT)
         render :text => "true"
       else
         render :text => "false"
