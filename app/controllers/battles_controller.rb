@@ -13,7 +13,7 @@ class BattlesController < ApplicationController
       if current_user.battle_sync
         redirect_to next_turn_path
         return
-      else
+    else
         redirect_to battle_path
         return
       end
@@ -73,7 +73,7 @@ class BattlesController < ApplicationController
     if current_user.battle_queue
       current_user.battle_queue.destroy
     end
-    redirect_to root_path
+    redirect_to arena_path
   end
 
   def confirm_turn

@@ -12,6 +12,7 @@ Warbands::Application.routes.draw do
     end
 
     match 'home/smithy' => 'home#smithy', :as => "smithy"
+    match 'home/arena' => 'home#arena', :as => "arena"
 
     resources :rankings, :only => 'index'
 

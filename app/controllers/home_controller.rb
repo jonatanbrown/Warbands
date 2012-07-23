@@ -9,5 +9,9 @@ class HomeController < ApplicationController
   def smithy
     @team = current_user.team
   end
+
+  def arena
+
+  end
 end
 

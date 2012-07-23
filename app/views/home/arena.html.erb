@@ -1,0 +1,6 @@
+<% if !current_user.battle_queue %>
+  <%= link_to "Queue for match", queue_path(current_user) %>
+<% else %>
+  <%= link_to "Already in queue", queue_path(current_user) %>
+<% end %>
+
