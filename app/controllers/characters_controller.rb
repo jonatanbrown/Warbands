@@ -12,6 +12,19 @@ class CharactersController < ApplicationController
     @unused_equipment = unused_equipment
   end
 
+  def switch_char
+    @character = Character.find(params[:id])
+    @team = current_user.team
+    unused_equipment = @team.unused_equipment
+    @unused_weapons = unused_equipment.where(:eq_type => 0..6)
+    @unused_shields = unused_equipment.where(:eq_type => EQUIPMENT_SHIELD)
+    @unused_head = unused_equipment.where(:eq_type => EQUIPMENT_HEAD)
+    @unused_chest = unused_equipment.where(:eq_type => EQUIPMENT_CHEST)
+    @unused_legs = unused_equipment.where(:eq_type => EQUIPMENT_LEGS)
+    @unused_equipment = unused_equipment
+    render :edit, :layout => false
+  end
+
   def update
     @character = Character.find(params[:id])
     @character.name = params[:name]

@@ -2,7 +2,7 @@
   <h4>
     <%= link_to character.name, edit_character_path(character) %>
     <% if character.points_to_spend? %>
-      - <%= link_to "Unspent skill points", skillup_character_path(character) %>
+      - <%= link_to "Select new skill", skillup_character_path(character) %>
     <% end %>
   </h4>
   <div class="left character-stats-column">

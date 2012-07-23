@@ -1,5 +1,19 @@
 #character-stats {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    height: 450px;
+}
+
+#character-stats-and-navigation{
+    width: 200px;
     margin-right: 100px;
+}
+
+.character-navigation{
+    width: 200px;
+    padding: 10px;
 }
 
 #character-equipment {

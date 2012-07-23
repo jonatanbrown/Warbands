@@ -1,3 +1,7 @@
+body{
+    background-color: grey;
+}
+
 .red{
     color: red;
 }
@@ -41,7 +45,7 @@
     margin-top: 10px;
 }
 
-.main-content {
+.main-content-container {
     padding-left: 15px;
     padding-top: 5px;
     background-image:url('/images/background-main.png');

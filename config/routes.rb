@@ -29,6 +29,7 @@ Warbands::Application.routes.draw do
     match 'characters/:id/change_item/:equipment_id' => 'characters#change_item'
     match 'characters/:id/skillup' => 'characters#skillup', :as => "skillup_character"
     match 'characters/:id/select_skill' => 'characters#select_skill'
+    match 'characters/:id/switch_char' => 'characters#switch_char'
 
     match 'teams/:id/set_formation/:formation_num' => 'teams#set_formation'
     match 'teams/:id/set_character_positions/' => 'teams#set_character_positions'

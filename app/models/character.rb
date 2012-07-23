@@ -6,6 +6,8 @@ class Character
 
   field :name, :type => String
 
+  field :position, :type => Integer
+
   #Stats
   field :str, :type => Integer
   field :dex, :type => Integer
@@ -76,8 +78,6 @@ class Character
   field :current_hp, :type => Integer
   field :taken_damage, :type => Boolean
   field :active, :type => Boolean, :default => 1
-
-  field :position, :type => Integer
 
   field :learnings, :type => Array, :default => []
 

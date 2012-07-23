@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $(".submit-character").on("click", function(event) {
         var char_id = $(this).attr('data-id')
         var name = $("#"+char_id).val()
@@ -25,6 +26,8 @@ $(document).ready(function() {
         });
         return false;
     });
+
+    register_switch_char_listeners();
 
     register_equipment_listeners();
 });
@@ -54,6 +57,25 @@ function register_equipment_listeners() {
           success: function(data) {
             $('#character-equipment').html(data)
             register_equipment_listeners();
+          },
+          dataType: 'html'
+        });
+        return false;
+    });
+}
+
+function register_switch_char_listeners() {
+    $(".switch-character-button").on("click", function(event) {
+        $('.inner-content').fadeOut(200);
+        window.history.replaceState({}, 'Warbands', '/characters/' + $(this).attr('data-char-id') + '/edit');
+        $.ajax({
+          type: "GET",
+          url: '/characters/' + $(this).attr('data-char-id') + '/switch_char',
+          success: function(data) {
+            $('.inner-content').html(data);
+            register_switch_char_listeners();
+            register_equipment_listeners();
+            $('.inner-content').fadeIn(200);
           },
           dataType: 'html'
         });

@@ -1,17 +1,34 @@
 <h2><%= @character.name %></h2>
-<div id="character-stats" class="left">
-  <p>Strength: <%= @character.str %></p>
-  <p>Dexterity: <%= @character.dex %></p>
-  <p>Toughness: <%= @character.tgh %></p>
-  <p>Initiative: <%= @character.ini %></p>
-  <p>Intellect: <%= @character.int %></p>
-  <p>Memory: <%= @character.mem %></p>
-  </br>
-  <p>Strike: <%= @character.strike %></p>
-  <p>Defensive Posture: <%= @character.defensive_posture %></p>
-  <p>Throw: <%= @character.thrown %></p>
-  <p>Cover: <%= @character.cover %></p>
-  <p>Throw Dirt: <%= @character.dirt %></p>
+<div id="character-stats-and-navigation" class="left">
+  <div id="character-stats" class="left bright-background">
+    <p>
+      <b>Stats</b></br>
+      Strength: <%= @character.str %><br/>
+      Dexterity: <%= @character.dex %><br/>
+      Toughness: <%= @character.tgh %><br/>
+      Initiative: <%= @character.ini %><br/>
+      Intellect: <%= @character.int %><br/>
+      Memory: <%= @character.mem %><br/>
+    </p>
+    </br>
+    <p>
+      <b>Skills</b></br>
+      <% @character.get_skills_array.each_with_index do |skill_level, index| %>
+        <% if skill_level != 0%>
+          <%= "#{Constant.get_skill_name(index)}: #{@character.get_skill_value(index)}" %>
+          <br/>
+        <% end %>
+      <% end %>
+      <% if @character.points_to_spend? %>
+        </br>
+        <b><%= link_to "Select new skill", skillup_character_path(@character) %></b>
+      <% end %>
+    </p>
+  </div>
+  <div class="left character-navigation">
+    <div class="left"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position - 1).divmod(4)[1])._id %>"><img src="/images/left_arrow_link.png" onmouseover="this.src='/images/left_arrow_link_focus.png'" onmouseout="this.src='/images/left_arrow_link.png'"/></a></div>
+    <div class="right"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position + 1).divmod(4)[1])._id %>"><img src="/images/right_arrow_link.png" onmouseover="this.src='/images/right_arrow_link_focus.png'" onmouseout="this.src='/images/right_arrow_link.png'"/></a></div>
+  </div>
 </div>
 
 <div id="character-equipment" class="left" data-id="<%= @character._id %>">
