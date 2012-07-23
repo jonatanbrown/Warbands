@@ -9,5 +9,7 @@ class BattleResult
 
   field :learning_results, :type => String
 
+  field :rating_change, :type => Integer
+
 end
 

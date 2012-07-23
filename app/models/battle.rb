@@ -760,28 +760,44 @@ class Battle
     result
   end
 
-  def self.do_battle_results(loser, winner, loss_result, win_result)
-    result = ''
-      loser.characters.each do |char|
-        result += char.apply_learnings
+  def self.do_battle_results(loser_team, winner_team, loss_result, win_result)
+
+    rating_change_loser = calc_rating_change(0, winner_team.rating - loser_team.rating)
+    rating_change_winner = calc_rating_change(1, loser_team.rating - winner_team.rating)
+
+      #Do Loser
+
+      loser = loser_team.user
+
+      learning_results = ''
+      loser_team.characters.each do |char|
+        learning_results += char.apply_learnings
         char.save
       end
 
-      rating_change_loser = calc_rating_change(0, winner.rating - loser.rating)
-      rating_change_winner = calc_rating_change(1, loser.rating - winner.rating)
+      loser.battle.update_attributes(:result => loss_result)
+      loser_team.update_attributes(:rating => (loser_team.rating + rating_change_loser), :gold => (loser_team.gold + 10))
 
-      loser.user.battle.update_attributes(:result => loss_result, :learning_results => result)
-      loser.update_attributes(:rating => (loser.rating + rating_change_loser), :gold => (loser.gold + 10))
+      battle_result = BattleResult.create(last_turn_events: loser.battle_sync.turn_events, result: loser.battle.result, learning_results: learning_results, :rating_change => rating_change_loser)
+      loser.battle_result = battle_result
+      loser.save
 
-      result = ''
-      winner.characters.each do |char|
-        result += char.apply_learnings
-        char.learnings = []
+      # Do Winner
+      winner = winner_team.user
+
+      learning_results = ''
+      winner_team.characters.each do |char|
+        learning_results += char.apply_learnings
         char.save
       end
 
-      winner.user.battle.update_attributes(:result => win_result, :learning_results => result)
-      winner.update_attributes(:rating => (winner.rating + rating_change_winner), :gold => (winner.gold + 50))
+      winner.battle.update_attributes(:result => win_result)
+      winner_team.update_attributes(:rating => (winner_team.rating + rating_change_winner), :gold => (winner_team.gold + 50))
+
+      battle_result = BattleResult.create(last_turn_events: winner.battle_sync.turn_events, result: winner.battle.result, learning_results: learning_results, :rating_change => rating_change_winner)
+      winner.battle_result = battle_result
+      winner.save
+
   end
 
   def self.calc_rating_change(score, diff)

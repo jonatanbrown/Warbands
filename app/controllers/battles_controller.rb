@@ -133,25 +133,26 @@ class BattlesController < ApplicationController
   end
 
   def battle_finished
-    if current_user.battle_result
-      battle_result = current_user.battle_result
-    else
-      bs = current_user.battle_sync
-      battle = current_user.battle
-      battle_result = BattleResult.create(last_turn_events: bs.turn_events, result: battle.result, learning_results: battle.learning_results)
-      current_user.battle_result = battle_result
-      current_user.battle_sync = nil
-      current_user.battle = nil
-      current_user.save
-      if !bs.users.any?
-        bs.destroy
-      end
-      battle.destroy
-      current_user.team.reset_battle_stats
+    battle_result = current_user.battle_result
+    bs = current_user.battle_sync
+    if bs
+      battle_result.update_attribute(:last_turn_info, bs.turn_events)
     end
+    battle = current_user.battle
+    current_user.battle_sync = nil
+    current_user.battle = nil
+    current_user.save
+    if bs and !bs.users.any?
+      bs.destroy
+    end
+    if battle
+      battle.destroy
+    end
+    current_user.team.reset_battle_stats
 
     @learning_results = battle_result.learning_results
-    @turn_events = battle_result.last_turn_events
+    @turn_events = battle_result.last_turn_info
+    @rating_change = battle_result.rating_change
     if battle_result.result == BATTLE_WON
       render 'won_battle'
     elsif battle_result.result == BATTLE_LOST
