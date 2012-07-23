@@ -6,7 +6,7 @@
     color: green;
 }
 
-.separator{
+.separator-vertical{
     height: 50px;
     width: 940px;
     float: left;
@@ -21,9 +21,16 @@
 }
 
 #top-content{
-    height: 85px;
+    height: 110px;
     padding-left: 10px;
     padding-right: 10px;
+    background-image:url('/images/background-top.png');
+    background-repeat:repeat-y;
+    border: 2px solid;
+}
+
+.title-text{
+    margin-top: 10px;
 }
 
 #team-info{
@@ -31,12 +38,30 @@
 }
 
 .main-content {
-    margin-left: 20px;
+    padding-left: 15px;
+    padding-top: 5px;
+    background-image:url('/images/background-main.png');
+    background-repeat:repeat-y;
+    min-height: 700px;
+    border: 2px solid;
+    overflow: hidden;
 }
 
 #all-content{
     width: 940px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.navbar {
+    width: 940px;
+}
+
+.navbar a{
+    font-size: 15px;
+}
+
+.navbar-choice{
+    margin-right: 15px;
 }
 

@@ -10,30 +10,31 @@
 <div id="all-content">
   <% if current_user and current_user.team %>
     <div id="top-content">
-        <div class="left">
-          <h1>Warbands</h1>
+      <div class="left title-text">
+        <h1>Warbands</h1>
+      </div>
+      <div id="team-info" class="right" data-id="<%= current_user.team._id %>">
+        <div id="gold-display"><p><b>Gold: <%= current_user.team.gold %></b></p></div>
+        <p><b>Rating: <%= current_user.team.rating %></b></p>
+        <%= battle_button %>
+      </div>
+      <div class="navbar left"><b>
+        <div class="navbar-choice left"><%= link_to "Home", root_path %></div>
+        <div class="navbar-choice left"><%= link_to "Barracks", team_path(current_user.team) %></div>
+        <div class="navbar-choice left"><%= link_to "Smithy", smithy_path %></div>
+        <div class="navbar-choice left">
+          <% if !current_user.battle_queue %>
+            <%= link_to "Arena", arena_path %>
+          <% else %>
+            <%= link_to "Arena", queue_path(current_user) %>
+          <% end %>
         </div>
-        <div id="team-info" class="right" data-id="<%= current_user.team._id %>">
-          <div id="gold-display"><p><b>Gold: <%= current_user.team.gold %></b></p></div>
-          <p><b>Rating: <%= current_user.team.rating %></b></p>
-          <%= battle_button %>
-        </div>
-    </div>
-    <div class="navbar">
-      <%= link_to "Home", root_path %>
-      <%= link_to "Barracks", team_path(current_user.team) %>
-      <%= link_to "Smithy", smithy_path %>
-      <% if !current_user.battle_queue %>
-        <%= link_to "Arena", arena_path %>
-      <% else %>
-        <%= link_to "Arena", queue_path(current_user) %>
-      <% end %>
-      <%= link_to "Rankings", rankings_path %>
+        <div class="navbar-choice left"><%= link_to "Rankings", rankings_path %></div>
+      </b></div>
     </div>
   <% end %>
-
   <div class="main-content">
-  <%= yield %>
+    <%= yield %>
   </div>
 </div>
 
