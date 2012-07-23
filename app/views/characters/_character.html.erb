@@ -1,26 +1,41 @@
-<tr>
-  <td>
-    <h4>
-      <%= link_to character.name, edit_character_path(character) %>
-      <% if character.points_to_spend? %>
-        - <%= link_to "Unspent skill points", skillup_character_path(character) %>
-      <% end %>
-    </h4>
+<div class="character-info bright-background left">
+  <h4>
+    <%= link_to character.name, edit_character_path(character) %>
+    <% if character.points_to_spend? %>
+      - <%= link_to "Unspent skill points", skillup_character_path(character) %>
+    <% end %>
+  </h4>
+  <div class="left character-stats-column">
     <p>
-      Strength: <%= character.str %>
-      Dexterity: <%= character.dex %>
-      Toughness: <%= character.tgh %>
-      Initiative: <%= character.ini %>
-      Intellect: <%= character.int %>
-      Memory: <%= character.mem %>
+      <b>Stats</b></br>
+      Strength: <%= character.str %><br/>
+      Dexterity: <%= character.dex %><br/>
+      Toughness: <%= character.tgh %><br/>
+      Initiative: <%= character.ini %><br/>
+      Intellect: <%= character.int %><br/>
+      Memory: <%= character.mem %><br/>
     </p>
+  </div>
+
+  <div class="left character-skills-column">
     <p>
-      <% character.get_skills_array.each_with_index do |skill_level, index| %>
-        <% if skill_level != 0%>
-          <%= "#{Constant.get_skill_name(index)}: #{character.get_skill_value(index)}" %>
+      <b>Skills</b></br>
+        <% character.get_skills_array.each_with_index do |skill_level, index| %>
+          <% if skill_level != 0%>
+            <%= "#{Constant.get_skill_name(index)}: #{character.get_skill_value(index)}" %>
+            <br/>
+          <% end %>
         <% end %>
+    </p>
+  </div>
+  <div class="left character-gear-column">
+    <p>
+      <b>Gear</b></br>
+      <% equipment = character.equipments.all.sort {|x, y| x.eq_type <=> y.eq_type} %>
+      <% equipment.each_with_index do |item| %>
+        <%= "#{item.get_equipment_slot}: #{item.name}" %></br>
       <% end %>
     </p>
-  </td>
-</tr>
+  </div>
+</div>
 

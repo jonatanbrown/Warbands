@@ -1,19 +1,21 @@
-<h4><%= equipment.name %>
-<% if equipment.character %>
-  <a class="unequip-item" href="#" data-id="<%= equipment._id %>"><span class="red">X</span></a>
-<% end %>
-</h4>
-<% if equipment.weapon? %>
-  <p>Class: <%= equipment.get_class_name %></p>
-  <% if equipment.ranged? %>
-    <p>Range: Ranged </p>
-  <% else %>
-    <p>Range: Melee </p>
+<div class="equipment-info bright-background">
+  <h4><%= equipment.name %>
+  <% if equipment.character %>
+    <a class="unequip-item" href="#" data-id="<%= equipment._id %>"><span class="red">X</span></a>
   <% end %>
-  <p>Damage: <%= "#{equipment.min_damage} - #{equipment.max_damage}" %></p>
-<% else %>
-  <p>Class: <%= equipment.get_class_name %></p>
-  <p>Armor: <%= equipment.armor %></p>
-  <p>Str Req: <%= equipment.str_req %></p>
-<% end %>
+  </h4>
+  <% if equipment.weapon? %>
+    <p>Class: <%= equipment.get_class_name %></p>
+    <% if equipment.ranged? %>
+      <p>Range: Ranged </p>
+    <% else %>
+      <p>Range: Melee </p>
+    <% end %>
+    <p>Damage: <%= "#{equipment.min_damage} - #{equipment.max_damage}" %></p>
+  <% else %>
+    <p>Class: <%= equipment.get_class_name %></p>
+    <p>Armor: <%= equipment.armor %></p>
+    <p>Str Req: <%= equipment.str_req %></p>
+  <% end %>
+</div>
 

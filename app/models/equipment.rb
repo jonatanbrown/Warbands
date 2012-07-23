@@ -73,6 +73,33 @@ class Equipment
     end
   end
 
+  def get_equipment_slot
+    case eq_type
+    when EQUIPMENT_SWORD
+      'Weapon'
+    when EQUIPMENT_MACE
+      'Weapon'
+    when EQUIPMENT_AXE
+      'Weapon'
+    when EQUIPMENT_SPEAR
+      'Weapon'
+    when EQUIPMENT_THROWING_KNIVES
+      'Weapon'
+    when EQUIPMENT_JAVELINS
+      'Weapon'
+    when EQUIPMENT_THROWING_AXES
+      'Weapon'
+    when EQUIPMENT_SHIELD
+      'Shield'
+    when EQUIPMENT_HEAD
+      'Head Armor'
+    when EQUIPMENT_CHEST
+      'Chest Armor'
+    when EQUIPMENT_LEGS
+      'Leg Armor'
+    end
+  end
+
   def roll_damage
     rand(min_damage..max_damage)
   end

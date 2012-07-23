@@ -9,5 +9,26 @@
 
 #team-char-list {
     margin-right: 100px;
+    width: 550px;
+}
+
+.character-stats-column, .character-skills-column{
+    width: 160px;
+}
+
+.character-gear-column{
+    width: 220px;
+}
+
+.character-info{
+    margin-bottom: 7px;
+    padding-left: 5px;
+    border-radius: 10px;
+}
+
+.equipment-info{
+    margin-bottom: 7px;
+    padding-left: 5px;
+    border-radius: 10px;
 }
 
