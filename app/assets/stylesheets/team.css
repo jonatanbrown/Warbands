@@ -62,3 +62,13 @@
     border-radius: 10px;
 }
 
+#choose-team-name{
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+
+#characters-table{
+    width: 545px;
+}
+

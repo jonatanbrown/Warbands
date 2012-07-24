@@ -1,13 +1,15 @@
-<h2>Create a new team!</h2>
-
-<%= form_for @team do |f| %>
-  <p>Name</p>
-  <%= f.text_field :name %>
-
-<table id="characters-table">
+<div class="content-header left">
+  <h2>Create a new team!</h2>
+  <h4><a href="#" id="reroll-characters" data-id="<%= @team._id %>">Reroll Characters</a></h4></br>
+</div>
+<div id="characters-table" class="left">
     <%= render :partial => "characters/character", :collection => @team.characters %>
-</table>
-<a href="#" id="reroll-characters" data-id="<%= @team._id %>">Reroll Characters</a></br>
-  <%= f.submit "Create Team" %>
-<% end %>
+</div>
+<div id="choose-team-name" class="left bright-background">
+  <%= form_for @team do |f| %>
+    <p>Name</p>
+    <%= f.text_field :name %>
+    <%= f.submit "Create Team" %>
+  <% end %>
+</div>
 
