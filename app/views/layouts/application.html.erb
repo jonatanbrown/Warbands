@@ -16,6 +16,7 @@
       <div id="team-info" class="right" data-id="<%= current_user.team._id %>">
         <div id="gold-display"><p><b>Gold: <%= current_user.team.gold %></b></p></div>
         <p><b>Rating: <%= current_user.team.rating %></b></p>
+        <div class="right"><%= link_to "Logout", logout_path %></div>
         <%= battle_button %>
       </div>
       <div class="navbar left"><b>
@@ -30,7 +31,6 @@
           <% end %>
         </div>
         <div class="navbar-choice left"><%= link_to "Rankings", rankings_path %></div>
-        <div class="navbar-choice right"><%= link_to "Logout", logout_path %></div>
       </b></div>
     </div>
   <% end %>
