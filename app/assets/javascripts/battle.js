@@ -213,12 +213,12 @@ function update_timeout_clock(){
       else
       {
         var int_data = parseInt(data);
-        $('#submit-timer').html("Timeout in " + int_data + " seconds.");
+        $('#submit-timer').html("<b><span class='red'>Timeout in " + int_data + " seconds.</span></b>");
         clearInterval(battle_actions_interval_id);
         setInterval(
           function(){
             int_data -= 1;
-            $('#submit-timer').html("Timeout in " + int_data + " seconds.");
+            $('#submit-timer').html("<b><span class='red'>Timeout in " + int_data + " seconds.</span></b>");
           },
           1000
         );
