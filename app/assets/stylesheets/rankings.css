@@ -1,0 +1,16 @@
+.rankings-team-td{
+    width: 200px;
+    text-align: left;
+}
+
+.rankings-rating-td{
+    width: 50px;
+    text-align: left;
+}
+
+#rankings-table{
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+}
+

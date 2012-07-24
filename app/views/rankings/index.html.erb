@@ -1,9 +1,10 @@
 <h2>Team rankings</h2>
-
-<table>
-<tr><th>Team</th><th>Rating</th></tr>
-<% @teams.each do |team| %>
-  <tr><td><%= team.name %></td><td><%= team.rating %></td></tr>
-<% end %>
-</table>
+<div  id="rankings-table" class="bright-background">
+  <table>
+  <tr><th class="rankings-team-td">Team</th><th class="rankings-rating-td">Rating</th></tr>
+  <% @teams.each do |team| %>
+    <tr><td class="rankings-team-td"><%= team.name %></td><td class="rankings-rating-td"><%= team.rating %></td></tr>
+  <% end %>
+  </table>
+</div>
 
