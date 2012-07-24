@@ -11,5 +11,7 @@ class BattleResult
 
   field :rating_change, :type => Integer
 
+  field :gold_change, :type => Integer
+
 end
 

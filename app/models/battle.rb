@@ -779,7 +779,7 @@ class Battle
       loser.battle.update_attributes(:result => loss_result)
       loser_team.update_attributes(:rating => (loser_team.rating + rating_change_loser), :gold => (loser_team.gold + 10))
 
-      battle_result = BattleResult.create(last_turn_events: loser.battle_sync.turn_events, result: loser.battle.result, learning_results: learning_results, :rating_change => rating_change_loser)
+      battle_result = BattleResult.create(last_turn_events: loser.battle_sync.turn_events, result: loser.battle.result, learning_results: learning_results, :rating_change => rating_change_loser, :gold_change => 10)
       loser.battle_result = battle_result
       loser.save
 
@@ -796,7 +796,7 @@ class Battle
       winner.battle.update_attributes(:result => win_result)
       winner_team.update_attributes(:rating => (winner_team.rating + rating_change_winner), :gold => (winner_team.gold + 50))
 
-      battle_result = BattleResult.create(last_turn_events: winner.battle_sync.turn_events, result: winner.battle.result, learning_results: learning_results, :rating_change => rating_change_winner)
+      battle_result = BattleResult.create(last_turn_events: winner.battle_sync.turn_events, result: winner.battle.result, learning_results: learning_results, :rating_change => rating_change_winner, :gold_change => 50)
       winner.battle_result = battle_result
       winner.save
 

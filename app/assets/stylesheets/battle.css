@@ -31,6 +31,21 @@
     border-radius: 10px;
 }
 
+#battle-final-events{
+    float: left;
+    width: 449px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#battle-gain{
+    float: left;
+    width: 349px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
 .section-header{
     width: 905px;
 }

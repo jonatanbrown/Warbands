@@ -150,18 +150,20 @@ class BattlesController < ApplicationController
     end
     current_user.team.reset_battle_stats
 
+    @result = battle_result.result
     @learning_results = battle_result.learning_results
     @turn_events = battle_result.last_turn_info
     @rating_change = battle_result.rating_change
-    if battle_result.result == BATTLE_WON
-      render 'won_battle'
-    elsif battle_result.result == BATTLE_LOST
-      render 'lost_battle'
-    elsif battle_result.result == TIMED_OUT
-      render 'timed_out'
-    else
-      render 'opponent_timed_out'
-    end
+    @gold_change = battle_result.gold_change
+    #if battle_result.result == BATTLE_WON
+    #  render 'won_battle'
+    #elsif battle_result.result == BATTLE_LOST
+    #  render 'lost_battle'
+    #elsif battle_result.result == TIMED_OUT
+    #  render 'timed_out'
+    #else
+    #  render 'opponent_timed_out'
+    #end
   end
 
 end

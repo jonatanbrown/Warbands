@@ -1,0 +1,27 @@
+<h2>
+  <% if @result == BATTLE_WON %>
+    You won the battle!
+  <% elsif @result == BATTLE_LOST %>
+    You lost the battle.
+  <% elsif @result == OPPONENT_TIMED_OUT %>
+    Your opponent timed out, you win!
+  <% elsif @result == TIMED_OUT %>
+    You timed out, you lose.
+  <% end %>
+</h2>
+<div id="battle-final-events" class="bright-background">
+  <%= @turn_events.html_safe %>
+</div>
+<div id="battle-gain" class="bright-background">
+
+  You gain <%= @gold_change %> gold.
+
+  <p><%= @learning_results.html_safe %></p>
+
+  <% if @rating_change < 0 %>
+    <p><span class="red">Your rating changed by <%= @rating_change %>.</span></p>
+  <% else %>
+    <p><span class="green">Your rating changed by <%= @rating_change %>.</span></p>
+  <% end %>
+</div>
+
