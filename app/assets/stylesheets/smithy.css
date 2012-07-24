@@ -1,16 +1,39 @@
 .btn-container {
     margin-bottom: 10px;
+    height: 20px;
 }
 
 #smithy-tab-content{
-    width: 500px;
+    width: 400px;
+    height: 200px;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 #smithy-item-view {
     width: 440px;
+    height: 200px;
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 #smithy-messages {
     width: 940px;
+}
+
+.buy-item-button{
+    display: none;
+}
+
+.item-button {
+  color: #0088cc;
+  cursor: default;
+}
+
+.item-button:hover {
+  color: #0088cc;
+  text-decoration: none;
+  cursor: default;
 }
 

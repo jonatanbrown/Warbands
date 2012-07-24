@@ -1,7 +1,15 @@
 $(document).ready(function() {
-    $(".buy-item-button").on("mouseover", function(event) {
+    $(".item-button").on("mouseover", function(event) {
         result = get_item_description($(this).attr('data-item'));
         $("#smithy-item-view").html(result);
+    });
+
+    $(".item-button").on("mouseenter", function(event) {
+        $(this).parent().find('.buy-item-button').show(200);
+    });
+
+    $(".btn-container").on("mouseleave", function(event) {
+        $(this).find('.buy-item-button').hide();
     });
 
     $(".buy-item-button").on("click", function(event) {
@@ -13,6 +21,7 @@ $(document).ready(function() {
             },
             dataType: 'script'
         });
+        return false;
     });
 });
 
