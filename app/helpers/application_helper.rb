@@ -15,7 +15,7 @@ module ApplicationHelper
   def battle_character(pos, team)
     char = team.get_char(pos)
     if team.get_char(pos).active
-      content = ''
+      content = '<b>'
       if current_user.team.characters.include?(char)
         content += char.get_stats_text
         content += "</br>"
@@ -25,6 +25,7 @@ module ApplicationHelper
       end
       content += "</br>"
       content += char.get_effects_text
+      content += '</b>'
       result = '<div class="battle-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
       result += render :partial => "characters/battle_character", :locals => { :character => char }
     else
@@ -37,11 +38,11 @@ module ApplicationHelper
 
   def edit_team_character(pos, team)
     char = team.get_char(pos)
-    content = ''
-
+    content = "<b>"
     content += char.get_stats_text
     content += "</br>"
     content += char.get_skills_text
+    content += "</b>"
 
     result = '<div class="edit-team-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
       result += char.name
