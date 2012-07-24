@@ -47,6 +47,7 @@ body{
 
 .main-content-container {
     padding-left: 15px;
+    padding-right: 15px;
     padding-top: 5px;
     background-image:url('/images/background-main.png');
     background-repeat:repeat-y;

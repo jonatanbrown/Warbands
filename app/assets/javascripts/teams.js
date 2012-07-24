@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-    $('.edit-team-character').popover({placement: 'bottom'})
-
     $("#reroll-characters").on("click", function(event) {
         var team_id = $(this).attr('data-id')
         $.ajax({
@@ -14,6 +12,14 @@ $(document).ready(function() {
         });
         return false;
     });
+
+    register_edit_team_listeners();
+
+});
+
+function register_edit_team_listeners() {
+
+    $('.edit-team-character').popover({placement: 'bottom'})
 
     $("#formation-selector").on("change", function(event) {
         var team_id = $(this).attr('data-id')
@@ -63,5 +69,27 @@ $(document).ready(function() {
         });
         return false;
     });
-});
+
+    $("#submit-character-names").on("click", function(event) {
+        var team_id = $('#team-info').attr('data-id');
+        var name_fields = $('.character-name-field');
+        var names = {}
+        console.log(name_fields)
+        for (var i = 0; i < name_fields.length; i++)
+        {
+            names[$(name_fields[i]).attr('data-id') + ''] = $(name_fields[i]).val();
+        }
+        $.ajax({
+          type: "POST",
+          url: '/teams/' + team_id + '/set_character_names/',
+          data: {names: names},
+          success: function(data) {
+            $(".inner-content").html(data)
+            register_edit_team_listeners();
+          },
+          dataType: 'html'
+        });
+        return false;
+    });
+}
 

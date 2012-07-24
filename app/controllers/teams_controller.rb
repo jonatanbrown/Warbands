@@ -53,6 +53,13 @@ class TeamsController < ApplicationController
     render "_char_positions", :layout => false
   end
 
+  def set_character_names
+    @team = Team.find(params[:id])
+    @team.set_character_names(params["names"])
+    @team.save
+    render :edit, :layout => false
+  end
+
   def in_battle
     team = Team.find(params[:id])
     if team.user.battle

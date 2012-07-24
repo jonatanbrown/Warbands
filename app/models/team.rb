@@ -59,6 +59,13 @@ class Team
 
   end
 
+  def set_character_names(char_names)
+    char_names.each do |id, name|
+      char = Character.find(id)
+      char.update_attribute(:name, name)
+    end
+  end
+
   def set_formation(formation_num)
 
     unless (1..4) === formation_num.to_i
