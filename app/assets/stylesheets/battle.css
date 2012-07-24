@@ -1,5 +1,6 @@
 #battle-teams{
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 #opponent-team{
@@ -18,11 +19,16 @@
 
 #home-team-actions{
     float: left;
-    margin-right: 50px;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
 }
 
 #turn-events{
     float: left;
+    width: 449px;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .section-header{
