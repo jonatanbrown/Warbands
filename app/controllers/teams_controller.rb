@@ -87,5 +87,11 @@ class TeamsController < ApplicationController
     end
     render "purchase_item"
   end
+
+  def destroy
+    @team = Team.find(params[:id])
+    @team.destroy
+    redirect_to root_path
+  end
 end
 
