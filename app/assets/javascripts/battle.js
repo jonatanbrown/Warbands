@@ -55,12 +55,26 @@ $(document).ready(function() {
 
 function update_action_list(pos) {
     $('#pos' + pos + '-actions').html("");
-    for (i in battle['actions']['' + pos])
-    {
+    for (var i = 0; i < battle['actions']['' + pos].length; i++) {
         var skill_id = battle['actions']['' + pos][i]['action'];
         var target_pos = battle['actions']['' + pos][i]['target'];
         var skill_name = battle['skills'][skill_id][0];
-        $('#pos' + pos + '-actions').append('<p>' + skill_name + ' at ' + target_pos + ' <a href="#" class="undo-action" data-action-index=' + i + ' data-pos=' + pos + '><span class="red">X</span></a>' + '</p>');
+        var friendly = battle['actions']['' + pos][i]['friendly'];
+        var target_name = ''
+        if (friendly) {
+            for (var n = 0; n < battle.chars.length; n++) {
+                if(battle.chars[n][1] == target_pos)
+                    target_name += ' at ' + battle.chars[n][0]
+            }
+        }
+        else {
+            console.log(target_pos)
+            for (var n = 0; n < battle.op_chars.length; n++) {
+                if(battle.op_chars[n][1] == target_pos)
+                    target_name += ' at ' + battle.op_chars[n][0]
+            }
+        }
+        $('#pos' + pos + '-actions').append('<p>' + skill_name + target_name + ' <a href="#" class="undo-action" data-action-index=' + i + ' data-pos=' + pos + '><span class="red">X</span></a>' + '</p>');
     }
     $('.undo-action').on("click", undo_action);
 }
@@ -136,6 +150,9 @@ function undo_action() {
 
     var index = $(this).attr('data-action-index');
     var pos = $(this).attr('data-pos');
+    console.log('Position')
+    console.log(pos)
+    console.log(battle['actions']['' + pos])
     var skill_id = battle['actions']['' + pos][index].action
 
     var ap_cost = battle.skills[skill_id][2]
