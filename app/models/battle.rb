@@ -772,6 +772,7 @@ class Battle
       learning_results = ''
       loser_team.characters.each do |char|
         learning_results += char.apply_learnings
+        char.learnings = []
         char.save
       end
 
@@ -788,6 +789,7 @@ class Battle
       learning_results = ''
       winner_team.characters.each do |char|
         learning_results += char.apply_learnings
+        char.learnings = []
         char.save
       end
 
