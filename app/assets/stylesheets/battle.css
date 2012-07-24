@@ -1,9 +1,19 @@
+#battle-teams{
+    border-radius: 10px;
+}
+
 #opponent-team{
     width: auto;
+    overflow:hidden;
+    height:1%;
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 #home-team{
-
+    overflow:hidden;
+    height:1%;
+    border-radius: 10px;
 }
 
 #home-team-actions{
@@ -13,6 +23,10 @@
 
 #turn-events{
     float: left;
+}
+
+.section-header{
+    width: 905px;
 }
 
 .battle-character{
@@ -27,17 +41,17 @@
 .front-row{
     float: left;
     min-width: 890px;
-    margin-bottom: 20px;
+    padding: 10px;
 }
 
 .back-row{
     float: left;
     min-width: 890px;
-    margin-bottom: 20px;
+    padding: 10px;
 }
 
 .two-char-row{
-    padding-left: 16%;
+    margin-left: 16%;
 }
 
 .front-row-formation-1{

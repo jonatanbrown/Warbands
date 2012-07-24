@@ -28,50 +28,48 @@
   );
 </script>
 
-<div id="battle-info">
-  <div class="left">
-    <p>Doin battle against <%= @op_team.name %>!</p>
-    <p>Battle is on turn <%= @battle.turn %></p>
-  </div>
-  <div class="right">
-    <div id="submit-timer">
-      Opponent has not yet confirmed actions.
-    </div>
+<div class="section-header left">
+  <h2>In battle against <%= @op_team.name %>!</h2>
+</div>
+<div id="battle-info left">
+  <span>Battle is on turn <%= @battle.turn %></span>
+  <div id="submit-timer" class="right">
+    Opponent has not yet confirmed actions.
   </div>
 </div>
 
-<div id="opponent-team">
-  <% case @op_team.formation %>
-    <% when 1 %>
-      <%= render :partial => "front_row_1", :locals => {:team => @op_team} %>
-    <% when 2 %>
-      <%= render :partial => "back_row_2", :locals => {:team => @op_team} %>
-      <%= render :partial => "front_row_2", :locals => {:team => @op_team} %>
-    <% when 3 %>
-      <%= render :partial => "back_row_3", :locals => {:team => @op_team} %>
-      <%= render :partial => "front_row_3", :locals => {:team => @op_team} %>
-    <% when 4 %>
-      <%= render :partial => "back_row_4", :locals => {:team => @op_team} %>
-      <%= render :partial => "front_row_4", :locals => {:team => @op_team} %>
-  <% end %>
-</div>
+<div id="battle-teams" class="bright-background left">
+  <div id="opponent-team" class="left">
+    <% case @op_team.formation %>
+      <% when 1 %>
+        <%= render :partial => "front_row_1", :locals => {:team => @op_team} %>
+      <% when 2 %>
+        <%= render :partial => "back_row_2", :locals => {:team => @op_team} %>
+        <%= render :partial => "front_row_2", :locals => {:team => @op_team} %>
+      <% when 3 %>
+        <%= render :partial => "back_row_3", :locals => {:team => @op_team} %>
+        <%= render :partial => "front_row_3", :locals => {:team => @op_team} %>
+      <% when 4 %>
+        <%= render :partial => "back_row_4", :locals => {:team => @op_team} %>
+        <%= render :partial => "front_row_4", :locals => {:team => @op_team} %>
+    <% end %>
+  </div>
 
-<div class="separator-vertical"></div>
-
-<div id="home-team">
-  <% case @team.formation %>
-    <% when 1 %>
-      <%= render :partial => "front_row_1", :locals => {:team => @team} %>
-    <% when 2 %>
-      <%= render :partial => "front_row_2", :locals => {:team => @team} %>
-      <%= render :partial => "back_row_2", :locals => {:team => @team} %>
-    <% when 3 %>
-      <%= render :partial => "front_row_3", :locals => {:team => @team} %>
-      <%= render :partial => "back_row_3", :locals => {:team => @team} %>
-    <% when 4 %>
-      <%= render :partial => "front_row_4", :locals => {:team => @team} %>
-      <%= render :partial => "back_row_4", :locals => {:team => @team} %>
-  <% end %>
+  <div id="home-team" class="left">
+    <% case @team.formation %>
+      <% when 1 %>
+        <%= render :partial => "front_row_1", :locals => {:team => @team} %>
+      <% when 2 %>
+        <%= render :partial => "front_row_2", :locals => {:team => @team} %>
+        <%= render :partial => "back_row_2", :locals => {:team => @team} %>
+      <% when 3 %>
+        <%= render :partial => "front_row_3", :locals => {:team => @team} %>
+        <%= render :partial => "back_row_3", :locals => {:team => @team} %>
+      <% when 4 %>
+        <%= render :partial => "front_row_4", :locals => {:team => @team} %>
+        <%= render :partial => "back_row_4", :locals => {:team => @team} %>
+    <% end %>
+  </div>
 </div>
 
 <div id="home-team-actions">
