@@ -1,6 +1,7 @@
-.btn-container {
+.smithy-btn-container {
     margin-bottom: 10px;
-    height: 20px;
+    height: 25px;
+    font-size: 14px;
 }
 
 #smithy-tab-content{
@@ -24,6 +25,7 @@
 
 .buy-item-button{
     display: none;
+    margin-left: 5px;
 }
 
 .item-button {
@@ -35,5 +37,10 @@
   color: #0088cc;
   text-decoration: none;
   cursor: default;
+}
+
+.smithy-tab{
+    font-size: 15px;
+    font-weight: bold;
 }
 

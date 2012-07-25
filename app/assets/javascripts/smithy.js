@@ -8,7 +8,7 @@ $(document).ready(function() {
         $(this).parent().find('.buy-item-button').show(200);
     });
 
-    $(".btn-container").on("mouseleave", function(event) {
+    $(".smithy-btn-container").on("mouseleave", function(event) {
         $(this).find('.buy-item-button').hide();
     });
 
