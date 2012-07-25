@@ -37,6 +37,7 @@ Warbands::Application.routes.draw do
     match 'teams/:id/in_battle/' => 'teams#in_battle'
     match 'teams/:id/formation/' => 'teams#formation'
     match 'teams/:id/purchase_item/:item' => 'teams#purchase_item'
+    match 'teams/:id/sell_item/:item_id' => 'teams#sell_item'
 
     match 'battle_syncs/refresh_waiting_status' => 'battle_syncs#refresh_waiting_status'
     match 'battle_syncs/seconds_left' => 'battle_syncs#seconds_left'

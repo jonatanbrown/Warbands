@@ -88,6 +88,14 @@ class TeamsController < ApplicationController
     render "purchase_item"
   end
 
+  def sell_item
+    @team = Team.find(params[:id])
+    equipment = Equipment.find(params[:item_id])
+    @team.update_attribute(:gold, @team.gold + (equipment.value / 3.0).round(0))
+    equipment.destroy
+    render "sell_item"
+  end
+
   def destroy
     @team = Team.find(params[:id])
     @team.destroy

@@ -2,6 +2,8 @@
   <h4><%= equipment.name %>
   <% if equipment.character %>
     <a class="unequip-item" href="#" data-id="<%= equipment._id %>"><span class="red">X</span></a>
+  <% else %>
+    <a href="#" rel="tooltip" data-original-title="Sell Item for <%= (equipment.value / 3.0).round(0) %>" class="sell-item-button" data-id="<%= equipment._id %>"><img src='/images/coin-icon.png' border='0'/></a>
   <% end %>
   </h4>
   <% if equipment.weapon? %>

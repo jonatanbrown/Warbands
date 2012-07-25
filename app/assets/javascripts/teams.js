@@ -13,6 +13,21 @@ $(document).ready(function() {
         return false;
     });
 
+    $(".sell-item-button").on("click", function(event) {
+        team_id = $('#team-info').attr('data-id');
+        item_id = $(this).attr('data-id');
+        $.ajax({
+            url: '/teams/' + team_id + '/sell_item/' + item_id,
+            success: function(data) {
+
+            },
+            dataType: 'script'
+        });
+        $(this).closest('.equipment-info').remove()
+        $('.tooltip').remove()
+        return false;
+    });
+
     register_edit_team_listeners();
 
 });

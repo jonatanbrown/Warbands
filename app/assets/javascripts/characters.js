@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $(".sell-item-button").tooltip({placement: 'right'});
+
     $(".select-skill-button").on("click", function(event) {
         $.ajax({
           type: "POST",
