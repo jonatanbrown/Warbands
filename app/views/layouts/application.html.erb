@@ -23,13 +23,7 @@
         <div class="navbar-choice left"><%= link_to "Home", root_path %></div>
         <div class="navbar-choice left"><%= link_to "Barracks", team_path(current_user.team) %></div>
         <div class="navbar-choice left"><%= link_to "Smithy", smithy_path %></div>
-        <div class="navbar-choice left">
-          <% if !current_user.battle_queue %>
-            <%= link_to "Arena", arena_path %>
-          <% else %>
-            <%= link_to "Arena", queue_path(current_user) %>
-          <% end %>
-        </div>
+        <div class="navbar-choice left"><%= link_to "Arena", arena_path %></div>
         <div class="navbar-choice left"><%= link_to "Rankings", rankings_path %></div>
       </b></div>
     </div>
