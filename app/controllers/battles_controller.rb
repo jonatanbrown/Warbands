@@ -129,6 +129,10 @@ class BattlesController < ApplicationController
       battle.update_attributes(turn: battle.turn + 1, submitted: false)
       redirect_to next_turn_path
     end
+
+    @team = current_user.team
+    @op_team = User.find(battle.opponent).team
+    @turn_events = bs.turn_events
   end
 
   def battle_finished

@@ -18,4 +18,41 @@
 <h2>Waiting for opponent to finish..</h2>
 
 <%= link_to "Refresh", waiting_for_turn_path %>
+<p><h3>Previous turn events</h3></p>
+<div id="battle-teams" class="bright-background left">
+  <div id="opponent-team" class="left">
+    <% case @op_team.formation %>
+      <% when 1 %>
+        <%= render :partial => "front_row_1", :locals => {:team => @op_team} %>
+      <% when 2 %>
+        <%= render :partial => "back_row_2", :locals => {:team => @op_team} %>
+        <%= render :partial => "front_row_2", :locals => {:team => @op_team} %>
+      <% when 3 %>
+        <%= render :partial => "back_row_3", :locals => {:team => @op_team} %>
+        <%= render :partial => "front_row_3", :locals => {:team => @op_team} %>
+      <% when 4 %>
+        <%= render :partial => "back_row_4", :locals => {:team => @op_team} %>
+        <%= render :partial => "front_row_4", :locals => {:team => @op_team} %>
+    <% end %>
+  </div>
+
+  <div id="home-team" class="left">
+    <% case @team.formation %>
+      <% when 1 %>
+        <%= render :partial => "front_row_1", :locals => {:team => @team} %>
+      <% when 2 %>
+        <%= render :partial => "front_row_2", :locals => {:team => @team} %>
+        <%= render :partial => "back_row_2", :locals => {:team => @team} %>
+      <% when 3 %>
+        <%= render :partial => "front_row_3", :locals => {:team => @team} %>
+        <%= render :partial => "back_row_3", :locals => {:team => @team} %>
+      <% when 4 %>
+        <%= render :partial => "front_row_4", :locals => {:team => @team} %>
+        <%= render :partial => "back_row_4", :locals => {:team => @team} %>
+    <% end %>
+  </div>
+</div>
+<div id="turn-events" class="bright-background">
+  <%= @turn_events.html_safe %>
+</div>
 
