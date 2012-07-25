@@ -1,7 +1,8 @@
 .smithy-btn-container {
-    margin-bottom: 10px;
+    //margin-bottom: 10px;
     height: 25px;
     font-size: 14px;
+    line-height: 25px;
 }
 
 #smithy-tab-content{
@@ -42,5 +43,19 @@
 .smithy-tab{
     font-size: 15px;
     font-weight: bold;
+}
+
+.smithy-item-separator{
+    width: 400px;
+    height: 2px;
+    background: #dddddd;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.smithy-cost{
+    font-size: inherit;
 }
 

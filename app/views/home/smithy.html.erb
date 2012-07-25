@@ -12,48 +12,89 @@
 <div class="tab-content left bright-background" id="smithy-tab-content">
   <div class="tab-pane active" id="melee-weapons">
 
-    <div class="smithy-btn-container"><span class="item-button" data-item="short_sword">Short Sword</span><a href="#" class="buy-item-button" data-item="short_sword"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="club">Club</span><a href="#" class="buy-item-button" data-item="club"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="small_axe">Small Axe</span><a href="#" class="buy-item-button" data-item="small_axe"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="short_spear">Short Spear</span><a href="#" class="buy-item-button" data-item="short_spear"><img src='/images/coin-icon.png' border='0'/></a></div>
+    <div class="smithy-btn-container"><span class="item-button" data-item="short_sword">Short Sword</span><a href="#" class="buy-item-button" data-item="short_sword"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('short_sword')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="club">Club</span><a href="#" class="buy-item-button" data-item="club"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('club')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="small_axe">Small Axe</span><a href="#" class="buy-item-button" data-item="small_axe"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('small_axe')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="short_spear">Short Spear</span><a href="#" class="buy-item-button" data-item="short_spear"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('short_spear')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
 
   </div>
   <div class="tab-pane" id="ranged-weapons">
 
-    <div class="smithy-btn-container"><span class="item-button" data-item="throwing_knives">Throwing Knives</span><a href="#" class="buy-item-button" data-item="throwing_knives"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="javelins">Javelins</span><a href="#" class="buy-item-button" data-item="javelins"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="throwing_axes">Throwing Axes</span><a href="#" class="buy-item-button" data-item="throwing_axes"><img src='/images/coin-icon.png' border='0'/></a></div>
+    <div class="smithy-btn-container"><span class="item-button" data-item="throwing_knives">Throwing Knives</span><a href="#" class="buy-item-button" data-item="throwing_knives"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('throwing_knives')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="javelins">Javelins</span><a href="#" class="buy-item-button" data-item="javelins"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('javelins')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="throwing_axes">Throwing Axes</span><a href="#" class="buy-item-button" data-item="throwing_axes"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('throwing_axes')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
 
   </div>
   <div class="tab-pane" id="shields">
 
-    <div class="smithy-btn-container"><span class="item-button" data-item="buckler">Buckler</span><a href="#" class="buy-item-button" data-item="buckler"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="small_shield">Small Shield</span><a href="#" class="buy-item-button" data-item="small_shield"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="kite_shield">Kite Shield</span><a href="#" class="buy-item-button" data-item="kite_shield"><img src='/images/coin-icon.png' border='0'/></a></div>
+    <div class="smithy-btn-container"><span class="item-button" data-item="buckler">Buckler</span><a href="#" class="buy-item-button" data-item="buckler"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('buckler')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="small_shield">Small Shield</span><a href="#" class="buy-item-button" data-item="small_shield"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('small_shield')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="kite_shield">Kite Shield</span><a href="#" class="buy-item-button" data-item="kite_shield"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('kite_shield')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
 
   </div>
   <div class="tab-pane" id="head-armor">
 
-    <div class="smithy-btn-container"><span class="item-button" data-item="leather_cap">Leather Cap</span><a href="#" class="buy-item-button" data-item="leather_cap"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="studded_leather_cap">Studded Leather Cap</span><a href="#" class="buy-item-button" data-item="studded_leather_cap"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="chainmail_coif">Chainmail Coif</span><a href="#" class="buy-item-button" data-item="chainmail_coif"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="full_helm">Full Helm</span><a href="#" class="buy-item-button" data-item="full_helm"><img src='/images/coin-icon.png' border='0'/></a></div>
+    <div class="smithy-btn-container"><span class="item-button" data-item="leather_cap">Leather Cap</span><a href="#" class="buy-item-button" data-item="leather_cap"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('leather_cap')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="studded_leather_cap">Studded Leather Cap</span><a href="#" class="buy-item-button" data-item="studded_leather_cap"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('studded_leather_cap')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="chainmail_coif">Chainmail Coif</span><a href="#" class="buy-item-button" data-item="chainmail_coif"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('chainmail_coif')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="full_helm">Full Helm</span><a href="#" class="buy-item-button" data-item="full_helm"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('full_helm')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
 
   </div>
   <div class="tab-pane" id="chest-armor">
 
-    <div class="smithy-btn-container"><span class="item-button" data-item="leather_armor">Leather Armor</span><a href="#" class="buy-item-button" data-item="leather_armor"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="studded_leather_armor">Studded Leather Armor</span><a href="#" class="buy-item-button" data-item="studded_leather_armor"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="chainmail_armor">Chainmail Armor</span><a href="#" class="buy-item-button" data-item="chainmail_armor"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="chest_plate">Chest Plate</span><a href="#" class="buy-item-button" data-item="chest_plate"><img src='/images/coin-icon.png' border='0'/></a></div>
+    <div class="smithy-btn-container"><span class="item-button" data-item="leather_armor">Leather Armor</span><a href="#" class="buy-item-button" data-item="leather_armor"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('leather_armor')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="studded_leather_armor">Studded Leather Armor</span><a href="#" class="buy-item-button" data-item="studded_leather_armor"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('studded_leather_armor')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="chainmail_armor">Chainmail Armor</span><a href="#" class="buy-item-button" data-item="chainmail_armor"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('chainmail_armor')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="chest_plate">Chest Plate</span><a href="#" class="buy-item-button" data-item="chest_plate"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('chest_plate')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
 
   </div>
   <div class="tab-pane" id="leg-armor">
 
-    <div class="smithy-btn-container"><span class="item-button" data-item="leather_pants">Leather Pants</span><a href="#" class="buy-item-button" data-item="leather_pants"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="studded_leather_pants">Studded Leather Pants</span><a href="#" class="buy-item-button" data-item="studded_leather_pants"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="chainmail_breeches">Chainmail Breeches</span><a href="#" class="buy-item-button" data-item="chainmail_breeches"><img src='/images/coin-icon.png' border='0'/></a></div>
-    <div class="smithy-btn-container"><span class="item-button" data-item="plate_legs">Full Plate Leggings</span><a href="#" class="buy-item-button" data-item="plate_legs"><img src='/images/coin-icon.png' border='0'/></a></div>
+    <div class="smithy-btn-container"><span class="item-button" data-item="leather_pants">Leather Pants</span><a href="#" class="buy-item-button" data-item="leather_pants"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('leather_pants')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="studded_leather_pants">Studded Leather Pants</span><a href="#" class="buy-item-button" data-item="studded_leather_pants"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('studded_leather_pants')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="chainmail_breeches">Chainmail Breeches</span><a href="#" class="buy-item-button" data-item="chainmail_breeches"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('chainmail_breeches')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
+    <div class="smithy-btn-container"><span class="item-button" data-item="plate_legs">Full Plate Leggings</span><a href="#" class="buy-item-button" data-item="plate_legs"><img src='/images/coin-icon.png' border='0'/></a><p class="right smithy-cost"><%= Equipment.get_cost('plate_legs')%> Gold</p></div>
+    <div class="smithy-item-separator"></div>
+
 
   </div>
 </div>
