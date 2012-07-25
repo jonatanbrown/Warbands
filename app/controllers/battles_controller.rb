@@ -4,8 +4,7 @@ class BattlesController < ApplicationController
 
     @team = current_user.team
 
-    if current_user.battle_result
-      br = current_user.battle_result
+    if br = current_user.battle_result
       br.destroy
     end
 
@@ -13,7 +12,7 @@ class BattlesController < ApplicationController
       if current_user.battle_sync
         redirect_to next_turn_path
         return
-    else
+      else
         redirect_to battle_path
         return
       end
@@ -136,6 +135,7 @@ class BattlesController < ApplicationController
     battle_result = current_user.battle_result
     bs = current_user.battle_sync
     if bs
+      bs.update_attribute(:reference_id, nil)
       battle_result.update_attribute(:last_turn_info, bs.turn_events)
     end
     battle = current_user.battle
