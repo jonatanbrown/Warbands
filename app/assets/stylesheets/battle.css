@@ -46,6 +46,14 @@
     margin-left: 10px;
 }
 
+#waiting-for-turn-timer{
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 10px;
+    width: 206px;
+    height: 18px;
+}
+
 .section-header{
     width: 905px;
 }

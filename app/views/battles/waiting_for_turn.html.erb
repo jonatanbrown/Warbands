@@ -13,11 +13,32 @@
   },
   3000
   );
+
+  var timeleft = 0
+
+  $.ajax({
+    type: "GET",
+    url: '/battle_syncs/seconds_left/',
+    success: function(data) {
+      timeleft = parseInt(data);
+      setInterval(
+        function(){
+          timeleft -= 1;
+          if(timeleft < 0)
+            timeleft = 0;
+          $('#waiting-for-turn-timer').html("<b>Opponent timeout in " + timeleft + " seconds.</b>");
+        },
+        1000
+      );
+    },
+    dataType: 'text'
+  });
 </script>
 
 <h2>Waiting for opponent to finish..</h2>
 
 <%= link_to "Refresh", waiting_for_turn_path %>
+
 <p><h3>Previous turn events</h3></p>
 <div id="battle-teams" class="bright-background left">
   <div id="opponent-team" class="left">
@@ -54,5 +75,8 @@
 </div>
 <div id="turn-events" class="bright-background">
   <%= @turn_events.html_safe %>
+</div>
+
+<div id="waiting-for-turn-timer" class="left bright-background">
 </div>
 
