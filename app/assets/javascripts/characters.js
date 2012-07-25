@@ -26,7 +26,8 @@ function register_equipment_listeners() {
           type: "POST",
           url: '/characters/' + char_id + '/change_item/' + equipment_id,
           success: function(data) {
-            $('#character-equipment').html(data)
+            $('.inner-content').html(data)
+            register_switch_char_listeners();
             register_equipment_listeners();
           },
           dataType: 'html'
@@ -41,7 +42,8 @@ function register_equipment_listeners() {
           type: "GET",
           url: '/characters/' + char_id + '/change_item/' + equipment_id,
           success: function(data) {
-            $('#character-equipment').html(data)
+            $('.inner-content').html(data)
+            register_switch_char_listeners();
             register_equipment_listeners();
           },
           dataType: 'html'

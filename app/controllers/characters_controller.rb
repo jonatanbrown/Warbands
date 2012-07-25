@@ -49,7 +49,7 @@ class CharactersController < ApplicationController
     @unused_chest = unused_equipment.where(:eq_type => EQUIPMENT_CHEST)
     @unused_legs = unused_equipment.where(:eq_type => EQUIPMENT_LEGS)
     @unused_equipment = unused_equipment
-    render "_equipment", :layout => false
+    render :edit, :layout => false
   end
 
   def skillup
