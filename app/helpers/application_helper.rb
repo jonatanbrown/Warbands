@@ -46,6 +46,15 @@ module ApplicationHelper
 
     result = '<div class="edit-team-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
       result += char.name
+      if weapon = char.equipped_weapon
+        if weapon.melee?
+          result += '</br><img src="/images/icon_melee.png"/>'
+        else
+          result += '</br><img src="/images/icon_ranged.png"/>'
+        end
+      else
+        result += '</br>Unarmed'
+      end
     result += '</div>'
     result.html_safe
   end
