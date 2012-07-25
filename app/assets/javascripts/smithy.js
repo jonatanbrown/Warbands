@@ -23,6 +23,8 @@ $(document).ready(function() {
         });
         return false;
     });
+
+    $(".buy-item-button").tooltip({placement: 'right'})
 });
 
 function get_item_description(item) {
