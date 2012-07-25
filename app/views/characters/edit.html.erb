@@ -26,8 +26,8 @@
     </p>
   </div>
   <div class="left character-navigation">
-    <div class="left"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position - 1).divmod(4)[1])._id %>"><img src="/images/left_arrow_link.png" onmouseover="this.src='/images/left_arrow_link_focus.png'" onmouseout="this.src='/images/left_arrow_link.png'"/></a></div>
-    <div class="right"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position + 1).divmod(4)[1])._id %>"><img src="/images/right_arrow_link.png" onmouseover="this.src='/images/right_arrow_link_focus.png'" onmouseout="this.src='/images/right_arrow_link.png'"/></a></div>
+    <div class="left"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position - 1).divmod(5)[1])._id %>"><img src="/images/left_arrow_link.png" onmouseover="this.src='/images/left_arrow_link_focus.png'" onmouseout="this.src='/images/left_arrow_link.png'"/></a></div>
+    <div class="right"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position + 1).divmod(5)[1])._id %>"><img src="/images/right_arrow_link.png" onmouseover="this.src='/images/right_arrow_link_focus.png'" onmouseout="this.src='/images/right_arrow_link.png'"/></a></div>
   </div>
 </div>
 
