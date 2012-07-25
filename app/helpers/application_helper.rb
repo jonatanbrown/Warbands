@@ -45,6 +45,7 @@ module ApplicationHelper
     content += "</b>"
 
     result = '<div class="edit-team-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
+      result += '<div class="position-number">' + (pos + 1).to_s + '</div>'
       result += char.name
       if weapon = char.equipped_weapon
         if weapon.melee?
