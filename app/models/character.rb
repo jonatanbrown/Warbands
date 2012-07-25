@@ -833,13 +833,13 @@ class Character
   end
 
   def roll_discipline_increase(discipline_id)
-    if rand(1..100) == 1 and rand(1..50) > get_discipline_value(discipline_id)
+    if rand(1..50) == 1 and rand(1..50) > get_discipline_value(discipline_id)
       learnings << discipline_id
     end
   end
 
   def roll_skill_increase(skill_id)
-    if rand(1..100) == 1
+    if rand(1..50) == 1
       skill_value = get_skill_value(skill_id)
       if skill_value >= 20
         if rand(1..(20 * (skill_value - 19))) == 1
