@@ -6,7 +6,7 @@
         if(battle.skill_selected != null)
             battle.skill_selected = null
             $('.skill-button-container').removeClass('selected');
-            $('.battle-character').removeClass('disabled');
+            $('.battle-character').removeClass('disabled legal-target slight-penalty-target severe-penalty-target');
     });
 
     update_timeout_clock();

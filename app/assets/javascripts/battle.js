@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('#mass-retreat').on("click", mass_retreat);
 
     $('.battle-character').on('click', function() {
-        if(!$(this).hasClass('disabled') && battle.skill_selected != null){
+        if(!$(this).hasClass('disabled') && !$(this).hasClass('knocked-out') && battle.skill_selected != null){
             confirm_skill(battle.skill_selected.pos, battle.skill_selected.skill_id, $(this).attr('data-position'))
             return false;
         }
@@ -22,7 +22,7 @@ function listen_select_skill_buttons(selector) {
         targetability = battle.skills[skill_id][3]
 
         $('.skill-button-container').removeClass('selected');
-        $('.battle-character').removeClass('disabled');
+        $('.battle-character').removeClass('disabled legal-target slight-penalty-target severe-penalty-target');
 
         $(this).closest('.skill-button-container').addClass('selected')
         battle['skill_selected'] = {pos: parseInt(pos), skill_id: parseInt(skill_id)}
@@ -32,17 +32,23 @@ function listen_select_skill_buttons(selector) {
         }
         else if(targetability == 1) {
         $('#opponent-team').find('.battle-character[data-targetability-melee="false"]').addClass('disabled');
+        $('#opponent-team').find('.battle-character[data-targetability-melee="true"]').addClass('legal-target');
         $('#home-team').find('.battle-character').addClass('disabled');
         }
         else if(targetability == 2) {
             $('#home-team').find('.battle-character').addClass('disabled');
+            $('#opponent-team').find('.battle-character[data-targetability-ranged="0"]').addClass('legal-target');
+            $('#opponent-team').find('.battle-character[data-targetability-ranged="1"]').addClass('slight-penalty-target');
+            $('#opponent-team').find('.battle-character[data-targetability-ranged="2"]').addClass('severe-penalty-target');
         }
         else if(targetability == 3) {
             $('#opponent-team').find('.battle-character').addClass('disabled');
+            $('#home-team').find('.battle-character').addClass('legal-target');
         }
         else if(targetability == 4) {
             $('#opponent-team').find('.battle-character').addClass('disabled');
-            $('#home-team').find('.battle-character[data-position="' + pos + '"]').addClass('disabled');
+            $('#home-team').find('.battle-character').addClass('legal-target');
+            $('#home-team').find('.battle-character[data-position="' + pos + '"]').addClass('disabled').removeclass('legal-target');
         }
         return false
     });
@@ -76,7 +82,7 @@ function confirm_skill(pos, skill_id, target) {
 function update_action_list(pos) {
 
     $('.skill-button-container').removeClass('selected');
-    $('.battle-character').removeClass('disabled');
+    $('.battle-character').removeClass('disabled legal-target slight-penalty-target severe-penalty-target');
 
     $('#pos' + pos + '-actions').html("");
     for (var i = 0; i < battle['actions']['' + pos].length; i++) {
@@ -100,41 +106,6 @@ function update_action_list(pos) {
         $('#pos' + pos + '-actions').append('<p>' + skill_name + target_name + ' <a href="#" class="undo-action" data-action-index=' + i + ' data-pos=' + pos + '><span class="red">X</span></a>' + '</p>');
     }
     $('.undo-action').on("click", undo_action);
-}
-
-function set_target_options(selector, skill_id, pos) {
-    selector.html(" ");
-    //Check what targets are legal
-    if (battle.skills[skill_id][3] == 0 || battle.skills[skill_id][3] == 5)
-    {
-    }
-    else if (battle.skills[skill_id][3] == 4)
-    {
-        for (i in battle.chars)
-        {
-            var target = battle.chars[i]
-            if (pos != target[1])
-            {
-                selector.append('<option value="' + target[1] + '">' + target[0] + '</option>');
-            }
-        }
-    }
-    else
-    {
-        for (i in battle.op_chars)
-        {
-            var info = ""
-            var target = battle.op_chars[i]
-            if (battle.pos_targetability[target[1]][1] == 1)
-                info = "Slight penalty";
-            else if (battle.pos_targetability[target[1]][1] == 2)
-                info = "Severe penalty";
-            if (skill_can_target_pos(skill_id, pos, battle.formation, target[1]))
-            {
-                selector.append('<option value="' + target[1] + '">' + target[0] + " " + info +'</option>');
-            }
-        }
-    }
 }
 
 function set_skill_options(selector, pos) {

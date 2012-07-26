@@ -29,7 +29,7 @@ module ApplicationHelper
       result = '<div class="battle-character" rel="popover" data-targetability-melee="' + team.position_targetability_melee(pos).to_s + '" data-targetability-ranged="' + team.position_targetability_ranged(pos).to_s + '" data-content="' + content + '" data-original-title="' + char.name + '" data-position="'+ pos.to_s + '">'
       result += render :partial => "characters/battle_character", :locals => { :character => char }
     else
-      result = '<div class="battle-character">'
+      result = '<div class="battle-character knocked-out">'
       result += 'Knocked out.'
     end
     result += '</div>'

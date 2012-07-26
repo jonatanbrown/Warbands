@@ -1,3 +1,39 @@
+@-moz-keyframes pulsate {
+    0% {
+        -moz-transform: scale(1.0,1.0); /* Firefox */
+    }
+    50% {
+        -moz-transform: scale(1.2,1.2); /* Firefox */
+    }
+    100% {
+        -moz-transform: scale(1.0,1.0); /* Firefox */
+    }
+}
+
+@-webkit-keyframes pulsate {
+    0% {
+        -webkit-transform: scale(1.0,1.0);
+    }
+    50% {
+        -webkit-transform: scale(1.2,1.2);
+    }
+    100% {
+        -webkit-transform: scale(1.0,1.0);
+    }
+}
+
+@-ms-keyframes pulsate {
+    0% {
+        -ms-transform: scale(1.0,1.0);
+    }
+    50% {
+        -ms-transform: scale(1.2,1.2);
+    }
+    100% {
+        -ms-transform: scale(1.0,1.0);
+    }
+}
+
 .skill-select{
     width: 150px;
 }
@@ -8,7 +44,20 @@
 }
 
 .skill-button-container.selected{
-    box-shadow:0px 0px 20px #000;
+    -webkit-animation-name: pulsate;
+    -webkit-animation-duration: 0.5s;
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: pulsate;
+    -moz-animation-duration: 0.5s;
+    -moz-animation-timing-function: ease-in;
+    -moz-animation-iteration-count: infinite;
+
+    -ms-animation-name: pulsate;
+    -ms-animation-duration: 0.5s;
+    -ms-animation-timing-function: ease-in;
+    -ms-animation-iteration-count: infinite;
 }
 
 .team-character{
@@ -90,6 +139,23 @@
 .battle-character.disabled{
     border: 2px solid rgba(0, 0, 0, 0.3);
     color: rgba(0, 0, 0, 0.3)
+}
+
+.battle-character.knocked-out{
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.3)
+}
+
+.battle-character.legal-target{
+    box-shadow:0px 0px 20px #0F0;
+}
+
+.battle-character.slight-penalty-target{
+    box-shadow:0px 0px 20px #FF8C00;
+}
+
+.battle-character.severe-penalty-target{
+    box-shadow:0px 0px 20px #FF0000;
 }
 
 .front-row{
