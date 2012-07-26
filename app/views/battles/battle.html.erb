@@ -2,6 +2,13 @@
 
   $(document).ready(function() {
 
+    $(window).on("click", function(event) {
+        if(battle.skill_selected != null)
+            battle.skill_selected = null
+            $('.skill-button-container').removeClass('selected');
+            $('.battle-character').removeClass('disabled');
+    });
+
     update_timeout_clock();
 
   });

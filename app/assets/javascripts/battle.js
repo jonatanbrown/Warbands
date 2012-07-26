@@ -1,16 +1,17 @@
 $(document).ready(function() {
 
-    $(window).on("click", function(event) {
-        if(battle.skill_selected != null)
-            battle.skill_selected = null
-            $('.skill-button-container').removeClass('selected');
-    });
-
     $('.battle-character').popover({placement: 'bottom'})
     $('.skill-icon-image').tooltip({placement: 'top'});
 
     $('#submit-turn').on("click", submit_turn);
     $('#mass-retreat').on("click", mass_retreat);
+
+    $('.battle-character').on('click', function() {
+        if(!$(this).hasClass('disabled') && battle.skill_selected != null){
+            confirm_skill(battle.skill_selected.pos, battle.skill_selected.skill_id, $(this).attr('data-position'))
+            return false;
+        }
+    });
 });
 
 function listen_select_skill_buttons(selector) {
@@ -21,19 +22,34 @@ function listen_select_skill_buttons(selector) {
         targetability = battle.skills[skill_id][3]
 
         $('.skill-button-container').removeClass('selected');
+        $('.battle-character').removeClass('disabled');
 
         $(this).closest('.skill-button-container').addClass('selected')
-        battle['skill_selected'] = {pos: pos, skill_id: skill_id}
+        battle['skill_selected'] = {pos: parseInt(pos), skill_id: parseInt(skill_id)}
 
-        if(targetability == 0){
-            confirm_skill(pos, skill_id, null, skill_selector)
+        if(targetability == 0 || targetability == 5){
+            confirm_skill(pos, skill_id, null)
+        }
+        else if(targetability == 1) {
+        $('#opponent-team').find('.battle-character[data-targetability-melee="false"]').addClass('disabled');
+        $('#home-team').find('.battle-character').addClass('disabled');
+        }
+        else if(targetability == 2) {
+            $('#home-team').find('.battle-character').addClass('disabled');
+        }
+        else if(targetability == 3) {
+            $('#opponent-team').find('.battle-character').addClass('disabled');
+        }
+        else if(targetability == 4) {
+            $('#opponent-team').find('.battle-character').addClass('disabled');
+            $('#home-team').find('.battle-character[data-position="' + pos + '"]').addClass('disabled');
         }
         return false
     });
     $('.skill-icon-image').tooltip({placement: 'top'});
 }
 
-function confirm_skill(pos, skill_id, target, skill_selector) {
+function confirm_skill(pos, skill_id, target) {
 
     var skill_ap = battle.skills[skill_id][2]
 
@@ -51,10 +67,17 @@ function confirm_skill(pos, skill_id, target, skill_selector) {
     update_action_list(pos);
 
     //Recalculate action selector options and set selectors
+    skill_selector = $('#pos' + pos + '-skill-selector');
     set_skill_options(skill_selector, pos);
+
+    battle.skill_selected = null;
 }
 
 function update_action_list(pos) {
+
+    $('.skill-button-container').removeClass('selected');
+    $('.battle-character').removeClass('disabled');
+
     $('#pos' + pos + '-actions').html("");
     for (var i = 0; i < battle['actions']['' + pos].length; i++) {
         var skill_id = battle['actions']['' + pos][i]['action'];
