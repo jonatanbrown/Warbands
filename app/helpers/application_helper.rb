@@ -26,7 +26,7 @@ module ApplicationHelper
       content += "</br>"
       content += char.get_effects_text
       content += '</b>'
-      result = '<div class="battle-character" rel="popover" data-content="' + content + '" data-original-title="' + char.name + '">'
+      result = '<div class="battle-character" rel="popover" data-pos="' + pos.to_s + '" data-content="' + content + '" data-original-title="' + char.name + '">'
       result += render :partial => "characters/battle_character", :locals => { :character => char }
     else
       result = '<div class="battle-character">'

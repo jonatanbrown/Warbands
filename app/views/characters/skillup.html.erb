@@ -7,58 +7,58 @@
 <% if @character.melee_combat_points > 0 %>
   <h3>Melee Combat Skills</h3>
   <% if @character.get_skill_value(SKILL_QUICK_STRIKE) == nil %>
-    <p><a href='#' class='select-skill-button' data-skill-id='6'>Learn Quick Strike</a></p>
+    <p><a href='#' class='learn-skill-button' data-skill-id='6'>Learn Quick Strike</a></p>
   <% end %>
   <% if @character.get_skill_value(SKILL_HEAVY_STRIKE) == nil %>
-    <p><a href='#' class='select-skill-button' data-skill-id='7'>Learn Heavy Strike</a></p>
+    <p><a href='#' class='learn-skill-button' data-skill-id='7'>Learn Heavy Strike</a></p>
   <% end %>
   <% if @character.get_skill_value(SKILL_ACCURATE_STRIKE) == nil %>
-   <p> <a href='#' class='select-skill-button' data-skill-id='8'>Learn Accurate Strike</a></p>
+   <p> <a href='#' class='learn-skill-button' data-skill-id='8'>Learn Accurate Strike</a></p>
   <% end %>
   <% if @character.get_skill_value(SKILL_FINISHING_STRIKE) == nil %>
-    <p><a href='#' class='select-skill-button' data-skill-id='9'>Learn Finishing Strike</a></p>
+    <p><a href='#' class='learn-skill-button' data-skill-id='9'>Learn Finishing Strike</a></p>
   <% end %>
   <% if @character.get_skill_value(SKILL_PROTECT) == nil %>
-    <p><a href='#' class='select-skill-button' data-skill-id='10'>Learn Protect</a></p>
+    <p><a href='#' class='learn-skill-button' data-skill-id='10'>Learn Protect</a></p>
   <% end %>
   <% if @character.get_skill_value(SKILL_SHIELD_WALL) == nil %>
-    <p><a href='#' class='select-skill-button' data-skill-id='11'>Learn Shield Wall</a></p>
+    <p><a href='#' class='learn-skill-button' data-skill-id='11'>Learn Shield Wall</a></p>
   <% end %>
   <% if @character.get_skill_value(SKILL_COUNTERSTRIKE) == nil %>
-    <p><a href='#' class='select-skill-button' data-skill-id='12'>Learn Counterstrike</a></p>
+    <p><a href='#' class='learn-skill-button' data-skill-id='12'>Learn Counterstrike</a></p>
   <% end %>
 <% end %>
 <% if @character.ranged_combat_points > 0 %>
   <h3>Ranged Combat Skills</h3>
     <% if @character.get_skill_value(SKILL_FLING) == nil %>
-      <p><a href='#' class='select-skill-button' data-skill-id='13'>Learn Fling</a></p>
+      <p><a href='#' class='learn-skill-button' data-skill-id='13'>Learn Fling</a></p>
     <% end %>
     <% if @character.get_skill_value(SKILL_QUICK_THROW) == nil %>
-      <p><a href='#' class='select-skill-button' data-skill-id='14'>Learn Quick Throw</a></p>
+      <p><a href='#' class='learn-skill-button' data-skill-id='14'>Learn Quick Throw</a></p>
     <% end %>
     <% if @character.get_skill_value(SKILL_HEAVY_THROW) == nil %>
-     <p> <a href='#' class='select-skill-button' data-skill-id='15'>Learn Heavy Throw</a></p>
+     <p> <a href='#' class='learn-skill-button' data-skill-id='15'>Learn Heavy Throw</a></p>
     <% end %>
     <% if @character.get_skill_value(SKILL_TAKE_AIM) == nil %>
-      <p><a href='#' class='select-skill-button' data-skill-id='16'>Learn Take Aim</a></p>
+      <p><a href='#' class='learn-skill-button' data-skill-id='16'>Learn Take Aim</a></p>
     <% end %>
     <% if @character.get_skill_value(SKILL_UNDISTURBED) == nil %>
-      <p><a href='#' class='select-skill-button' data-skill-id='17'>Learn Undisturbed</a></p>
+      <p><a href='#' class='learn-skill-button' data-skill-id='17'>Learn Undisturbed</a></p>
     <% end %>
 <% end %>
 <% if @character.dirty_combat_points > 0 %>
   <h3>Dirty Combat Skills</h3>
     <% if @character.get_skill_value(SKILL_BOLA) == nil %>
-      <p><a href='#' class='select-skill-button' data-skill-id='18'>Learn Bola</a></p>
+      <p><a href='#' class='learn-skill-button' data-skill-id='18'>Learn Bola</a></p>
     <% end %>
     <% if @character.get_skill_value(SKILL_MIND_POISON) == nil %>
-      <p><a href='#' class='select-skill-button' data-skill-id='19'>Learn Mind Numbing Poison</a></p>
+      <p><a href='#' class='learn-skill-button' data-skill-id='19'>Learn Mind Numbing Poison</a></p>
     <% end %>
     <% if @character.get_skill_value(SKILL_PARALYZING_POISON) == nil %>
-     <p> <a href='#' class='select-skill-button' data-skill-id='20'>Learn Paralyzing Poison</a></p>
+     <p> <a href='#' class='learn-skill-button' data-skill-id='20'>Learn Paralyzing Poison</a></p>
     <% end %>
     <% if @character.get_skill_value(SKILL_WEAKNESS_POISON) == nil %>
-      <p><a href='#' class='select-skill-button' data-skill-id='21'>Learn Weakness Poison</a></p>
+      <p><a href='#' class='learn-skill-button' data-skill-id='21'>Learn Weakness Poison</a></p>
     <% end %>
 <% end %>
 

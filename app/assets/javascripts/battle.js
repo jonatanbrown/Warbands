@@ -1,58 +1,58 @@
 $(document).ready(function() {
 
+    $(window).on("click", function(event) {
+        if(battle.skill_selected != null)
+            battle.skill_selected = null
+            $('.skill-button-container').removeClass('selected');
+    });
+
     $('.battle-character').popover({placement: 'bottom'})
     $('.skill-icon-image').tooltip({placement: 'top'});
 
     $('#submit-turn').on("click", submit_turn);
     $('#mass-retreat').on("click", mass_retreat);
-
-    $(".confirm-skill").on("click", function(event) {
-
-        var pos = $(this).attr('data-pos');
-        var skill_selector = $('#pos' + pos + '-skill-selector')
-        var target_selector = $('#pos' + pos + '-character-selector')
-
-        var skill_id = $('#pos' + pos + '-skill-selector').val()
-        var target = target_selector.val()
-
-        if (skill_id)
-        {
-            var skill_text = $('#pos' + pos + '-skill-selector' + " option[value=" + skill_id + "]").text();
-            var skill_ap = $('#pos' + pos + '-skill-selector' + " option[value=" + skill_id + "]").attr('data-ap');
-
-            //Add actions to battle orders
-            if (battle.skills[skill_id][3] == 3 || battle.skills[skill_id][3] == 4)
-                battle['actions']['' + pos].push({action: skill_id, target: target, friendly: true})
-            else
-                battle['actions']['' + pos].push({action: skill_id, target: target, friendly: false})
-
-            //Recalculate remaining AP, and update display
-            battle['pos' + pos + '_ap'] -= skill_ap
-            $('#pos' + pos + '-ap').html('AP: ' + battle['pos' + pos + '_ap'])
-
-            //Append to visible list of actions
-            update_action_list(pos);
-
-            //Recalculate action selector options and set selectors
-            set_skill_options(skill_selector, pos);
-            set_target_options(target_selector, skill_selector.val(), pos)
-        }
-        return false;
-    });
-
-    $(".skill-selector").on("change", function(event) {
-        var skill_id = $(this).val()
-        var pos = $(this).attr('data-pos');
-        var target_selector = $('#pos' + pos + '-character-selector')
-        set_target_options(target_selector, skill_id, pos)
-    });
-
-    $(".target-selector").each(function(index, selector) {
-        var pos = $(selector).attr('data-pos')
-        var skill_selector = $('#pos' + pos + '-skill-selector')
-        set_target_options($(selector), skill_selector.val(), pos)
-    });
 });
+
+function listen_select_skill_buttons(selector) {
+    $(selector).on("click", function(event) {
+        skill_selector = $(this).closest('.skill-select')
+        pos = skill_selector.attr('data-pos')
+        skill_id = $(this).attr('data-skill-id')
+        targetability = battle.skills[skill_id][3]
+
+        $('.skill-button-container').removeClass('selected');
+
+        $(this).closest('.skill-button-container').addClass('selected')
+        battle['skill_selected'] = {pos: pos, skill_id: skill_id}
+
+        if(targetability == 0){
+            confirm_skill(pos, skill_id, null, skill_selector)
+        }
+        return false
+    });
+    $('.skill-icon-image').tooltip({placement: 'top'});
+}
+
+function confirm_skill(pos, skill_id, target, skill_selector) {
+
+    var skill_ap = battle.skills[skill_id][2]
+
+    //Add actions to battle orders
+    if (battle.skills[skill_id][3] == 3 || battle.skills[skill_id][3] == 4)
+        battle['actions']['' + pos].push({action: skill_id, target: target, friendly: true})
+    else
+        battle['actions']['' + pos].push({action: skill_id, target: target, friendly: false})
+
+    //Recalculate remaining AP, and update display
+    battle['pos' + pos + '_ap'] -= skill_ap
+    $('#pos' + pos + '-ap').html('AP: ' + battle['pos' + pos + '_ap'])
+
+    //Append to visible list of actions
+    update_action_list(pos);
+
+    //Recalculate action selector options and set selectors
+    set_skill_options(skill_selector, pos);
+}
 
 function update_action_list(pos) {
     $('#pos' + pos + '-actions').html("");
@@ -69,7 +69,6 @@ function update_action_list(pos) {
             }
         }
         else {
-            console.log(target_pos)
             for (var n = 0; n < battle.op_chars.length; n++) {
                 if(battle.op_chars[n][1] == target_pos)
                     target_name += ' at ' + battle.op_chars[n][0]
@@ -117,6 +116,7 @@ function set_target_options(selector, skill_id, pos) {
 
 function set_skill_options(selector, pos) {
     selector.html(" ");
+    $('.tooltip').remove()
     var ap = battle['pos' + pos + '_ap']
     for (i in battle.skills)
     {
@@ -130,10 +130,11 @@ function set_skill_options(selector, pos) {
             }
             else
             {
-                selector.append('<a href="#" class="select-skill-icon" data-skill-id="' + skill[1] + '"><img class="skill-icon-image" rel="tooltip" src="/images/' + skill[4] + '" data-original-title="'+ skill[0] + ' - lvl ' + skill_level + ' - ' + skill[2] + ' ap"></a>')
+                selector.append('<div class="skill-button-container left"><a href="#" class="select-skill-button" data-skill-id="' + skill[1] + '"><img class="skill-icon-image" rel="tooltip" src="/images/' + skill[4] + '" data-original-title="'+ skill[0] + ' - lvl ' + skill_level + ' - ' + skill[2] + ' ap"></a></div>')
             }
         }
     }
+    listen_select_skill_buttons("#pos" + pos + "-skill-selector .select-skill-button");
 }
 
 function submit_turn() {
@@ -153,15 +154,11 @@ function undo_action() {
 
     var index = $(this).attr('data-action-index');
     var pos = $(this).attr('data-pos');
-    console.log('Position')
-    console.log(pos)
-    console.log(battle['actions']['' + pos])
     var skill_id = battle['actions']['' + pos][index].action
 
     var ap_cost = battle.skills[skill_id][2]
 
     var skill_selector = $('#pos' + pos + '-skill-selector')
-    var target_selector = $('#pos' + pos + '-character-selector')
 
     battle['pos' + pos + '_ap'] += ap_cost
     $('#pos' + pos + '-ap').html('AP: ' + battle['pos' + pos + '_ap'])
@@ -171,7 +168,6 @@ function undo_action() {
     update_action_list(pos);
 
     set_skill_options(skill_selector, pos);
-    set_target_options(target_selector, skill_selector.val(), pos)
 
     return false;
 }

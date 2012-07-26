@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     $(".sell-item-button").tooltip({placement: 'right'});
 
-    $(".select-skill-button").on("click", function(event) {
+    $(".learn-skill-button").on("click", function(event) {
         $.ajax({
           type: "POST",
           url: '/characters/' + character_id + '/select_skill',
