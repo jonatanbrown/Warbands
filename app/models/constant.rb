@@ -4,28 +4,28 @@ class Constant
 
   def self.skills
     [
-      ["#{get_skill_name(0)}", 0, get_skill_ap(0), get_skill_targeting(0)],
-      ["#{get_skill_name(1)}", 1, get_skill_ap(1), get_skill_targeting(1)],
-      ["#{get_skill_name(2)}", 2, get_skill_ap(2), get_skill_targeting(2)],
-      ["#{get_skill_name(3)}", 3, get_skill_ap(3), get_skill_targeting(3)],
-      ["#{get_skill_name(4)}", 4, get_skill_ap(4), get_skill_targeting(4)],
-      ["#{get_skill_name(5)}", 5, get_skill_ap(5), get_skill_targeting(5)],
-      ["#{get_skill_name(6)}", 6, get_skill_ap(6), get_skill_targeting(6)],
-      ["#{get_skill_name(7)}", 7, get_skill_ap(7), get_skill_targeting(7)],
-      ["#{get_skill_name(8)}", 8, get_skill_ap(8), get_skill_targeting(8)],
-      ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9)],
-      ["#{get_skill_name(10)}", 10, get_skill_ap(10), get_skill_targeting(10)],
-      ["#{get_skill_name(11)}", 11, get_skill_ap(11), get_skill_targeting(11)],
-      ["#{get_skill_name(12)}", 12, get_skill_ap(12), get_skill_targeting(12)],
-      ["#{get_skill_name(13)}", 13, get_skill_ap(13), get_skill_targeting(13)],
-      ["#{get_skill_name(14)}", 14, get_skill_ap(14), get_skill_targeting(14)],
-      ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15)],
-      ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16)],
-      ["#{get_skill_name(17)}", 17, get_skill_ap(17), get_skill_targeting(17)],
-      ["#{get_skill_name(18)}", 18, get_skill_ap(18), get_skill_targeting(18)],
-      ["#{get_skill_name(19)}", 19, get_skill_ap(19), get_skill_targeting(19)],
-      ["#{get_skill_name(20)}", 20, get_skill_ap(20), get_skill_targeting(20)],
-      ["#{get_skill_name(21)}", 21, get_skill_ap(21), get_skill_targeting(21)]
+      ["#{get_skill_name(0)}", 0, get_skill_ap(0), get_skill_targeting(0), get_skill_icon(0)],
+      ["#{get_skill_name(1)}", 1, get_skill_ap(1), get_skill_targeting(1), get_skill_icon(1)],
+      ["#{get_skill_name(2)}", 2, get_skill_ap(2), get_skill_targeting(2), get_skill_icon(2)],
+      ["#{get_skill_name(3)}", 3, get_skill_ap(3), get_skill_targeting(3), get_skill_icon(3)],
+      ["#{get_skill_name(4)}", 4, get_skill_ap(4), get_skill_targeting(4), get_skill_icon(4)],
+      ["#{get_skill_name(5)}", 5, get_skill_ap(5), get_skill_targeting(5), get_skill_icon(5)],
+      ["#{get_skill_name(6)}", 6, get_skill_ap(6), get_skill_targeting(6), get_skill_icon(6)],
+      ["#{get_skill_name(7)}", 7, get_skill_ap(7), get_skill_targeting(7), get_skill_icon(7)],
+      ["#{get_skill_name(8)}", 8, get_skill_ap(8), get_skill_targeting(8), get_skill_icon(8)],
+      ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9), get_skill_icon(9)],
+      ["#{get_skill_name(10)}", 10, get_skill_ap(10), get_skill_targeting(10), get_skill_icon(10)],
+      ["#{get_skill_name(11)}", 11, get_skill_ap(11), get_skill_targeting(11), get_skill_icon(11)],
+      ["#{get_skill_name(12)}", 12, get_skill_ap(12), get_skill_targeting(12), get_skill_icon(12)],
+      ["#{get_skill_name(13)}", 13, get_skill_ap(13), get_skill_targeting(13), get_skill_icon(13)],
+      ["#{get_skill_name(14)}", 14, get_skill_ap(14), get_skill_targeting(14), get_skill_icon(14)],
+      ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15), get_skill_icon(15)],
+      ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16), get_skill_icon(16)],
+      ["#{get_skill_name(17)}", 17, get_skill_ap(17), get_skill_targeting(17), get_skill_icon(17)],
+      ["#{get_skill_name(18)}", 18, get_skill_ap(18), get_skill_targeting(18), get_skill_icon(18)],
+      ["#{get_skill_name(19)}", 19, get_skill_ap(19), get_skill_targeting(19), get_skill_icon(19)],
+      ["#{get_skill_name(20)}", 20, get_skill_ap(20), get_skill_targeting(20), get_skill_icon(20)],
+      ["#{get_skill_name(21)}", 21, get_skill_ap(21), get_skill_targeting(21), get_skill_icon(21)]
     ].to_s
   end
 
@@ -225,6 +225,55 @@ class Constant
         ''
       when SKILL_WEAKNESS_POISON
         ''
+    end
+  end
+
+  def self.get_skill_icon(skill_id)
+    case skill_id
+      when SKILL_STRIKE
+        'icon_strike.png'
+      when SKILL_THROWN
+        'icon_thrown.png'
+      when SKILL_RETREAT
+        'icon_retreat.png'
+      when SKILL_DIRT
+        'icon_dirt.png'
+      when SKILL_DEFENSIVE_POSTURE
+        'icon_defensive_posture.png'
+      when SKILL_COVER
+        'icon_cover.png'
+      when SKILL_QUICK_STRIKE
+        'icon_quick_strike.png'
+      when SKILL_HEAVY_STRIKE
+        'icon_heavy_strike.png'
+      when SKILL_ACCURATE_STRIKE
+        'icon_accurate_strike.png'
+      when SKILL_FINISHING_STRIKE
+        'icon_finishing_strike.png'
+      when SKILL_PROTECT
+        'icon_protect.png'
+      when SKILL_SHIELD_WALL
+        'icon_shield_wall.png'
+      when SKILL_COUNTERSTRIKE
+        'icon_counterstrike.png'
+      when SKILL_FLING
+        'icon_fling.png'
+      when SKILL_QUICK_THROW
+        'icon_quick_throw'
+      when SKILL_HEAVY_THROW
+        'icon_heavy_throw.png'
+      when SKILL_TAKE_AIM
+        'icon_take_aim.png'
+      when SKILL_UNDISTURBED
+        'icon_undisturbed.png'
+      when SKILL_BOLA
+        'icon_bola.png'
+      when SKILL_MIND_POISON
+        'icon_mind_poison.png'
+      when SKILL_PARALYZING_POISON
+        'icon_paralyzing_poison.png'
+      when SKILL_WEAKNESS_POISON
+        'icon_weakness_poison.png'
     end
   end
 

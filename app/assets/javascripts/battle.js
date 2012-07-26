@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     $('.battle-character').popover({placement: 'bottom'})
+    $('.skill-icon-image').tooltip({placement: 'top'});
 
     $('#submit-turn').on("click", submit_turn);
     $('#mass-retreat').on("click", mass_retreat);
@@ -119,15 +120,17 @@ function set_skill_options(selector, pos) {
     var ap = battle['pos' + pos + '_ap']
     for (i in battle.skills)
     {
-        if (ap >= battle.skills[i][2] && battle['pos' + pos + '_skills'][i] > 0)
+        skill_level = battle['pos' + pos + '_skills'][i]
+        skill = battle.skills[i]
+        if (ap >= skill[2] && skill_level > 0)
         {
-            if (battle.skills[i][3] == 1 && !battle.melee_range[pos])
+            if (skill[3] == 1 && !battle.melee_range[pos])
             {
                 //Melee skill and char infront, don't add option.
             }
             else
             {
-                selector.append('<option value="' + battle.skills[i][1] + '" data-ap="' + battle.skills[i][2] + '">' + battle.skills[i][0] + ' - (' +  battle['pos' + pos + '_skills'][i] + ') - ' + battle.skills[i][2] + ' AP</option>');
+                selector.append('<a href="#" class="select-skill-icon" data-skill-id="' + skill[1] + '"><img class="skill-icon-image" rel="tooltip" src="/images/' + skill[4] + '" data-original-title="'+ skill[0] + ' - lvl ' + skill_level + ' - ' + skill[2] + ' ap"></a>')
             }
         }
     }

@@ -1,3 +1,11 @@
+.skill-select{
+    width: 200px;
+}
+
+.select-skill-icon{
+    margin-left: 4px;
+}
+
 #battle-teams{
     border-radius: 10px;
     margin-bottom: 10px;
