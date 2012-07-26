@@ -1,9 +1,10 @@
 .skill-select{
-    width: 200px;
+    width: 150px;
 }
 
 .skill-button-container{
     margin-left: 4px;
+    margin-bottom: 4px;
 }
 
 .skill-button-container.selected{
@@ -17,6 +18,7 @@
     margin-right: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
+    width: 140px;
 }
 
 #battle-teams{
@@ -44,7 +46,7 @@
 
 #turn-events{
     float: left;
-    width: 449px;
+    width: 886px;
     padding: 10px;
     border-radius: 10px;
 }
