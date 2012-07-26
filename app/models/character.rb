@@ -400,7 +400,7 @@ class Character
         return thrown
       end
     when SKILL_RETREAT
-      return 1
+      return 0
     when SKILL_DIRT
       return dirt
     when SKILL_DEFENSIVE_POSTURE
@@ -465,8 +465,8 @@ class Character
     elsif skill_id == SKILL_THROWN
       thrown
     elsif skill_id == SKILL_RETREAT
-      1
-    elsif skill_id == SKILL_DIRT
+      0
+  elsif skill_id == SKILL_DIRT
       dirt
     elsif skill_id == SKILL_DEFENSIVE_POSTURE
       defensive_posture
