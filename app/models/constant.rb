@@ -297,6 +297,8 @@ class Constant
         'Weakness Attacks'
       when EFFECT_BLEEDING
         'Bleeding'
+      when EFFECT_TAKEN_AIM
+        'Taken Aim'
     end
   end
 
@@ -317,6 +319,8 @@ class Constant
       when EFFECT_APPLIED_PARALYZING_POISON
         true
       when EFFECT_APPLIED_WEAKNESS_POISON
+        true
+      when EFFECT_TAKEN_AIM
         true
       else
         true
@@ -346,6 +350,8 @@ class Constant
       when EFFECT_APPLIED_PARALYZING_POISON
         "<span class='green'>"
       when EFFECT_APPLIED_WEAKNESS_POISON
+        "<span class='green'>"
+      when EFFECT_TAKEN_AIM
         "<span class='green'>"
       else
         "<span>"
