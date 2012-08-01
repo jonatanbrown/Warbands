@@ -98,8 +98,12 @@ class TeamsController < ApplicationController
 
   def destroy
     @team = Team.find(params[:id])
-    @team.destroy
-    redirect_to root_path
+    unless @team.user.battle
+      @team.destroy
+      render 'delete_success', :formats => [:js]
+    else
+      render 'delete_error', :formats => [:js]
+    end
   end
 end
 

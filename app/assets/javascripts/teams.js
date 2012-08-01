@@ -36,7 +36,7 @@ function register_edit_team_listeners() {
 
     $('.edit-team-character').popover({placement: 'bottom'})
 
-    register_formation_selector();
+    register_formation_listener();
 
     $("#submit-character-positions").on("click", function(event) {
         var team_id = $(this).attr('data-id')
@@ -94,9 +94,25 @@ function register_edit_team_listeners() {
         });
         return false;
     });
+
+    $("#destroy-team").on("click", function(event) {
+        var team_id = $('#team-info').attr('data-id');
+        if(confirm('Are you sure you want to delete your team?'))
+        {
+            $.ajax({
+              type: "DELETE",
+              url: '/teams/' + team_id,
+              success: function(data) {
+
+              },
+              dataType: 'script'
+            });
+        }
+        return false;
+    });
 }
 
-function register_formation_selector() {
+function register_formation_listener() {
     $("#formation-selector").on("change", function(event) {
         var team_id = $(this).attr('data-id')
         var formation_num = $(this).val()
@@ -106,8 +122,7 @@ function register_formation_selector() {
           success: function(data) {
             $("#edit-formation").html(data);
             $('.edit-team-character').popover({placement: 'bottom'});
-            register_formation_selector();
-
+            register_formation_listener();
           },
           dataType: 'html'
         });
