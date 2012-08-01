@@ -87,7 +87,7 @@ class Constant
     if skill_id == SKILL_STRIKE
       4
     elsif skill_id == SKILL_THROWN
-      6
+      4
     elsif skill_id == SKILL_RETREAT
       0
     elsif skill_id == SKILL_DIRT
