@@ -7,6 +7,8 @@ gem 'mongoid'
 gem 'devise'
 gem 'bson_ext'
 gem 'thin'
+gem 'qu-rails'
+gem 'qu-mongo'
 
 
 # Bundle edge Rails instead:
