@@ -45,6 +45,7 @@ class Battle
       end
     end
 
+    #Resolve actions
     action_list.each do |a|
       turn_events += resolve_action(a)
     end

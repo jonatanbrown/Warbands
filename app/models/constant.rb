@@ -298,7 +298,7 @@ class Constant
       when EFFECT_BLEEDING
         'Bleeding'
       when EFFECT_TAKEN_AIM
-        'Taken Aim'
+        'THIS SHOULD NOT BE HERE'
     end
   end
 
@@ -321,7 +321,7 @@ class Constant
       when EFFECT_APPLIED_WEAKNESS_POISON
         true
       when EFFECT_TAKEN_AIM
-        true
+        false
       else
         true
     end
@@ -352,7 +352,7 @@ class Constant
       when EFFECT_APPLIED_WEAKNESS_POISON
         "<span class='green'>"
       when EFFECT_TAKEN_AIM
-        "<span class='green'>"
+        "<span class='red'>"
       else
         "<span>"
     end
