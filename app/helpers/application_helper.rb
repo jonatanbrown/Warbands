@@ -2,13 +2,13 @@ module ApplicationHelper
 
   def battle_button
     if current_user.battle_queue
-      link_to "<img src='/images/green_swords.png' border='0'/>".html_safe, queue_path
+      link_to "<img src='/images/green_swords.png' class='battle-button' border='0' rel='tooltip' data-original-title='In Queue'/>".html_safe, queue_path
     elsif current_user.battle and current_user.battle.submitted
-      link_to "<img src='/images/red_swords.png' border='0'/>".html_safe, waiting_for_turn_path
+      link_to "<img src='/images/red_swords.png' class='battle-button' border='0' rel='tooltip' data-original-title='In Battle!'/>".html_safe, waiting_for_turn_path
     elsif current_user.battle and !current_user.battle.submitted
-      link_to "<img src='/images/red_swords.png' border='0'/>".html_safe, battle_path
+      link_to "<img src='/images/red_swords.png' class='battle-button' border='0' rel='tooltip' data-original-title='In Battle!'/>".html_safe, battle_path
     else
-      "<img src='/images/grey_swords.png' border='0'/>".html_safe
+      "<img src='/images/grey_swords.png' class='battle-button' border='0' rel='tooltip' data-original-title='Not in Queue' />".html_safe
     end
   end
 
