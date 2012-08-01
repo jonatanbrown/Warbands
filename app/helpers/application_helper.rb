@@ -1,7 +1,9 @@
 module ApplicationHelper
 
   def battle_button
-    if current_user.battle and current_user.battle.submitted
+    if current_user.battle_queue
+      link_to "<img src='/images/green_swords.png' border='0'/>".html_safe, queue_path
+    elsif current_user.battle and current_user.battle.submitted
       link_to "<img src='/images/red_swords.png' border='0'/>".html_safe, waiting_for_turn_path
     elsif current_user.battle and !current_user.battle.submitted
       link_to "<img src='/images/red_swords.png' border='0'/>".html_safe, battle_path
