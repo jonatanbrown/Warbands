@@ -36,19 +36,7 @@ function register_edit_team_listeners() {
 
     $('.edit-team-character').popover({placement: 'bottom'})
 
-    $("#formation-selector").on("change", function(event) {
-        var team_id = $(this).attr('data-id')
-        var formation_num = $(this).val()
-        $.ajax({
-          type: "POST",
-          url: '/teams/' + team_id + '/set_formation/' + formation_num,
-          success: function(data) {
-            $("#team-formation").html(data)
-            $('.edit-team-character').popover({placement: 'bottom'})
-          },
-          dataType: 'html'
-        });
-    });
+    register_formation_selector();
 
     $("#submit-character-positions").on("click", function(event) {
         var team_id = $(this).attr('data-id')
@@ -105,6 +93,24 @@ function register_edit_team_listeners() {
           dataType: 'html'
         });
         return false;
+    });
+}
+
+function register_formation_selector() {
+    $("#formation-selector").on("change", function(event) {
+        var team_id = $(this).attr('data-id')
+        var formation_num = $(this).val()
+        $.ajax({
+          type: "POST",
+          url: '/teams/' + team_id + '/set_formation/' + formation_num,
+          success: function(data) {
+            $("#edit-formation").html(data);
+            $('.edit-team-character').popover({placement: 'bottom'});
+            register_formation_selector();
+
+          },
+          dataType: 'html'
+        });
     });
 }
 

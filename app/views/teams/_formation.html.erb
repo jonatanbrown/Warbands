@@ -1,21 +1,26 @@
-<div style="text-align: center"><b>Front<b></div>
+  <div id="team-formation">
+    <div style="text-align: center"><b>Front<b></div>
+    <% case @team.formation %>
+      <% when 1 %>
+        <%= render :partial => "formation1", :locals => {:team => @team} %>
+      <% when 2 %>
+        <%= render :partial => "formation2", :locals => {:team => @team} %>
+      <% when 3 %>
+        <%= render :partial => "formation3", :locals => {:team => @team} %>
+      <% when 4 %>
+        <%= render :partial => "formation4", :locals => {:team => @team} %>
+    <% end %>
+  </div>
+
+<p>Set formation</p>
+
+  <%= select_tag('formation-selector', options_for_select([['One', 1], ['Two', 2], ['Three', 3], ['Four', 4]], @team.formation), 'data-id' => @team._id) %>
 
 <% if @team.errors.any? %>
   <span class="red">
     <% @team.errors.messages.each do |msg| %>
-      <p><%= msg[1][0] %></p>
+      <%= msg[1][0] %>
     <% end %>
   </span>
-<% end %>
-
-<% case @team.formation %>
-  <% when 1 %>
-    <%= render :partial => "formation1", :locals => {:team => @team} %>
-  <% when 2 %>
-    <%= render :partial => "formation2", :locals => {:team => @team} %>
-  <% when 3 %>
-    <%= render :partial => "formation3", :locals => {:team => @team} %>
-  <% when 4 %>
-    <%= render :partial => "formation4", :locals => {:team => @team} %>
 <% end %>
 

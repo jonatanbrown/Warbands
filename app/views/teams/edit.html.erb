@@ -1,11 +1,6 @@
 <h2><%= @team.name %></h2>
-<div id="formation-select" class="bright-background left">
-  <div id="team-formation">
-    <%= render :partial => "formation" %>
-  </div>
-  <p>Set formation</p>
-
-  <%= select_tag('formation-selector', options_for_select([['One', 1], ['Two', 2], ['Three', 3], ['Four', 4]], @team.formation), 'data-id' => @team._id) %>
+<div id="edit-formation" class="bright-background left">
+  <%= render :partial => "formation" %>
 </div>
   <div id="position-select" class="bright-background left">
   <div id="char-positions">
