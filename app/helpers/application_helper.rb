@@ -3,8 +3,6 @@ module ApplicationHelper
   def battle_button
     if current_user.battle and current_user.battle.submitted
       link_to "<img src='/images/red_swords.png' border='0'/>".html_safe, waiting_for_turn_path
-    elsif current_user.battle and !current_user.battle.submitted and current_user.battle_sync
-      link_to "<img src='/images/red_swords.png' border='0'/>".html_safe, next_turn_path
     elsif current_user.battle and !current_user.battle.submitted
       link_to "<img src='/images/red_swords.png' border='0'/>".html_safe, battle_path
     else

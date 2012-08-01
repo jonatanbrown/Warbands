@@ -2,15 +2,22 @@ class BattleSyncsController < ApplicationController
 
   def refresh_waiting_status
     bs = current_user.battle_sync
+    battle = current_user.battle
     if bs.submit_count == 0
       render :text => "true"
     else
       if bs.seconds_since_submit > 60 and current_user.battle.submitted
-        team = current_user.team
-        op_team = User.find(team.user.battle.opponent).team
 
-        bs.update_attribute(:turn_events, "")
-        Battle.do_battle_results(op_team, team, TIMED_OUT, OPPONENT_TIMED_OUT)
+        battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: battle.opponent }], submit_count: 1, state: 'waiting' }, update: {'$set' => {state: 'resolving'}}, :new => true)
+
+        if battle_sync
+          bs = BattleSync.instantiate(battle_sync)
+          team = current_user.team
+          op_team = User.find(team.user.battle.opponent).team
+
+          bs.update_attribute(:turn_events, "")
+          Battle.do_battle_results(op_team, team, TIMED_OUT, OPPONENT_TIMED_OUT)
+        end
         render :text => "true"
       else
         render :text => "false"

@@ -9,19 +9,17 @@ class BattlesController < ApplicationController
     end
 
     if current_user.battle
-      if current_user.battle_sync
-        redirect_to next_turn_path
-        return
-      else
-        redirect_to battle_path
-        return
-      end
-
+      redirect_to battle_path
+      return
     elsif q = BattleQueue.collection.find_and_modify(query: { '$nor' => [ {user_id: current_user._id} ]}, :remove => true)
       bq = BattleQueue.instantiate(q)
       opponent = User.find(bq.user_id)
       Battle.create(user: current_user, opponent: bq.user_id )
       Battle.create(user: opponent, opponent: current_user._id)
+      bs = BattleSync.create(reference_id: current_user._id)
+      bs.users << current_user
+      bs.users << opponent
+      bs.save
       redirect_to battle_path
     elsif !BattleQueue.all.any?
       @queue = BattleQueue.create(user: current_user)
@@ -30,26 +28,6 @@ class BattlesController < ApplicationController
   end
 
   def battle
-    @battle = current_user.battle
-    @team = current_user.team
-    @op_team = User.find(@battle.opponent).team
-
-    @chars = @team.characters.where(:active => true)
-    @op_chars = @op_team.characters.where(:active => true)
-
-    #Create battlesync unless it already exists
-    BattleSync.collection.find_and_modify(query: { '$or' => [ { reference_id: current_user._id } , { reference_id: @battle.opponent } ] }, update: {'$set' => {reference_id: current_user._id}}, :upsert => true, :new => true)
-
-    bs = BattleSync.where(:reference_id.in => [current_user._id, @battle.opponent]).first
-
-    bs.users << current_user
-    bs.save
-
-    @turn_events = ""
-  end
-
-  def next_turn
-
     @battle = current_user.battle
     @team = current_user.team
     @op_team = User.find(@battle.opponent).team
@@ -127,7 +105,7 @@ class BattlesController < ApplicationController
 
     if bs.turn > battle.turn
       battle.update_attributes(turn: battle.turn + 1, submitted: false)
-      redirect_to next_turn_path
+      redirect_to battle_path
     end
 
     @team = current_user.team
