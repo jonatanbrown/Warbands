@@ -7,7 +7,7 @@
   <% end %>
   </h4>
   <% if equipment.weapon? %>
-    <p>Class: <%= equipment.get_class_name %></p>
+    <p>Class: <span class="weapon-class" rel="tooltip" data-original-title="<%= equipment.get_class_tooltip %>"><%= equipment.get_class_name %></span></p>
     <% if equipment.ranged? %>
       <p>Range: Ranged </p>
     <% else %>

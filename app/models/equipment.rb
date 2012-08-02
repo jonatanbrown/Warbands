@@ -75,6 +75,25 @@ class Equipment
     end
   end
 
+  def get_class_tooltip
+    case eq_type
+    when EQUIPMENT_SWORD
+      'Swords give a 5% chance to parry melee attacks.'
+    when EQUIPMENT_MACE
+      'Maces give a 5% chance to stun the opponent, negating their next action.'
+    when EQUIPMENT_AXE
+      'Axes give a 5% chance to cause the opponent to bleed, causing damage over time.'
+    when EQUIPMENT_SPEAR
+      'Spears give a 10% bonus to Initiative of weapon based attacks.'
+    when EQUIPMENT_THROWING_KNIVES
+      'Knives give a 10% bonus to Initiative of weapon based attacks.'
+    when EQUIPMENT_JAVELINS
+      'Javelins reduce chance of missing with weapon based attacks by 10%.'
+    when EQUIPMENT_THROWING_AXES
+      'Axes give a 5% chance to cause the opponent to bleed, causing damage over time.'
+    end
+  end
+
   def get_equipment_slot
     case eq_type
     when EQUIPMENT_SWORD

@@ -25,6 +25,9 @@ $(document).ready(function() {
 });
 
 function register_equipment_listeners() {
+
+    $(".weapon-class").tooltip({placement: 'right'})
+
     $('.equipment-selector').on("change", function(event) {
         var equipment_id = $(this).val()
         var char_id = $('#character-equipment').attr('data-id')
