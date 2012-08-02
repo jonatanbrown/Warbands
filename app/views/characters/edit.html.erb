@@ -16,7 +16,8 @@
       </br>
       HP: <%= @character.hp%></br>
       AP: <%= @character.ap%></br>
-      Armor: <%= @character.armor %>
+      Armor: <%= @character.armor %></br>
+      Damage reduction: <%= (@character.damage_reduction * 100.0).round(2) %>%
     </p>
     <p>
       <b>Discipline Progress</b>

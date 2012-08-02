@@ -184,8 +184,7 @@ class Battle
             if char.ran_up?
               damage *= 3.0
             end
-            damage -= (target.final_tgh/2.0)
-            damage -= (target.armor/2.0)
+            damage *= (1 - target.damage_reduction)
             if damage < 0
               damage = 0
             end
@@ -277,8 +276,7 @@ class Battle
           if char.ran_up?
             damage *= 3.0
           end
-          damage -= (target.final_tgh/2.0)
-          damage -= (target.armor/2.0)
+          damage *= (1 - target.damage_reduction)
 
           if damage < 0
             damage = 0
@@ -315,8 +313,7 @@ class Battle
           if char.ran_up?
             damage *= 3.0
           end
-          damage -= (target.final_tgh/2.0)
-          damage -= (target.armor/2.0)
+          damage *= (1 - target.damage_reduction)
           if damage < 0
             damage = 0
           end
@@ -385,8 +382,7 @@ class Battle
           if char.ran_up?
             damage *= 3.0
           end
-          damage -= (target.final_tgh/2.0)
-          damage -= (target.armor/2.0)
+          damage *= (1 - target.damage_reduction)
           if damage < 0
             damage = 0
           end
@@ -426,8 +422,7 @@ class Battle
           if char.ran_up?
             damage *= 3.0
           end
-          damage -= (target.final_tgh/2.0)
-          damage -= (target.armor/2.0)
+          damage *= (1 - target.damage_reduction)
 
           if damage < 0
             damage = 0
@@ -460,8 +455,7 @@ class Battle
         if char.ran_up?
           damage *= 3.0
         end
-        damage -= (target.final_tgh/2.0).
-        damage -= (target.armor/2.0)
+        damage *= (1 - target.damage_reduction)
 
         if damage < 0
           damage = 0
@@ -501,8 +495,7 @@ class Battle
           if char.ran_up?
             damage *= 3.0
           end
-          damage -= (target.final_tgh/2.0)
-          damage -= (target.armor/2.0)
+          damage *= (1 - target.damage_reduction)
 
           if damage < 0
             damage = 0
@@ -548,8 +541,7 @@ class Battle
           if char.ran_up?
             damage *= 3.0
           end
-          damage -= (target.final_tgh/2.0)
-          damage -= (target.armor/2.0)
+          damage *= (1 - target.damage_reduction)
           if damage < 0
             damage = 0
           end
@@ -588,8 +580,7 @@ class Battle
           if char.ran_up?
             damage *= 3.0
           end
-          damage -= (target.final_tgh/2.0)
-          damage -= (target.armor/2.0)
+          damage *= (1 - target.damage_reduction)
           if damage < 0
             damage = 0
           end

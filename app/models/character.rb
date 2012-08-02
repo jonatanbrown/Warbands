@@ -582,6 +582,11 @@ class Character
     rand(1..100) <= 5
   end
 
+  def damage_reduction
+    val = armor + tgh
+    ((100.0*val)/(50.0+val)) * 0.01
+  end
+
   def is_protected?
     effects.each do |effect|
       if effect[0] == EFFECT_PROTECTED
