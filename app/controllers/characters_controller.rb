@@ -60,7 +60,11 @@ class CharactersController < ApplicationController
     character = Character.find(params[:id])
     character.select_skill(params[:skill_id].to_i)
     character.save
-    render :nothing => true
+    if character.points_to_spend?
+      render :text => 'true'
+    else
+      render :text => 'false'
+    end
   end
 end
 

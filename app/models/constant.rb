@@ -298,7 +298,7 @@ class Constant
       when SKILL_ACCURATE_STRIKE
         'An attack that always hits the opponent'
       when SKILL_FINISHING_STRIKE
-        'An attack with greatly increased damage.'
+        'A costly attack with greatly increased damage.'
       when SKILL_PROTECT
         'Attempt to protect another character by deflecting attacks onto oneself instead.'
       when SKILL_SHIELD_WALL

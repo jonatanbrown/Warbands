@@ -8,9 +8,13 @@ $(document).ready(function() {
           url: '/characters/' + character_id + '/select_skill',
           data: 'skill_id=' + $(this).attr('data-skill-id'),
           success: function(data) {
-            window.location.reload()
+            if(data == 'true')
+                window.location.reload()
+            else
+                window.location.replace('/teams/' + $('#team-info').attr('data-id'))
+
           },
-          dataType: 'html'
+          dataType: 'text'
         });
         return false;
     });
