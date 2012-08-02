@@ -6,6 +6,12 @@
     height: 450px;
 }
 
+.discipline-progress{
+    width: 120px;
+    height: 15px;
+    margin-bottom: 0px;
+}
+
 #character-stats-and-navigation{
     width: 200px;
     margin-right: 100px;

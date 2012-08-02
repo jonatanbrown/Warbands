@@ -27,9 +27,9 @@ class Character
       field :ranged_combat_points, :type => Integer, :default => 0
       field :dirty_combat_points, :type => Integer, :default => 0
 
-      field :melee_combat, :type => Integer, :default => 1
-      field :ranged_combat, :type => Integer, :default => 1
-      field :dirty_combat, :type => Integer, :default => 1
+      field :melee_combat, :type => Integer, :default => 0
+      field :ranged_combat, :type => Integer, :default => 0
+      field :dirty_combat, :type => Integer, :default => 0
 
   #Skills
 

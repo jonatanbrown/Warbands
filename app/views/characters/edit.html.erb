@@ -1,5 +1,9 @@
 <h2><%= @character.name %></h2>
 <div id="character-stats-and-navigation" class="left">
+  <div class="left character-navigation">
+    <div class="left"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position - 1).divmod(5)[1])._id %>"><img src="/images/left_arrow_link.png" onmouseover="this.src='/images/left_arrow_link_focus.png'" onmouseout="this.src='/images/left_arrow_link.png'"/></a></div>
+    <div class="right"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position + 1).divmod(5)[1])._id %>"><img src="/images/right_arrow_link.png" onmouseover="this.src='/images/right_arrow_link_focus.png'" onmouseout="this.src='/images/right_arrow_link.png'"/></a></div>
+  </div>
   <div id="character-stats" class="left bright-background">
     <p>
       <b>Stats</b></br>
@@ -14,8 +18,13 @@
       AP: <%= @character.ap%></br>
       Armor: <%= @character.armor %>
     </p>
-    </br>
     <p>
+      <b>Discipline Progress</b>
+
+      <div><span class="left">Melee: </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.melee_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
+      <div><span class="left">Ranged: </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.ranged_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
+      <div><span class="left">Dirty: </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.dirty_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
+      </br>
       <b>Skills</b></br>
       <% @character.get_skills_array.each_with_index do |skill_level, index| %>
         <% if skill_level != 0%>
@@ -28,10 +37,6 @@
         <b><%= link_to "Select new skill", skillup_character_path(@character) %></b>
       <% end %>
     </p>
-  </div>
-  <div class="left character-navigation">
-    <div class="left"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position - 1).divmod(5)[1])._id %>"><img src="/images/left_arrow_link.png" onmouseover="this.src='/images/left_arrow_link_focus.png'" onmouseout="this.src='/images/left_arrow_link.png'"/></a></div>
-    <div class="right"><a href="#" class="switch-character-button" data-char-id="<%= @character.team.get_char((@character.position + 1).divmod(5)[1])._id %>"><img src="/images/right_arrow_link.png" onmouseover="this.src='/images/right_arrow_link_focus.png'" onmouseout="this.src='/images/right_arrow_link.png'"/></a></div>
   </div>
 </div>
 
