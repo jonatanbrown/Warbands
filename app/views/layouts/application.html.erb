@@ -9,6 +9,7 @@
 <body>
 <div id="all-content">
   <% if current_user and current_user.team %>
+    <div id="top-background-top"></div>
     <div id="top-content">
       <div class="left title-text">
         <h1>Warbands</h1>
@@ -27,12 +28,15 @@
         <div class="navbar-choice left"><%= link_to "Rankings", rankings_path %></div>
       </b></div>
     </div>
+    <div id="top-background-bottom"></div>
   <% end %>
+  <div id="main-background-top"></div>
   <div class="main-content-container">
     <div class="inner-content">
       <%= yield %>
     </div>
   </div>
+  <div id="main-background-bottom"></div>
 </div>
 
 </body>

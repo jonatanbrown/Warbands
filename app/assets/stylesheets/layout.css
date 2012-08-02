@@ -4,7 +4,7 @@
 }
 
 body{
-    background-color: grey;
+    background-color: #fff;
 }
 
 .devise-div{
@@ -38,17 +38,20 @@ body{
     float: left;
 }
 
+.navbar{
+    margin-bottom: 13px;
+}
+
 .right{
     float: right;
 }
 
 #top-content{
-    height: 110px;
+    height: 105px;
     padding-left: 10px;
     padding-right: 10px;
-    background-image:url('/images/background-top.png');
+    background-image:url('/images/background-main-part.png');
     background-repeat:repeat-y;
-    border: 2px solid;
 }
 
 .title-text{
@@ -59,14 +62,43 @@ body{
     margin-top: 10px;
 }
 
+#top-background-top{
+    position: absolute;
+    top: 0px;
+    height: 6px;
+    width: 940px;
+    background-image:url('/images/background-border-top.png');
+}
+
+#top-background-bottom{
+    position: absolute;
+    top: 103px;
+    height: 6px;
+    width: 940px;
+    background-image:url('/images/background-border-bottom.png');
+}
+
+#main-background-top{
+    position: absolute;
+    background-image:url('/images/background-border-top.png');
+    height: 6px;
+    width: 940px;
+    top: 115px;
+}
+
+#main-background-bottom{
+    background-image:url('/images/background-border-bottom.png');
+    height: 6px;
+    width: 940px;
+}
+
 .main-content-container {
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 5px;
-    background-image:url('/images/background-main.png');
+    background-image:url('/images/background-main-part.png');
     background-repeat:repeat-y;
     min-height: 700px;
-    border: 2px solid;
     overflow: hidden;
 }
 
