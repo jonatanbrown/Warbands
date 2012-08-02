@@ -135,6 +135,7 @@ class Battle
       return "<p>#{char.name} was incapacitated and took some time to recover.</p>"
     end
 
+    #SELF TARGETING SKILLS
     if char.active
       case action['skill']
 
@@ -180,6 +181,9 @@ class Battle
 
           if hit
             damage = char.equipped_weapon.roll_damage + ((char.final_dex + char.fling)/2.0)
+            if char.ran_up?
+              damage *= 3.0
+            end
             damage -= (target.final_tgh/2.0)
             damage -= (target.armor/2.0)
             if damage < 0
@@ -187,7 +191,7 @@ class Battle
             end
             damage = damage.round(0)
             target.current_hp -= damage
-            target.taken_damage = true
+            target.took_damage
 
             result += "<p>#{char.name} flings a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
             result += target.check_if_poisoned(char)
@@ -238,6 +242,16 @@ class Battle
           result += "<p>#{char.name} attempts do apply weakness poison but fails.</p>"
         end
 
+      #Run Up
+      when '22'
+        if char.skill_roll_successful?(SKILL_RUN_UP)
+          char.effects << [EFFECT_RAN_UP, 1, nil, nil]
+          char.roll_learning(SKILL_RUN_UP)
+          char.save
+          result += "<p>#{char.name} begins a run up.</p>"
+        else
+          result += "<p>#{char.name} attempts do a run up but misses the timing completely.</p>"
+        end
       end
     end
 
@@ -260,6 +274,9 @@ class Battle
 
         if hit
           damage = (char.equipped_weapon.roll_damage + ((char.final_str + char.strike)/2.0))
+          if char.ran_up?
+            damage *= 3.0
+          end
           damage -= (target.final_tgh/2.0)
           damage -= (target.armor/2.0)
 
@@ -268,7 +285,7 @@ class Battle
           end
           damage = damage.round(0)
           target.current_hp -= damage
-          target.taken_damage = true
+          target.took_damage
 
           result += "<p>#{char.name} strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -295,6 +312,9 @@ class Battle
 
         if hit
           damage = char.equipped_weapon.roll_damage + ((char.final_dex + char.thrown)/2.0)
+          if char.ran_up?
+            damage *= 3.0
+          end
           damage -= (target.final_tgh/2.0)
           damage -= (target.armor/2.0)
           if damage < 0
@@ -302,7 +322,7 @@ class Battle
           end
           damage = damage.round(0)
           target.current_hp -= damage
-          target.taken_damage = true
+          target.took_damage
           result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
@@ -362,6 +382,9 @@ class Battle
 
         if hit
           damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.quick_strike)/2.0)) * 0.8)
+          if char.ran_up?
+            damage *= 3.0
+          end
           damage -= (target.final_tgh/2.0)
           damage -= (target.armor/2.0)
           if damage < 0
@@ -369,7 +392,7 @@ class Battle
           end
           damage = damage.round(0)
           target.current_hp -= damage
-          target.taken_damage = true
+          target.took_damage
 
           result += "<p>#{char.name} quickly strikes #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -400,6 +423,9 @@ class Battle
 
         if hit
           damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.heavy_strike)/2.0)) * 1.2)
+          if char.ran_up?
+            damage *= 3.0
+          end
           damage -= (target.final_tgh/2.0)
           damage -= (target.armor/2.0)
 
@@ -408,7 +434,7 @@ class Battle
           end
           damage = damage.round(0)
           target.current_hp -= damage
-          target.taken_damage = true
+          target.took_damage
 
           result += "<p>#{char.name} does a heavy strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -431,6 +457,9 @@ class Battle
         end
 
         damage = (char.equipped_weapon.roll_damage + ((char.final_str + char.accurate_strike)/2.0))
+        if char.ran_up?
+          damage *= 3.0
+        end
         damage -= (target.final_tgh/2.0).
         damage -= (target.armor/2.0)
 
@@ -439,7 +468,7 @@ class Battle
         end
         damage = damage.round(0)
         target.current_hp -= damage
-        target.taken_damage = true
+        target.took_damage
 
         result += "<p>#{char.name} does an accurate strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -469,6 +498,9 @@ class Battle
 
         if hit
           damage = ((char.equipped_weapon.roll_damage + ((char.final_str + char.finishing_strike)/2.0)) * 1.7)
+          if char.ran_up?
+            damage *= 3.0
+          end
           damage -= (target.final_tgh/2.0)
           damage -= (target.armor/2.0)
 
@@ -477,7 +509,7 @@ class Battle
           end
           damage = damage.round(0)
           target.current_hp -= damage
-          target.taken_damage = true
+          target.took_damage
 
           result += "<p>#{char.name} does a finishing strike at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
@@ -513,6 +545,9 @@ class Battle
 
         if hit
           damage = (char.equipped_weapon.roll_damage + ((char.final_dex + char.quick_throw)/2.0)) * 0.8
+          if char.ran_up?
+            damage *= 3.0
+          end
           damage -= (target.final_tgh/2.0)
           damage -= (target.armor/2.0)
           if damage < 0
@@ -520,7 +555,7 @@ class Battle
           end
           damage = damage.round(0)
           target.current_hp -= damage
-          target.taken_damage = true
+          target.took_damage
           result += "<p>#{char.name} quickly throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
@@ -550,6 +585,9 @@ class Battle
 
         if hit
           damage = ((char.equipped_weapon.roll_damage + ((char.final_dex + char.heavy_throw)/2.0)) * 1.2)
+          if char.ran_up?
+            damage *= 3.0
+          end
           damage -= (target.final_tgh/2.0)
           damage -= (target.armor/2.0)
           if damage < 0
@@ -557,7 +595,7 @@ class Battle
           end
           damage = damage.round(0)
           target.current_hp -= damage
-          target.taken_damage = true
+          target.took_damage
           result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)

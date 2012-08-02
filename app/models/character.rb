@@ -52,10 +52,11 @@ class Character
 
     #Basic
       field :thrown, :type => Integer
-      field :cover, :type => Integer
+      field :run_up, :type => Integer
 
     #Learnable
       field :fling, :type => Integer
+      field :cover, :type => Integer
       field :quick_throw, :type => Integer
       field :heavy_throw, :type => Integer
       field :take_aim, :type => Integer
@@ -105,6 +106,7 @@ class Character
     self.strike = roll_skill
     self.defensive_posture = roll_skill
     self.thrown = roll_skill
+    self.run_up = roll_skill
     self.dirt = roll_skill
   end
 
@@ -452,6 +454,8 @@ class Character
       return paralyzing_poison
     when SKILL_WEAKNESS_POISON
       return weakness_poison
+    when SKILL_RUN_UP
+      return run_up
     end
 
     nil
@@ -503,6 +507,8 @@ class Character
       paralyzing_poison
     elsif skill_id == SKILL_WEAKNESS_POISON
       weakness_poison
+    elsif skill_id == SKILL_RUN_UP
+      run_up
     end
   end
 
@@ -727,6 +733,17 @@ class Character
     else
       ''
     end
+  end
+
+  def took_damage
+    self.taken_damage = true
+    effects.delete_if do |effect|
+      effect[0] == EFFECT_RAN_UP
+    end
+  end
+
+  def ran_up?
+    effects.map {|x| x[0] }.include?(EFFECT_RAN_UP)
   end
 
   def equipped_weapon

@@ -25,7 +25,8 @@ class Constant
       ["#{get_skill_name(18)}", 18, get_skill_ap(18), get_skill_targeting(18), get_skill_icon(18), get_skill_description(18)],
       ["#{get_skill_name(19)}", 19, get_skill_ap(19), get_skill_targeting(19), get_skill_icon(19), get_skill_description(19)],
       ["#{get_skill_name(20)}", 20, get_skill_ap(20), get_skill_targeting(20), get_skill_icon(20), get_skill_description(20)],
-      ["#{get_skill_name(21)}", 21, get_skill_ap(21), get_skill_targeting(21), get_skill_icon(21), get_skill_description(21)]
+      ["#{get_skill_name(21)}", 21, get_skill_ap(21), get_skill_targeting(21), get_skill_icon(21), get_skill_description(21)],
+      ["#{get_skill_name(22)}", 22, get_skill_ap(22), get_skill_targeting(22), get_skill_icon(22), get_skill_description(22)]
     ].to_s
   end
 
@@ -80,6 +81,8 @@ class Constant
       'Paralyzing Poison'
     elsif skill_id == SKILL_WEAKNESS_POISON
       'Weakness Poison'
+    elsif skill_id == SKILL_RUN_UP
+      'Run Up'
     end
   end
 
@@ -128,6 +131,8 @@ class Constant
       5
     elsif skill_id == SKILL_WEAKNESS_POISON
       5
+    elsif skill_id == SKILL_RUN_UP
+      5
     end
   end
 
@@ -175,6 +180,8 @@ class Constant
     elsif skill_id == SKILL_PARALYZING_POISON
       SELF
     elsif skill_id == SKILL_WEAKNESS_POISON
+      SELF
+    elsif skill_id == SKILL_RUN_UP
       SELF
     end
   end
@@ -225,6 +232,8 @@ class Constant
         ''
       when SKILL_WEAKNESS_POISON
         ''
+      when SKILL_RUN_UP
+        ''
     end
   end
 
@@ -274,6 +283,8 @@ class Constant
         'icon_paralyzing_poison.png'
       when SKILL_WEAKNESS_POISON
         'icon_weakness_poison.png'
+      when SKILL_RUN_UP
+        'icon_run_up.png'
     end
   end
 
@@ -323,6 +334,8 @@ class Constant
         'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced AP.'
       when SKILL_WEAKNESS_POISON
         'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced Str and Tgh.'
+      when SKILL_RUN_UP
+        'If no damage is taken between the run up and the next weapon based attack this round, it does 200% increased damage.'
     end
   end
 
@@ -348,6 +361,8 @@ class Constant
         'Bleeding'
       when EFFECT_TAKEN_AIM
         'THIS SHOULD NOT BE HERE'
+      when EFFECT_RAN_UP
+        'THIS SHOULD NOT BE HERE'
     end
   end
 
@@ -370,6 +385,8 @@ class Constant
       when EFFECT_APPLIED_WEAKNESS_POISON
         true
       when EFFECT_TAKEN_AIM
+        false
+      when EFFECT_RAN_UP
         false
       else
         true
@@ -400,6 +417,8 @@ class Constant
         "<span class='green'>"
       when EFFECT_APPLIED_WEAKNESS_POISON
         "<span class='green'>"
+      when EFFECT_TAKEN_AIM
+        "<span class='red'>"
       when EFFECT_TAKEN_AIM
         "<span class='red'>"
       else
@@ -558,6 +577,9 @@ class Constant
 
       when SKILL_WEAKNESS_POISON
         DISCIPLINE_DIRTY_COMBAT
+
+      when SKILL_RUN_UP
+        DISCIPLINE_RANGED_COMBAT
     end
   end
 end
