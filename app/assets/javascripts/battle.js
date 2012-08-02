@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
     $('.battle-character').popover({placement: 'bottom'})
-    $('.skill-icon-image').tooltip({placement: 'top'});
 
     $('#submit-turn').on("click", submit_turn);
     $('#mass-retreat').on("click", mass_retreat);
@@ -52,7 +51,7 @@ function listen_select_skill_buttons(selector) {
         }
         return false
     });
-    $('.skill-icon-image').tooltip({placement: 'top'});
+    $(selector).find('.skill-icon-image').tooltip({placement: 'top', delay: {show: 500, hide: 100}});
 }
 
 function confirm_skill(pos, skill_id, target) {
@@ -124,7 +123,7 @@ function set_skill_options(selector, pos) {
             }
             else
             {
-                selector.append('<div class="skill-button-container left"><a href="#" class="select-skill-button" data-skill-id="' + skill[1] + '"><img class="skill-icon-image" rel="tooltip" src="/images/' + skill[4] + '" data-original-title="'+ skill[0] + ' - lvl ' + skill_level + ' - ' + skill[2] + ' ap"></a></div>')
+                selector.append('<div class="skill-button-container left"><a href="#" class="select-skill-button" data-skill-id="' + skill[1] + '"><img class="skill-icon-image" rel="tooltip" src="/images/' + skill[4] + '" data-original-title="<b>'+ skill[0] + ' - lvl ' + skill_level + ' - ' + skill[2] + ' ap </b></br> ' + skill[5] + '"></a></div>')
             }
         }
     }

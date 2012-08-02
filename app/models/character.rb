@@ -105,7 +105,6 @@ class Character
     self.strike = roll_skill
     self.defensive_posture = roll_skill
     self.thrown = roll_skill
-    self.cover = roll_skill
     self.dirt = roll_skill
   end
 

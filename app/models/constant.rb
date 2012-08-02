@@ -4,28 +4,28 @@ class Constant
 
   def self.skills
     [
-      ["#{get_skill_name(0)}", 0, get_skill_ap(0), get_skill_targeting(0), get_skill_icon(0)],
-      ["#{get_skill_name(1)}", 1, get_skill_ap(1), get_skill_targeting(1), get_skill_icon(1)],
-      ["#{get_skill_name(2)}", 2, get_skill_ap(2), get_skill_targeting(2), get_skill_icon(2)],
-      ["#{get_skill_name(3)}", 3, get_skill_ap(3), get_skill_targeting(3), get_skill_icon(3)],
-      ["#{get_skill_name(4)}", 4, get_skill_ap(4), get_skill_targeting(4), get_skill_icon(4)],
-      ["#{get_skill_name(5)}", 5, get_skill_ap(5), get_skill_targeting(5), get_skill_icon(5)],
-      ["#{get_skill_name(6)}", 6, get_skill_ap(6), get_skill_targeting(6), get_skill_icon(6)],
-      ["#{get_skill_name(7)}", 7, get_skill_ap(7), get_skill_targeting(7), get_skill_icon(7)],
-      ["#{get_skill_name(8)}", 8, get_skill_ap(8), get_skill_targeting(8), get_skill_icon(8)],
-      ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9), get_skill_icon(9)],
-      ["#{get_skill_name(10)}", 10, get_skill_ap(10), get_skill_targeting(10), get_skill_icon(10)],
-      ["#{get_skill_name(11)}", 11, get_skill_ap(11), get_skill_targeting(11), get_skill_icon(11)],
-      ["#{get_skill_name(12)}", 12, get_skill_ap(12), get_skill_targeting(12), get_skill_icon(12)],
-      ["#{get_skill_name(13)}", 13, get_skill_ap(13), get_skill_targeting(13), get_skill_icon(13)],
-      ["#{get_skill_name(14)}", 14, get_skill_ap(14), get_skill_targeting(14), get_skill_icon(14)],
-      ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15), get_skill_icon(15)],
-      ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16), get_skill_icon(16)],
-      ["#{get_skill_name(17)}", 17, get_skill_ap(17), get_skill_targeting(17), get_skill_icon(17)],
-      ["#{get_skill_name(18)}", 18, get_skill_ap(18), get_skill_targeting(18), get_skill_icon(18)],
-      ["#{get_skill_name(19)}", 19, get_skill_ap(19), get_skill_targeting(19), get_skill_icon(19)],
-      ["#{get_skill_name(20)}", 20, get_skill_ap(20), get_skill_targeting(20), get_skill_icon(20)],
-      ["#{get_skill_name(21)}", 21, get_skill_ap(21), get_skill_targeting(21), get_skill_icon(21)]
+      ["#{get_skill_name(0)}", 0, get_skill_ap(0), get_skill_targeting(0), get_skill_icon(0), get_skill_description(0)],
+      ["#{get_skill_name(1)}", 1, get_skill_ap(1), get_skill_targeting(1), get_skill_icon(1), get_skill_description(1)],
+      ["#{get_skill_name(2)}", 2, get_skill_ap(2), get_skill_targeting(2), get_skill_icon(2), get_skill_description(2)],
+      ["#{get_skill_name(3)}", 3, get_skill_ap(3), get_skill_targeting(3), get_skill_icon(3), get_skill_description(3)],
+      ["#{get_skill_name(4)}", 4, get_skill_ap(4), get_skill_targeting(4), get_skill_icon(4), get_skill_description(4)],
+      ["#{get_skill_name(5)}", 5, get_skill_ap(5), get_skill_targeting(5), get_skill_icon(5), get_skill_description(5)],
+      ["#{get_skill_name(6)}", 6, get_skill_ap(6), get_skill_targeting(6), get_skill_icon(6), get_skill_description(6)],
+      ["#{get_skill_name(7)}", 7, get_skill_ap(7), get_skill_targeting(7), get_skill_icon(7), get_skill_description(7)],
+      ["#{get_skill_name(8)}", 8, get_skill_ap(8), get_skill_targeting(8), get_skill_icon(8), get_skill_description(8)],
+      ["#{get_skill_name(9)}", 9, get_skill_ap(9), get_skill_targeting(9), get_skill_icon(9), get_skill_description(9)],
+      ["#{get_skill_name(10)}", 10, get_skill_ap(10), get_skill_targeting(10), get_skill_icon(10), get_skill_description(10)],
+      ["#{get_skill_name(11)}", 11, get_skill_ap(11), get_skill_targeting(11), get_skill_icon(11), get_skill_description(11)],
+      ["#{get_skill_name(12)}", 12, get_skill_ap(12), get_skill_targeting(12), get_skill_icon(12), get_skill_description(12)],
+      ["#{get_skill_name(13)}", 13, get_skill_ap(13), get_skill_targeting(13), get_skill_icon(13), get_skill_description(13)],
+      ["#{get_skill_name(14)}", 14, get_skill_ap(14), get_skill_targeting(14), get_skill_icon(14), get_skill_description(14)],
+      ["#{get_skill_name(15)}", 15, get_skill_ap(15), get_skill_targeting(15), get_skill_icon(15), get_skill_description(15)],
+      ["#{get_skill_name(16)}", 16, get_skill_ap(16), get_skill_targeting(16), get_skill_icon(16), get_skill_description(16)],
+      ["#{get_skill_name(17)}", 17, get_skill_ap(17), get_skill_targeting(17), get_skill_icon(17), get_skill_description(17)],
+      ["#{get_skill_name(18)}", 18, get_skill_ap(18), get_skill_targeting(18), get_skill_icon(18), get_skill_description(18)],
+      ["#{get_skill_name(19)}", 19, get_skill_ap(19), get_skill_targeting(19), get_skill_icon(19), get_skill_description(19)],
+      ["#{get_skill_name(20)}", 20, get_skill_ap(20), get_skill_targeting(20), get_skill_icon(20), get_skill_description(20)],
+      ["#{get_skill_name(21)}", 21, get_skill_ap(21), get_skill_targeting(21), get_skill_icon(21), get_skill_description(21)]
     ].to_s
   end
 
@@ -274,6 +274,55 @@ class Constant
         'icon_paralyzing_poison.png'
       when SKILL_WEAKNESS_POISON
         'icon_weakness_poison.png'
+    end
+  end
+
+  def self.get_skill_description(skill_id)
+    case skill_id
+      when SKILL_STRIKE
+        'Standard melee attack.'
+      when SKILL_THROWN
+        'Standard ranged attack.'
+      when SKILL_RETREAT
+        ''
+      when SKILL_DIRT
+        'Blind the opponent by throwing dirt into their eyes. Reduced Dex and Ini of the target.'
+      when SKILL_DEFENSIVE_POSTURE
+        'Assume a defensive posture giving you an increased chance to dodge incoming melee attacks.'
+      when SKILL_COVER
+        'Greatly increased chance of avoiding ranged attacks by hiding behind characters in front.'
+      when SKILL_QUICK_STRIKE
+        'An attack with increased initiative but reduced damage.'
+      when SKILL_HEAVY_STRIKE
+        'An attack with increased damage but reduced initiative.'
+      when SKILL_ACCURATE_STRIKE
+        'An attack that always hits the opponent'
+      when SKILL_FINISHING_STRIKE
+        'An attack with greatly increased damage.'
+      when SKILL_PROTECT
+        'Attempt to protect another character by deflecting attacks onto oneself instead.'
+      when SKILL_SHIELD_WALL
+        'Protects self and characters behind from ranged attacks.'
+      when SKILL_COUNTERSTRIKE
+        'After successfuly avoiding a melee attack gives a chance to strike back at the attacker.'
+      when SKILL_FLING
+        'A ranged attack that hits a random enemy target.'
+      when SKILL_QUICK_THROW
+        'A ranged attack with increased initiative but reduced damage.'
+      when SKILL_HEAVY_THROW
+        'A ranged attack with increased damage but reduced initiative.'
+      when SKILL_TAKE_AIM
+        'When attacking the same target more than once in the same round, gives an increased chance to hit on each attack after the first.'
+      when SKILL_UNDISTURBED
+        'If the character takes no damage during round, gives a chance to increase AP for the next round.'
+      when SKILL_BOLA
+        'A ranged attack that aims to stun the opponent causing them to miss their next action.'
+      when SKILL_MIND_POISON
+        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced Int and Mem.'
+      when SKILL_PARALYZING_POISON
+        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced AP.'
+      when SKILL_WEAKNESS_POISON
+        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced Str and Tgh.'
     end
   end
 
