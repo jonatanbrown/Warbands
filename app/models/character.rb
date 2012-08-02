@@ -849,7 +849,7 @@ class Character
   end
 
   def roll_discipline_increase(discipline_id)
-    if rand(1..50) == 1 and rand(1..50) > get_discipline_value(discipline_id)
+    if rand(1..50) == 1 and rand(1..35) > get_discipline_value(discipline_id)
       learnings << discipline_id
     end
   end
