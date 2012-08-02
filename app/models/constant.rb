@@ -291,51 +291,51 @@ class Constant
   def self.get_skill_description(skill_id)
     case skill_id
       when SKILL_STRIKE
-        'Standard melee attack.'
+        'Standard melee attack.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_THROWN
-        'Standard ranged attack.'
+        'Standard ranged attack.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_RETREAT
         ''
       when SKILL_DIRT
-        'Blind the opponent by throwing dirt into their eyes. Reduced Dex and Ini of the target.'
+        'Blind the opponent by throwing dirt into their eyes. Reduces Dex and Ini of the target.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_DEFENSIVE_POSTURE
-        'Assume a defensive posture giving you an increased chance to dodge incoming melee attacks.'
+        'Assume a defensive posture giving you an increased chance to dodge incoming melee attacks.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_COVER
-        'Greatly increased chance of avoiding ranged attacks by hiding behind characters in front.'
+        'Greatly increased chance of avoiding ranged attacks by hiding behind characters in front.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_QUICK_STRIKE
-        'An attack with increased initiative but reduced damage.'
+        'An attack with increased initiative but reduced damage.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_HEAVY_STRIKE
-        'An attack with increased damage but reduced initiative.'
+        'An attack with increased damage but reduced initiative.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_ACCURATE_STRIKE
-        'An attack that always hits the opponent'
+        'An attack that always hits the opponent' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_FINISHING_STRIKE
-        'A costly attack with greatly increased damage.'
+        'A costly attack with greatly increased damage.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_PROTECT
-        'Attempt to protect another character by deflecting attacks onto oneself instead.'
+        'Attempt to protect another character by deflecting attacks onto oneself instead.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_SHIELD_WALL
-        'Protects self and characters behind from ranged attacks.'
+        'Protects self and characters behind from ranged attacks.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_COUNTERSTRIKE
-        'After successfuly avoiding a melee attack gives a chance to strike back at the attacker.'
+        'After successfuly avoiding a melee attack gives a chance to strike back at the attacker.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_FLING
-        'A ranged attack that hits a random enemy target.'
+        'A ranged attack that hits a random enemy target.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_QUICK_THROW
-        'A ranged attack with increased initiative but reduced damage.'
+        'A ranged attack with increased initiative but reduced damage.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_HEAVY_THROW
-        'A ranged attack with increased damage but reduced initiative.'
+        'A ranged attack with increased damage but reduced initiative.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_TAKE_AIM
-        'When attacking the same target more than once in the same round, gives an increased chance to hit on each attack after the first.'
+        'When attacking the same target more than once in the same round, gives an increased chance to hit on each attack after the first.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_UNDISTURBED
-        'If the character takes no damage during round, gives a chance to increase AP for the next round.'
+        'If the character takes no damage during round, gives a chance to increase AP for the next round.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_BOLA
-        'A ranged attack that aims to stun the opponent causing them to miss their next action.'
+        'A ranged attack that aims to stun the opponent causing them to miss their next action.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_MIND_POISON
-        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced Int and Mem.'
+        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced Int and Mem.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_PARALYZING_POISON
-        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced AP.'
+        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced AP.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_WEAKNESS_POISON
-        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced Str and Tgh.'
+        'Coats ones weapon with poison that can cause enemies who take damage from it to suffer reduced Str and Tgh.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
       when SKILL_RUN_UP
-        'If no damage is taken between the run up and the next weapon based attack this round, it does 200% increased damage.'
+        'If no damage is taken between the run up and the next weapon based attack this round, it does 200% increased damage.' + "</br><b>#{Constant.get_discipline_name(Constant.get_discipline(skill_id))}</b>"
     end
   end
 
@@ -580,6 +580,17 @@ class Constant
 
       when SKILL_RUN_UP
         DISCIPLINE_RANGED_COMBAT
+    end
+  end
+
+  def self.get_discipline_name(discipline_id)
+    case discipline_id
+    when DISCIPLINE_MELEE_COMBAT
+      'Melee Combat'
+    when DISCIPLINE_RANGED_COMBAT
+      'Ranged Combat'
+    when DISCIPLINE_DIRTY_COMBAT
+      'Dirty Combat'
     end
   end
 end
