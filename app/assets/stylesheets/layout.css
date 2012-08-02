@@ -1,3 +1,8 @@
+.interactable{
+  color: #0088cc;
+  cursor: default;
+}
+
 body{
     background-color: grey;
 }

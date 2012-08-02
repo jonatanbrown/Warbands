@@ -12,6 +12,11 @@
     margin-bottom: 0px;
 }
 
+.skill-highlighted{
+    color: red;
+    font-weight: bold;
+}
+
 #character-stats-and-navigation{
     width: 200px;
     margin-right: 100px;

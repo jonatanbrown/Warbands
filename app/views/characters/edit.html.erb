@@ -22,14 +22,14 @@
     <p>
       <b>Discipline Progress</b>
 
-      <div><span class="left">Melee: </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.melee_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
-      <div><span class="left">Ranged: </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.ranged_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
-      <div><span class="left">Dirty: </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.dirty_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
+      <div><span class="left interactable progress-discipline" data-discipline-id="-2">Melee </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.melee_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
+      <div><span class="left interactable progress-discipline" data-discipline-id="-3">Ranged </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.ranged_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
+      <div><span class="left interactable progress-discipline" data-discipline-id="-4">Dirty </span><div class="discipline-progress progress right"><div class="bar" style="width: <%= @character.dirty_combat.divmod(5)[1] * 20 %>%"></div></div></div></br>
       </br>
       <b>Skills</b></br>
       <% @character.get_skills_array.each_with_index do |skill_level, index| %>
         <% if skill_level != 0%>
-          <%= "#{Constant.get_skill_name(index)}: #{@character.get_skill_value(index)}" %>
+          <span class="skill-text discipline<%= Constant.get_discipline(index) %>"><%= "#{Constant.get_skill_name(index)}: #{@character.get_skill_value(index)}" %></span>
           <br/>
         <% end %>
       <% end %>

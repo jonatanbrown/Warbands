@@ -18,13 +18,10 @@ $(document).ready(function() {
         });
         return false;
     });
-
-    register_switch_char_listeners();
-
-    register_equipment_listeners();
+    register_character_listeners();
 });
 
-function register_equipment_listeners() {
+function register_character_listeners() {
 
     $(".weapon-class").tooltip({placement: 'right'})
 
@@ -36,8 +33,7 @@ function register_equipment_listeners() {
           url: '/characters/' + char_id + '/change_item/' + equipment_id,
           success: function(data) {
             $('.inner-content').html(data)
-            register_switch_char_listeners();
-            register_equipment_listeners();
+            register_character_listeners();
           },
           dataType: 'html'
         });
@@ -51,17 +47,14 @@ function register_equipment_listeners() {
           type: "GET",
           url: '/characters/' + char_id + '/change_item/' + equipment_id,
           success: function(data) {
-            $('.inner-content').html(data)
-            register_switch_char_listeners();
-            register_equipment_listeners();
+            $('.inner-content').html(data);
+            register_character_listeners();
           },
           dataType: 'html'
         });
         return false;
     });
-}
 
-function register_switch_char_listeners() {
     var sync_count = 0
     var content_data = null
     $(".switch-character-button").on("click", function(event) {
@@ -70,8 +63,7 @@ function register_switch_char_listeners() {
             if(sync_count > 1) {
                 $('.inner-content').html(content_data);
                 $('.inner-content').fadeIn(100);
-                register_switch_char_listeners();
-                register_equipment_listeners();
+                register_character_listeners();
             }
         });
         window.history.replaceState({}, 'Warbands', '/characters/' + $(this).attr('data-char-id') + '/edit');
@@ -84,13 +76,24 @@ function register_switch_char_listeners() {
             if(sync_count > 1) {
                 $('.inner-content').html(content_data);
                 $('.inner-content').fadeIn(100);
-                register_switch_char_listeners();
-                register_equipment_listeners();
+                register_character_listeners();
             }
           },
           dataType: 'html'
         });
         return false;
+    });
+
+    $('.progress-discipline').on('mouseover', function(event) {
+        var discipline_id = $(this).attr('data-discipline-id')
+        $('.skill-text.discipline' + discipline_id).addClass('skill-highlighted')
+
+
+    });
+
+    $('.progress-discipline').on('mouseout', function(event) {
+        var discipline_id = $(this).attr('data-discipline-id')
+        $('.skill-text.discipline' + discipline_id).removeClass('skill-highlighted')
     });
 }
 
