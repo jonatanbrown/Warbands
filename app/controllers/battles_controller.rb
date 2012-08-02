@@ -71,12 +71,16 @@ class BattlesController < ApplicationController
 
       @battle.actions = params[:actions]
       @battle.submitted = true
-      bs = current_user.battle_sync
-      bs.submit_count += 1
-      bs.state = 'waiting'
-      bs.submit_time = Time.now
-      bs.save
       @battle.save
+
+      battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], '$or' => [{ state: 'orders' } , { state: 'waiting' }] }, update: {'$set' => {state: 'waiting'}}, :new => true)
+
+      if battle_sync
+        bs = BattleSync.instantiate(battle_sync)
+        bs.submit_count += 1
+        bs.submit_time = Time.now
+        bs.save
+      end
 
       @op_battle = op_user.battle
 
