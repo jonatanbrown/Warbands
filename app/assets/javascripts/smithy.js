@@ -2,6 +2,7 @@ $(document).ready(function() {
     $(".item-button").on("mouseover", function(event) {
         result = get_item_description($(this).attr('data-item'));
         $("#smithy-item-view").html(result);
+        $(".weapon-class").tooltip({placement: 'right'})
     });
 
     $(".item-button").on("mouseenter", function(event) {
@@ -24,6 +25,10 @@ $(document).ready(function() {
         return false;
     });
 
+    $('.smithy-tab').on('click', function() {
+        $("#smithy-item-view").html('');
+    })
+
     $(".buy-item-button").tooltip({placement: 'right'})
 });
 
@@ -33,49 +38,49 @@ function get_item_description(item) {
     {
     case 'short_sword':
         result += '<h3>Short Sword</h3>';
-        result += '<p>Class: Sword</p>'
+        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Swords give a 5% chance to parry melee attacks.">Sword</span></p>'
         result += '<p>Range: Melee</p>'
         result += '<p>Damage: 4-8</p>'
         result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
         break;
     case 'club':
         result += '<h3>Club</h3>';
-        result += '<p>Class: Mace</p>'
+        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Maces give a 5% chance to stun the opponent, negating their next action.">Mace</span></p>'
         result += '<p>Range: Melee</p>'
         result += '<p>Damage: 4-8</p>'
         result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
         break;
     case 'small_axe':
         result += '<h3>Small Axe</h3>';
-        result += '<p>Class: Axe</p>'
+        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Axes give a 5% chance to cause the opponent to bleed, causing damage over time.">Axe</span></p>'
         result += '<p>Range: Melee</p>'
         result += '<p>Damage: 4-8</p>'
         result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
         break;
     case 'short_spear':
         result += '<h3>Short Spear</h3>';
-        result += '<p>Class: Spear</p>'
+        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Spears give a 10% bonus to Initiative of weapon based attacks.">Spear</span></p>'
         result += '<p>Range: Melee</p>'
         result += '<p>Damage: 4-8</p>'
         result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
         break;
     case 'throwing_knives':
         result += '<h3>Throwing Knives</h3>';
-        result += '<p>Class: Knife</p>'
+        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Knives give a 10% bonus to Initiative of weapon based attacks.">Knife</span></p>'
         result += '<p>Range: Ranged</p>'
         result += '<p>Damage: 4-8</p>'
         result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
         break;
     case 'javelins':
         result += '<h3>Javelins</h3>';
-        result += '<p>Class: Javelin</p>'
+        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Javelins reduce chance of missing with weapon based attacks by 10%.">Javelin</span></p>'
         result += '<p>Range: Ranged</p>'
         result += '<p>Damage: 4-8</p>'
         result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
         break;
     case 'throwing_axes':
         result += '<h3>Throwing Axes</h3>';
-        result += '<p>Class: Axe</p>'
+        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Axes give a 5% chance to cause the opponent to bleed, causing damage over time.">Axe</span></p>'
         result += '<p>Range: Ranged</p>'
         result += '<p>Damage: 4-8</p>'
         result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'

@@ -29,7 +29,7 @@
     margin-left: 5px;
 }
 
-.item-button {
+.item-button, .weapon-class {
   color: #0088cc;
   cursor: default;
 }
