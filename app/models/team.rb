@@ -19,6 +19,7 @@ class Team
       c.roll_char
       c.position = i
       self.characters << c
+      c.create_basic_gear
     end
   end
 

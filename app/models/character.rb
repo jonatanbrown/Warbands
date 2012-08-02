@@ -87,8 +87,10 @@ class Character
 
 
   def roll_char
+    self.equipments = []
     self.roll_stats
     self.roll_skills
+    self.create_basic_gear
   end
 
   def roll_stats
@@ -108,6 +110,16 @@ class Character
     self.thrown = roll_skill
     self.run_up = roll_skill
     self.dirt = roll_skill
+  end
+
+  def create_basic_gear
+    if str > dex
+      eq = Equipment.create(:name => 'Wooden Stick', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => 2, :max_damage => 4, :value => 3)
+      equipments << eq
+    else
+      eq = Equipment.create(:name => 'Rusty Cutlery', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => 2, :max_damage => 4, :value => 3)
+      equipments << eq
+    end
   end
 
   def get_priority(action_index, skill_id)

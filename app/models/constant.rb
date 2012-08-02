@@ -191,7 +191,7 @@ class Constant
       when SKILL_STRIKE
         'strikes'
       when SKILL_THROWN
-        'throws a stone at'
+        'throws their weapon at'
       when SKILL_RETREAT
         ''
       when SKILL_DIRT
@@ -215,11 +215,11 @@ class Constant
       when SKILL_COUNTERSTRIKE
         ''
       when SKILL_FLING
-        'flings a stone at'
+        'flings their weapon at'
       when SKILL_QUICK_THROW
-        'quickly throws a stone at'
+        'quickly throws their weapon at'
       when SKILL_HEAVY_THROW
-        'throws a stone heavily at'
+        'throws their weapon heavily at'
       when SKILL_TAKE_AIM
         ''
       when SKILL_UNDISTURBED

@@ -14,6 +14,7 @@ class TeamsController < ApplicationController
 
   def roll_stats
     @team = Team.find(params[:id])
+    @team.equipments = []
     @team.characters.each do |c|
       c.roll_char
       c.save
