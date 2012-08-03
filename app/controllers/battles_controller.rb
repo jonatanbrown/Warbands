@@ -41,6 +41,8 @@ class BattlesController < ApplicationController
 
     if @battle.result != BATTLE_UNDECIDED
       redirect_to battle_finished_path
+  elsif @battle.submitted
+      redirect_to waiting_for_turn_path
     else
       render 'battle'
     end
@@ -57,10 +59,10 @@ class BattlesController < ApplicationController
 
     @battle = current_user.battle
 
-    redirect_location = '/battles/waiting_for_turn'
-
     if @battle.result != BATTLE_UNDECIDED
       redirect_location = '/battles/battle_finished'
+    elsif @battle.submitted
+      redirect_location = '/battles/waiting_for_turn'
     else
 
       op_user = User.find(@battle.opponent)
@@ -92,6 +94,8 @@ class BattlesController < ApplicationController
         bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events, turn: bs.turn + 1, submit_time: nil)
       end
 
+      redirect_location = '/battles/waiting_for_turn'
+
     end
 
     render :text => redirect_location
@@ -118,29 +122,32 @@ class BattlesController < ApplicationController
   end
 
   def battle_finished
-    battle_result = current_user.battle_result
-    bs = current_user.battle_sync
-    if bs
-      bs.update_attribute(:reference_id, nil)
-      battle_result.update_attribute(:last_turn_info, bs.turn_events)
-    end
-    battle = current_user.battle
-    current_user.battle_sync = nil
-    current_user.battle = nil
-    current_user.save
-    if bs and !bs.users.any?
-      bs.destroy
-    end
-    if battle
-      battle.destroy
-    end
-    current_user.team.reset_battle_stats
+    if battle_result = current_user.battle_result
+      bs = current_user.battle_sync
+      if bs
+        bs.update_attribute(:reference_id, nil)
+        battle_result.update_attribute(:last_turn_info, bs.turn_events)
+      end
+      battle = current_user.battle
+      current_user.battle_sync = nil
+      current_user.battle = nil
+      current_user.save
+      if bs and !bs.users.any?
+        bs.destroy
+      end
+      if battle
+        battle.destroy
+      end
+      current_user.team.reset_battle_stats
 
-    @result = battle_result.result
-    @learning_results = battle_result.learning_results
-    @turn_events = battle_result.last_turn_info
-    @rating_change = battle_result.rating_change
-    @gold_change = battle_result.gold_change
+      @result = battle_result.result
+      @learning_results = battle_result.learning_results
+      @turn_events = battle_result.last_turn_info
+      @rating_change = battle_result.rating_change
+      @gold_change = battle_result.gold_change
+    else
+      redirect_to battle_path
+    end
 
   end
 
