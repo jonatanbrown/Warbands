@@ -39,7 +39,7 @@ body{
 }
 
 .navbar{
-    margin-bottom: 13px;
+    margin-bottom: 10px;
 }
 
 .right{
@@ -55,7 +55,7 @@ body{
 }
 
 .title-text{
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 #team-info{
@@ -83,7 +83,7 @@ body{
     background-image:url('/images/background-border-top.png');
     height: 6px;
     width: 940px;
-    top: 115px;
+    top: 111px;
 }
 
 #main-background-bottom{
@@ -96,7 +96,7 @@ body{
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 5px;
-    background-image:url('/images/background-main-part.png');
+    background-image:url('/images/background-main-part-light.png');
     background-repeat:repeat-y;
     min-height: 700px;
     overflow: hidden;
