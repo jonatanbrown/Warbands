@@ -170,7 +170,7 @@ function mass_retreat() {
     for (x = 0; x < 5; ++x){
         battle['actions']['' + x].push({action: '2', target: null})
     }
-    submit_turn()
+    submit_turn();
     return false;
 }
 
@@ -212,6 +212,8 @@ function update_timeout_clock(){
           function(){
             int_data -= 1;
             $('#submit-timer').html("<b><span class='red'>Timeout in " + int_data + " seconds.</span></b>");
+            if(int_data < 0)
+                submit_turn();
           },
           1000
         );
