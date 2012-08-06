@@ -57,6 +57,11 @@ class BattlesController < ApplicationController
 
   def confirm_turn
 
+    puts "##################################################################################"
+    puts "CONFIRM_TURN CONTROLLER ACTION INITIATED"
+    puts Time.now
+    puts "##################################################################################"
+
     @battle = current_user.battle
 
     if @battle.result != BATTLE_UNDECIDED
@@ -97,6 +102,12 @@ class BattlesController < ApplicationController
       redirect_location = '/battles/waiting_for_turn'
 
     end
+
+    #DEBUG
+    puts "##################################################################################"
+    puts "CONFIRM_TURN CONTROLLER ACTION DONE"
+    puts Time.now
+    puts "##################################################################################"
 
     render :text => redirect_location
 

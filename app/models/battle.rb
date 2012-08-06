@@ -28,6 +28,12 @@ class Battle
 
     action_list = []
 
+    #DEBUG
+    puts "#####################################################################################"
+    puts "ADDING ACTIONS TO LIST"
+    puts Time.now
+    puts "#####################################################################################"
+
     action_list += add_actions_to_list(battle1, team2, team1)
     action_list += add_actions_to_list(battle2, team1, team2)
 
@@ -44,6 +50,12 @@ class Battle
         end
       end
     end
+
+    #DEBUG
+    puts "####################################################################################"
+    puts "RESOLVING ACTIONS"
+    puts Time.now
+    puts "####################################################################################"
 
     #Resolve actions
     action_list.each do |a|
@@ -64,6 +76,12 @@ class Battle
 
     active_chars = team1.characters.where(:active => true) + team2.characters.where(:active => true)
 
+    #DEBUG
+    puts "##################################################################################"
+    puts "CALCULATING EFFECT DURATIONS AND REMOVING OLD EFFECTS"
+    puts Time.now
+    puts "##################################################################################"
+
     active_chars.each do |char|
       char.effects.delete_if do |effect|
         effect[1] -= 1
@@ -83,6 +101,12 @@ class Battle
       char.taken_damage = false
       char.save
     end
+
+    #DEBUG
+    puts "###################################################################################"
+    puts "COMBAT RESOLUTION DONE"
+    puts Time.now
+    puts "###################################################################################"
 
     turn_events
 
