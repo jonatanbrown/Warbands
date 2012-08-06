@@ -1,3 +1,7 @@
+<script type="text/javascript">
+  Warbands.team_characters = <%= @team.characters.all.map { |char| [char.position, char._id.to_s] }.to_s.html_safe %>
+</script>
+<%= @team._id%>
 <h2><%= @team.name %></h2>
 <div id="edit-formation" class="bright-background left">
   <%= render :partial => "formation" %>

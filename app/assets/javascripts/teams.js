@@ -73,6 +73,35 @@ function register_edit_team_listeners() {
         return false;
     });
 
+    $('.character-selector').on('change', function() {
+        var pos_changed = $(this).attr('data-pos')
+        var char_selected = $(this).val()
+        var previous_char_pos, char_replaced = null
+        for (var i = 0; i < Warbands.team_characters.length; i++)
+        {
+            if(Warbands.team_characters[i][1] == char_selected)
+            {
+                previous_char_pos = Warbands.team_characters[i][0]
+            }
+            if(Warbands.team_characters[i][0] == pos_changed)
+            {
+                char_replaced = Warbands.team_characters[i][1]
+            }
+        }
+        $("#position" + previous_char_pos + "_character").val(char_replaced)
+        for (var i = 0; i < Warbands.team_characters.length; i++)
+        {
+            if(Warbands.team_characters[i][0] == previous_char_pos)
+            {
+               Warbands.team_characters[i][1] = char_replaced;
+            }
+            if(Warbands.team_characters[i][0] == pos_changed)
+            {
+                Warbands.team_characters[i][1] = char_selected;
+            }
+        }
+    });
+
     $("#submit-character-names").on("click", function(event) {
         var team_id = $('#team-info').attr('data-id');
         var name_fields = $('.character-name-field');

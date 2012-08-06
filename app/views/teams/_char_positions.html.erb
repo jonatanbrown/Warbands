@@ -8,9 +8,9 @@
   </span>
 <% end %>
 
-<div>1 <%= collection_select(:position0, :character, @team.characters, :_id, :name, {:selected => @team.get_char(0)._id, }) %></div>
-<div>2 <%= collection_select(:position1, :character, @team.characters, :_id, :name, {:selected => @team.get_char(1)._id}) %></div>
-<div>3 <%= collection_select(:position2, :character, @team.characters, :_id, :name, {:selected => @team.get_char(2)._id}) %></div>
-<div>4 <%= collection_select(:position3, :character, @team.characters, :_id, :name, {:selected => @team.get_char(3)._id}) %></div>
-<div>5 <%= collection_select(:position4, :character, @team.characters, :_id, :name, {:selected => @team.get_char(4)._id}) %></div>
+<div>1 <%= collection_select(:position0, :character, @team.characters, :_id, :name, {:selected => @team.get_char(0)._id}, {:class => 'character-selector', 'data-pos'.to_sym => '0'}) %></div>
+<div>2 <%= collection_select(:position1, :character, @team.characters, :_id, :name, {:selected => @team.get_char(1)._id}, {:class => 'character-selector', 'data-pos'.to_sym => '1'}) %></div>
+<div>3 <%= collection_select(:position2, :character, @team.characters, :_id, :name, {:selected => @team.get_char(2)._id}, {:class => 'character-selector', 'data-pos'.to_sym => '2'}) %></div>
+<div>4 <%= collection_select(:position3, :character, @team.characters, :_id, :name, {:selected => @team.get_char(3)._id}, {:class => 'character-selector', 'data-pos'.to_sym => '3'}) %></div>
+<div>5 <%= collection_select(:position4, :character, @team.characters, :_id, :name, {:selected => @team.get_char(4)._id}, {:class => 'character-selector', 'data-pos'.to_sym => '4'}) %></div>
 
