@@ -8,12 +8,12 @@
 </head>
 <body>
 <div id="all-content">
-  <% if current_user and current_user.team %>
     <div id="top-background-top"></div>
     <div id="top-content">
       <div class="left title-text">
         <img src="/images/logo_dark.png"/>
       </div>
+      <% if current_user and current_user.team %>
       <div id="team-info" class="right" data-id="<%= current_user.team._id %>">
         <div id="gold-display"><p><b>Gold: <%= current_user.team.gold %></b></p></div>
         <p><b>Rating: <%= current_user.team.rating %></b></p>
@@ -27,9 +27,9 @@
         <div class="navbar-choice left"><%= link_to "Arena", arena_path %></div>
         <div class="navbar-choice left"><%= link_to "Rankings", rankings_path %></div>
       </b></div>
+      <% end %>
     </div>
     <div id="top-background-bottom"></div>
-  <% end %>
   <div id="main-background-top"></div>
   <div class="main-content-container">
     <div class="inner-content">

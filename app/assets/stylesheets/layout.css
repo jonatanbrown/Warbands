@@ -39,7 +39,7 @@ body{
 }
 
 .navbar{
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .right{
@@ -52,6 +52,7 @@ body{
     padding-right: 10px;
     background-image:url('/images/background-main-part.png');
     background-repeat:repeat-y;
+    margin-bottom: 10px;
 }
 
 .title-text{
