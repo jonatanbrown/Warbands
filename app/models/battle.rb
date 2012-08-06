@@ -192,7 +192,7 @@ class Battle
             target.current_hp -= damage
             target.took_damage
 
-            result += "<p>#{char.name} flings a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+            result += "<p>#{char.name} flings their weapon at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
             result += target.check_if_poisoned(char)
 
             result += check_weapon_procs(char, target)
@@ -320,7 +320,7 @@ class Battle
           damage = damage.round(0)
           target.current_hp -= damage
           target.took_damage
-          result += "<p>#{char.name} throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+          result += "<p>#{char.name} throws their weapon at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
 
@@ -548,7 +548,7 @@ class Battle
           damage = damage.round(0)
           target.current_hp -= damage
           target.took_damage
-          result += "<p>#{char.name} quickly throws a stone at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+          result += "<p>#{char.name} quickly throws their weapon at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
 
@@ -587,7 +587,7 @@ class Battle
           damage = damage.round(0)
           target.current_hp -= damage
           target.took_damage
-          result += "<p>#{char.name} throws a stone heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
+          result += "<p>#{char.name} throws their weapon heavily at #{target.name} for <span class='red'>#{damage}</span> damage.</p>"
 
           result += target.check_if_poisoned(char)
 
