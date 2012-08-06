@@ -140,6 +140,7 @@ function submit_turn() {
         },
         dataType: 'text'
     });
+    $(this).parent().html("<img src='/images/spinner.gif'/>");
     return false;
 }
 
