@@ -13,6 +13,8 @@ Warbands::Application.routes.draw do
 
     match 'home/smithy' => 'home#smithy', :as => "smithy"
     match 'home/arena' => 'home#arena', :as => "arena"
+    match 'home/report_bugs' => 'home#report_bugs', :as => "report_bugs"
+    match 'home/submit_bug_report' => 'home#submit_bug_report', :as => "bug_reports", :via => 'POST'
 
     resources :rankings, :only => 'index'
 

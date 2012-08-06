@@ -5,6 +5,7 @@ class User
   has_one :battle
   has_one :battle_queue
   has_one :battle_result
+  has_many :bug_reports
 
   belongs_to :battle_sync
 

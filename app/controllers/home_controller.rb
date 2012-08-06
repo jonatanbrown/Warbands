@@ -19,5 +19,17 @@ class HomeController < ApplicationController
       redirect_to battle_path
     end
   end
+
+  def report_bugs
+    @bug_report = BugReport.new()
+  end
+
+  def submit_bug_report
+    flash[:notice] = "Thanks for your help!"
+    bug_report = BugReport.create(params[:bug_report])
+    bug_report.user = current_user
+    bug_report.save
+    redirect_to :report_bugs
+  end
 end
 

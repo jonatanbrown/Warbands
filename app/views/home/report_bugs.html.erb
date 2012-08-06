@@ -1,0 +1,16 @@
+<h2>Report Bugs</h2>
+Please add a comment describing how the bug appeared. Relevant information will automatically be saved with the report.
+
+<%= form_for @bug_report do |f| %>
+
+  <%= f.text_area :comment, :rows => 10, :cols => 30 %><br />
+
+  <%= f.submit %>
+
+<% end %>
+
+<span class="green"><b><% if flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+</span></b>
+

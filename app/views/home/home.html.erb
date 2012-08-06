@@ -1,5 +1,9 @@
 <% if @user.team %>
-  Welcome!
+  <h2>Welcome to the Warbands Alpha</h2></br> The game is in development and issues are bound to appear. If something out of the ordinary happens i would be happy if you could take a minute to report it
+
+  </br></br>
+  <b><div><%= link_to "Report bugs", report_bugs_path %></div></b>
+
 <% else %>
  <p>You have no teams, create one here!</p>
  <%= link_to "Create Team", new_team_path %>
