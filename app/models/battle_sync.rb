@@ -21,5 +21,13 @@ class BattleSync
     end
   end
 
+  def self.perform(bs_id)
+    bs = BattleSync.find(bs_id)
+    battle = bs.users[0].battle
+    op_battle = bs.users[1].battle
+    turn_events = Battle.resolve_turn(battle, op_battle)
+    bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events, turn: bs.turn + 1, submit_time: nil)
+  end
+
 end
 

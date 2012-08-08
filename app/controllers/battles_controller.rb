@@ -57,11 +57,6 @@ class BattlesController < ApplicationController
 
   def confirm_turn
 
-    puts "##################################################################################"
-    puts "CONFIRM_TURN CONTROLLER ACTION INITIATED"
-    puts Time.now
-    puts "##################################################################################"
-
     @battle = current_user.battle
 
     if @battle.result != BATTLE_UNDECIDED
@@ -94,20 +89,12 @@ class BattlesController < ApplicationController
       battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], submit_count: 2, state: 'waiting' }, update: {'$set' => {state: 'resolving'}}, :new => true)
 
       if battle_sync
-        turn_events = Battle.resolve_turn(@battle, @op_battle)
-        bs = BattleSync.instantiate(battle_sync)
-        bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events, turn: bs.turn + 1, submit_time: nil)
+        Qu.enqueue BattleSync, battle_sync['_id']
       end
 
       redirect_location = '/battles/waiting_for_turn'
 
     end
-
-    #DEBUG
-    puts "##################################################################################"
-    puts "CONFIRM_TURN CONTROLLER ACTION DONE"
-    puts Time.now
-    puts "##################################################################################"
 
     render :text => redirect_location
 
