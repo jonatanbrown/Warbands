@@ -25,13 +25,15 @@
         <div class="right"><%= link_to "Logout", logout_path %></div>
         <%= battle_button %>
       </div>
-      <div class="navbar left"><b>
-        <div class="navbar-choice left"><%= link_to "Home", root_path %></div>
-        <div class="navbar-choice left"><%= link_to "Barracks", team_path(current_user.team) %></div>
-        <div class="navbar-choice left"><%= link_to "Smithy", smithy_path %></div>
-        <div class="navbar-choice left"><%= link_to "Arena", arena_path %></div>
-        <div class="navbar-choice left"><%= link_to "Rankings", rankings_path %></div>
-      </b></div>
+      <div class="navbar-content left">
+        <div class="navbar left bright-background"><b>
+          <div class="navbar-choice left"><%= link_to "Home", root_path %></div><span class="left">l</span>
+          <div class="navbar-choice left"><%= link_to "Barracks", team_path(current_user.team) %></div><span class="left">l</span>
+          <div class="navbar-choice left"><%= link_to "Smithy", smithy_path %></div><span class="left">l</span>
+          <div class="navbar-choice left"><%= link_to "Arena", arena_path %></div><span class="left">l</span>
+          <div class="navbar-choice left"><%= link_to "Rankings", rankings_path %></div>
+        </b></div>
+      </div>
       <% end %>
     </div>
     <div id="top-background-bottom"></div>
