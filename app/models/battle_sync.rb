@@ -25,8 +25,23 @@ class BattleSync
     bs = BattleSync.find(bs_id)
     battle = bs.users[0].battle
     op_battle = bs.users[1].battle
+    #DEBUG
+    puts "################################################################"
+    puts "Performing turn resolution"
+    puts Time.now
+    puts "################################################################"
     turn_events = Battle.resolve_turn(battle, op_battle)
+    #DEBUG
+    puts "################################################################"
+    puts "Resolution performed"
+    puts Time.now
+    puts "################################################################"
     bs.update_attributes(submit_count: 0, state: 'orders', turn_events: turn_events, turn: bs.turn + 1, submit_time: nil)
+    #DEBUG
+    puts "################################################################"
+    puts "Updated BattleSync attributes"
+    puts Time.now
+    puts "################################################################"
   end
 
 end
