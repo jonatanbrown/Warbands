@@ -10,8 +10,6 @@ class BattleSyncsController < ApplicationController
 
         battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: battle.opponent }], submit_count: 1, state: 'waiting' }, update: {'$set' => {state: 'resolving'}}, :new => true)
 
-        render :text => "false"
-
         if battle_sync
           bs = BattleSync.instantiate(battle_sync)
           team = current_user.team
@@ -20,10 +18,10 @@ class BattleSyncsController < ApplicationController
           bs.update_attribute(:turn_events, "")
           Battle.do_battle_results(op_team, team, TIMED_OUT, OPPONENT_TIMED_OUT)
           render :text => "true"
+          return
         end
-      else
-        render :text => "false"
       end
+      render :text => "false"
     end
   end
 
