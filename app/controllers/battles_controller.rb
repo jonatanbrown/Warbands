@@ -133,6 +133,7 @@ class BattlesController < ApplicationController
         @battle.save
 
         battle_sync = current_user.battle_sync
+        battle_sync.update_attribute(:state, 'waiting')
         Qu.enqueue BattleSync, battle_sync['_id']
         redirect_location = '/battles/waiting_for_turn'
       end
