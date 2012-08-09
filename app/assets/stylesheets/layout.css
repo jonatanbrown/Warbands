@@ -107,7 +107,8 @@ body{
 
 .navbar a{
     font-size: 17px;
-    color: #fff;
+    color: #eee;
+    text-shadow: 2px 2px 0.1em #222;
 }
 
 .navbar span{
@@ -131,7 +132,7 @@ body{
 
 .navbar a:hover{
     text-decoration: none;
-    text-shadow: 2px 2px 0.2em #000;
+    text-shadow: 2px 2px 0.3em #000, 2px 2px 0.3em #000;
 }
 
 .navbar-content{
