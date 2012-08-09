@@ -13,6 +13,8 @@ class BattleSync
 
   field :submit_time, :type => Time
 
+  field :pvp, :type => Boolean, :default => true
+
   def seconds_since_submit
     if submit_time
       (Time.now - submit_time).to_i
@@ -22,15 +24,21 @@ class BattleSync
   end
 
   def self.perform(bs_id)
-    bs = BattleSync.find(bs_id)
-    battle = bs.users[0].battle
-    op_battle = bs.users[1].battle
+
     #DEBUG
     puts "################################################################"
     puts "Performing turn resolution"
     puts Time.now
     puts "################################################################"
-    turn_events = Battle.resolve_turn(battle, op_battle)
+
+    bs = BattleSync.find(bs_id)
+    battle = bs.users[0].battle
+    if bs.pvp
+      op_battle = bs.users[1].battle
+      turn_events = Battle.resolve_turn(battle, op_battle)
+    else
+      turn_events = Battle.resolve_turn(battle, nil)
+    end
     #DEBUG
     puts "################################################################"
     puts "Resolution performed"

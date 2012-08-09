@@ -22,14 +22,28 @@ class Battle
     turn_events = ""
 
     team1 = battle1.user.team
-    team2 = battle2.user.team
+
+    #Check if playing Human or AI
+    if battle2
+      team2 = battle2.user.team
+      pvp = true
+    else
+      team2 = Team.find(battle1.opponent)
+      pvp = false
+    end
 
     active_chars = team1.characters.where(:active => true) + team2.characters.where(:active => true)
 
     action_list = []
 
     action_list += add_actions_to_list(battle1, team2, team1)
-    action_list += add_actions_to_list(battle2, team1, team2)
+
+    if pvp
+      action_list += add_actions_to_list(battle2, team1, team2)
+      #Add actions from AI team here.
+    else
+
+    end
 
     action_list = sort_order(action_list)
 
@@ -50,16 +64,20 @@ class Battle
       turn_events += resolve_action(a)
     end
 
-    if rand(0..1) == 0
-      lost = check_if_lost(team1, team2)
-      unless lost
-        check_if_lost(team2, team1)
+    if pvp
+      if rand(0..1) == 0
+        lost = check_if_lost(team1, team2)
+        unless lost
+          check_if_lost(team2, team1)
+        end
+      else
+        lost = check_if_lost(team2, team1)
+        unless lost
+          check_if_lost(team1, team2)
+        end
       end
     else
-      lost = check_if_lost(team2, team1)
-      unless lost
-        check_if_lost(team1, team2)
-      end
+      check_if_lost_ai(team1, team2)
     end
 
     active_chars = team1.characters.where(:active => true) + team2.characters.where(:active => true)
@@ -644,6 +662,19 @@ class Battle
     false
   end
 
+  def self.check_if_lost_ai(team, ai_team)
+    if !team.characters.where(:active => true).any?
+      lost_vs_ai(team, ai_team)
+      return true
+
+    elsif !ai_team.characters.where(:active => true).any?
+      won_vs_ai(team, ai_team)
+      return true
+
+    end
+    false
+  end
+
   def self.validate_actions(char_actions, team, op_team)
     if char_actions
       char_actions.each do |pos, actions|
@@ -829,6 +860,47 @@ class Battle
       battle_result = BattleResult.create(last_turn_events: winner.battle_sync.turn_events, result: winner.battle.result, learning_results: learning_results, :rating_change => rating_change_winner, :gold_change => 50)
       winner.battle_result = battle_result
       winner.save
+
+  end
+
+  def self.lost_vs_ai(team, ai_team)
+    learning_results = ''
+    team.characters.each do |char|
+      learning_results += char.apply_learnings
+      char.learnings = []
+      char.save
+    end
+
+    player = team.user
+
+    player.battle.update_attributes(:result => BATTLE_LOST)
+
+    battle_result = BattleResult.create(last_turn_events: player.battle_sync.turn_events, result: player.battle.result, learning_results: learning_results, :rating_change => 0, :gold_change => 0)
+    player.battle_result = battle_result
+    player.save
+
+  end
+
+  def self.won_vs_ai(team, ai_team)
+    learning_results = ''
+    team.characters.each do |char|
+      learning_results += char.apply_learnings
+      char.learnings = []
+      char.save
+    end
+
+    player = team.user
+
+    player.battle.update_attributes(:result => BATTLE_WON)
+
+    case ai_team.difficulty
+      when 1
+        gold_change = 10
+    end
+
+    battle_result = BattleResult.create(last_turn_events: player.battle_sync.turn_events, result: player.battle.result, learning_results: learning_results, :rating_change => 0, :gold_change => gold_change)
+    player.battle_result = battle_result
+    player.save
 
   end
 

@@ -3,7 +3,7 @@ class BattleSyncsController < ApplicationController
   def refresh_waiting_status
     bs = current_user.battle_sync
     battle = current_user.battle
-    if bs.submit_count == 0
+    if bs.state == 'orders'
       render :text => "true"
     else
       if bs.seconds_since_submit > 60 and current_user.battle.submitted

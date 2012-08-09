@@ -18,7 +18,7 @@ class Character
 
   field :ap, :type => Integer
 
-  field :hp, :type => Integer, :default => 30
+  field :hp, :type => Integer, :default => 40
 
 
   #Disciplines
@@ -114,10 +114,10 @@ class Character
 
   def create_basic_gear
     if str > dex
-      eq = Equipment.create(:name => 'Wooden Stick', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => 2, :max_damage => 4, :value => 3)
+      eq = Equipment.create_item('wooden_stick', team)
       equipments << eq
     else
-      eq = Equipment.create(:name => 'Rusty Cutlery', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => 2, :max_damage => 4, :value => 3)
+      eq =Equipment.create_item('rusty_cutlery', team)
       equipments << eq
     end
   end

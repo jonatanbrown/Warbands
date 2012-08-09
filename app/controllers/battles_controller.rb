@@ -27,15 +27,33 @@ class BattlesController < ApplicationController
 
   end
 
+  def cage
+
+    if br = current_user.battle_result
+      br.destroy
+    end
+
+    ai_team = Team.create_ai_team(params[:format])
+    Battle.create(user: current_user, opponent: ai_team._id )
+    bs = BattleSync.create(reference_id: current_user._id, pvp: false)
+    bs.users << current_user
+    bs.save
+    redirect_to battle_path
+  end
+
   def battle
     @battle = current_user.battle
     @team = current_user.team
-    @op_team = User.find(@battle.opponent).team
+    bs = current_user.battle_sync
+
+    if bs.pvp
+      @op_team = User.find(@battle.opponent).team
+    else
+      @op_team = Team.find(@battle.opponent)
+    end
 
     @chars = @team.characters.where(:active => true)
     @op_chars = @op_team.characters.where(:active => true)
-
-    bs = current_user.battle_sync
 
     @turn_events = bs.turn_events
 
@@ -65,39 +83,61 @@ class BattlesController < ApplicationController
       redirect_location = '/battles/waiting_for_turn'
     else
 
-      op_user = User.find(@battle.opponent)
+      if current_user.battle_sync.pvp
+        op_team = User.find(@battle.opponent).team
+      else
+        op_team = Team.find(@battle.opponent)
+      end
 
-      unless Battle.validate_actions(params[:actions], current_user.team, op_user.team)
+      unless Battle.validate_actions(params[:actions], current_user.team, op_team)
         params[:actions] = nil
       end
 
       @battle.actions = params[:actions]
-      @battle.submitted = true
-      @battle.save
 
-      battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], '$or' => [{ state: 'orders' } , { state: 'waiting' }] }, update: {'$set' => {state: 'waiting'}}, :new => true)
+      #IF PLAYING OTHER HUMAN
+      if current_user.battle_sync.pvp
 
-      if battle_sync
-        bs = BattleSync.instantiate(battle_sync)
-        bs.submit_count += 1
-        bs.submit_time = Time.now
-        bs.save
-      end
+          @battle.submitted = true
+          @battle.save
 
-      @op_battle = op_user.battle
+          op_user = User.find(@battle.opponent)
 
-      battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], submit_count: 2, state: 'waiting' }, update: {'$set' => {state: 'resolving'}}, :new => true)
+          battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], '$or' => [{ state: 'orders' } , { state: 'waiting' }] }, update: {'$set' => {state: 'waiting'}}, :new => true)
 
-      if battle_sync
+          if battle_sync
+            bs = BattleSync.instantiate(battle_sync)
+            bs.submit_count += 1
+            bs.submit_time = Time.now
+            bs.save
+          end
+
+          @op_battle = op_user.battle
+
+          battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], submit_count: 2, state: 'waiting' }, update: {'$set' => {state: 'resolving'}}, :new => true)
+
+          if battle_sync
+          #DEBUG
+          puts "################################################################"
+          puts "Queuing turn resolution!"
+          puts Time.now
+          puts "################################################################"
+            Qu.enqueue BattleSync, battle_sync['_id']
+          end
+
+          redirect_location = '/battles/waiting_for_turn'
+
+      #IF PLAYING AI
+      else
+        @battle.submitted = true
+        @battle.save
+
+        battle_sync = current_user.battle_sync
         Qu.enqueue BattleSync, battle_sync['_id']
+        redirect_location = '/battles/waiting_for_turn'
       end
-
-      redirect_location = '/battles/waiting_for_turn'
-
     end
-
     render :text => redirect_location
-
   end
 
   def waiting_for_turn
@@ -112,10 +152,15 @@ class BattlesController < ApplicationController
     if bs.turn > battle.turn
       battle.update_attributes(turn: battle.turn + 1, submitted: false)
       redirect_to battle_path
+      return
     end
 
     @team = current_user.team
-    @op_team = User.find(battle.opponent).team
+    if bs.pvp
+      @op_team = User.find(battle.opponent).team
+    else
+      @op_team = Team.find(battle.opponent)
+    end
     @turn_events = bs.turn_events
   end
 
@@ -127,6 +172,11 @@ class BattlesController < ApplicationController
         battle_result.update_attribute(:last_turn_info, bs.turn_events)
       end
       battle = current_user.battle
+      if !bs.pvp
+        team = Team.find(current_user.battle.opponent)
+        team.characters.destroy_all
+        team.destroy
+      end
       current_user.battle_sync = nil
       current_user.battle = nil
       current_user.save

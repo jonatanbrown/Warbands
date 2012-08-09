@@ -176,6 +176,8 @@ class Equipment
 
   def self.create_item(item, team)
     case item
+      when 'wooden_stick'
+        Equipment.create(:name => 'Wooden Stick', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => 2, :max_damage => 4, :value => 3)
       when 'short_sword'
         Equipment.create(:name => 'Short Sword', :team => team, :eq_type => EQUIPMENT_SWORD, :min_damage => 4, :max_damage => 8, :value => 35)
       when 'club'
@@ -184,6 +186,8 @@ class Equipment
         Equipment.create(:name => 'Small Axe', :team => team, :eq_type => EQUIPMENT_AXE, :min_damage => 4, :max_damage => 8, :value => 35)
       when 'short_spear'
         Equipment.create(:name => 'Short Spear', :team => team, :eq_type => EQUIPMENT_SPEAR, :min_damage => 4, :max_damage => 8, :value => 35)
+      when 'rusty_cutlery'
+        Equipment.create(:name => 'Rusty Cutlery', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => 2, :max_damage => 4, :value => 3)
       when 'throwing_knives'
         Equipment.create(:name => 'Throwing Knives', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => 4, :max_damage => 8, :value => 35)
       when 'javelins'

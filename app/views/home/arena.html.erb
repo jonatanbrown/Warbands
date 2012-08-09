@@ -1,3 +1,14 @@
 <h2>Arena</h2>
-<%= link_to "Queue for match", queue_path(current_user) %>
+<p>Here you can fight other teams or try your luck against the various species of beasts in The Cages.</p>
+<div class="bright-background content-box left" id="arena-public-matches">
+  <h4>Public matches</h4>
+  <%= link_to "Queue for match", queue_path(current_user) %>
+</div>
+<div class="bright-background content-box left" id="arena-cages">
+  <h4>The Cages</h3>
+  <div class="beast">
+    <%= link_to "Gang of Goblins", cage_path('goblins'), :class=> 'left' %>
+    <span class="right">Difficulty: Pathetic</span>
+  </div>
+</div>
 
