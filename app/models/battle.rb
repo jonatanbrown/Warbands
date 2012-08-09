@@ -40,9 +40,8 @@ class Battle
 
     if pvp
       action_list += add_actions_to_list(battle2, team1, team2)
-      #Add actions from AI team here.
     else
-
+      action_list += add_ai_actions(team1, team2)
     end
 
     action_list = sort_order(action_list)
@@ -186,7 +185,8 @@ class Battle
       #Fling
       when '13'
 
-        opponent_chars = User.find(char.team.user.battle.opponent).team.characters.where(:active => true)
+        opponent_chars = action['target']['team'].characters.where(:active => true)
+
         if opponent_chars.any?
           target = opponent_chars[rand(0..(opponent_chars.length - 1))]
 
@@ -907,6 +907,29 @@ class Battle
   def self.calc_rating_change(score, diff)
     change = 16.0 * (score - ( 1.0/(1.0 + (10.0 ** (diff/400.0)))))
     change.round(0)
+  end
+
+  def self.add_ai_actions(team, ai_team)
+    list = []
+
+    melee_targets = team.characters.all.map {|char| team.position_targetability_melee(char.position) ? char.position : nil}
+    melee_targets.compact!
+
+    ai_team.characters.each do |char|
+      case char.name
+        when 'Goblin Berserker'
+          list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_STRIKE)})
+          list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(1, SKILL_STRIKE)})
+          list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(2, SKILL_STRIKE)})
+
+        when 'Goblin Forkthrower'
+          list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_FLING)})
+          list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(1, SKILL_FLING)})
+          list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(2, SKILL_FLING)})
+      end
+    end
+
+    list
   end
 end
 

@@ -481,7 +481,7 @@ class Character
       thrown
     elsif skill_id == SKILL_RETREAT
       0
-  elsif skill_id == SKILL_DIRT
+    elsif skill_id == SKILL_DIRT
       dirt
     elsif skill_id == SKILL_DEFENSIVE_POSTURE
       defensive_posture
@@ -874,12 +874,14 @@ class Character
   def roll_skill_increase(skill_id)
     if rand(1..50) == 1
       skill_value = get_skill_value(skill_id)
-      if skill_value >= 20
-        if rand(1..(20 * (skill_value - 19))) == 1
+      if skill_value
+        if skill_value >= 20
+          if rand(1..(20 * (skill_value - 19))) == 1
+            learnings << skill_id
+          end
+        elsif rand(1..20) > skill_value
           learnings << skill_id
         end
-      elsif rand(1..20) > skill_value
-        learnings << skill_id
       end
     end
   end

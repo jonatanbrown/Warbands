@@ -222,10 +222,17 @@ class Team
   def self.create_ai_team(type)
     case type
     when 'goblins'
-      ai_team = Team.create(:name => "Gang of Goblins", :formation => 1, :rating => nil, :difficulty => 1)
+      ai_team = Team.create(:name => "Gang of Goblins", :formation => 3, :rating => nil, :difficulty => 1)
       5.times do |i|
-        c = Character.new(:name => "Goblin", :position => i, :str => 5, :dex => 11, :tgh => 3, :ini => 14, :int => 1, :mem => 1, :strike => 10, :ap => 8, :hp => 30, :current_hp => 30)
-        e = Equipment.create_item('wooden_stick', nil)
+        if (0..2) === i
+          basic_weapon = 'wooden_stick'
+          name = 'Goblin Berserker'
+        else
+          basic_weapon = 'rusty_cutlery'
+          name = 'Goblin Forkthrower'
+        end
+        c = Character.new(:name => name, :position => i, :str => 5, :dex => 11, :tgh => 3, :ini => 14, :int => 1, :mem => 1, :strike => 5, :fling => 5, :ap => 8, :hp => 30, :current_hp => 30)
+        e = Equipment.create_item(basic_weapon, nil)
         c.equipments << e
         e.save
         c.save
