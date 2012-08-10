@@ -108,7 +108,9 @@ class BattlesController < ApplicationController
           if battle_sync
             bs = BattleSync.instantiate(battle_sync)
             bs.submit_count += 1
-            bs.submit_time = Time.now
+            unless bs.submit_time
+              bs.submit_time = Time.now
+            end
             bs.save
           end
 
