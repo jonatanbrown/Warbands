@@ -39,7 +39,11 @@
 
 <%= link_to "Refresh", waiting_for_turn_path %>
 
-<p><h3>Previous turn events</h3></p>
+<p>
+  <h3 class="left">Previous turn events</h3>
+  <div id="waiting-for-turn-timer" class="right">
+</div>
+</p>
 <div id="battle-teams" class="bright-background left">
   <div id="opponent-team" class="left">
     <% case @op_team.formation %>
@@ -75,8 +79,5 @@
 </div>
 <div id="turn-events" class="bright-background">
   <%= @turn_events.html_safe %>
-</div>
-
-<div id="waiting-for-turn-timer" class="left bright-background">
 </div>
 
