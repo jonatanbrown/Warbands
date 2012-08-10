@@ -211,7 +211,15 @@ function update_timeout_clock(){
         setInterval(
           function(){
             int_data -= 1;
-            $('#submit-timer').html("<b><span class='red'>Timeout in " + int_data + " seconds.</span></b>");
+            if(int_data % 2 == 0) {
+                var color = 'red'
+            }
+            else {
+                var color = ''
+            }
+
+            $('#submit-timer').html("<b><span class='" + color + "'>Timeout in " + int_data + " seconds.</span></b>");
+
             if(int_data < 0)
                 submit_turn();
           },
