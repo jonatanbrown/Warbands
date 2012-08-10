@@ -104,7 +104,7 @@ function update_action_list(pos) {
         }
         $('#pos' + pos + '-actions').append('<p>' + skill_name + target_name + ' <a href="#" class="undo-action" data-action-index=' + i + ' data-pos=' + pos + '><span class="red">X</span></a>' + '</p>');
     }
-    $('.undo-action').on("click", undo_action);
+    $('.undo-action[data-pos*="' + pos + '"]').on("click", undo_action);
 }
 
 function set_skill_options(selector, pos) {
