@@ -90,7 +90,6 @@ class Character
     self.equipments = []
     self.roll_stats
     self.roll_skills
-    self.create_basic_gear
   end
 
   def roll_stats
@@ -117,7 +116,7 @@ class Character
       eq = Equipment.create_item('wooden_stick', team)
       equipments << eq
     else
-      eq =Equipment.create_item('rusty_cutlery', team)
+      eq = Equipment.create_item('rusty_cutlery', team)
       equipments << eq
     end
   end
