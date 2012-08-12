@@ -896,6 +896,8 @@ class Battle
     case ai_team.difficulty
       when 1
         gold_change = 10
+      when 2
+        gold_change = 20
     end
 
     battle_result = BattleResult.create(last_turn_events: player.battle_sync.turn_events, result: player.battle.result, learning_results: learning_results, :rating_change => 0, :gold_change => gold_change)
