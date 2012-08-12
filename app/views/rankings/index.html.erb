@@ -1,9 +1,19 @@
 <h2>Team rankings</h2>
-<div  id="rankings-table" class="bright-background">
+<div  id="rankings-table" class="bright-background left">
+  <h3>Rating Ladder</h3>
   <table>
   <tr><th class="rankings-team-td">Team</th><th class="rankings-rating-td">Rating</th></tr>
-  <% @teams.each do |team| %>
+  <% @rating_teams.each do |team| %>
     <tr><td class="rankings-team-td"><%= team.name %></td><td class="rankings-rating-td"><%= team.rating %></td></tr>
+  <% end %>
+  </table>
+</div>
+<div  id="monster-table" class="bright-background left">
+  <h3>Top Beastslayers</h3>
+  <table>
+  <tr><th class="rankings-team-td">Team</th><th class="rankings-rating-td">Difficulty</th></tr>
+  <% @monster_teams.each do |team| %>
+    <tr><td class="rankings-team-td"><%= team.name %></td><td class="rankings-rating-td"><%= team.monster_beaten %></td></tr>
   <% end %>
   </table>
 </div>

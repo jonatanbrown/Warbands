@@ -893,7 +893,13 @@ class Battle
 
     player.battle.update_attributes(:result => BATTLE_WON)
 
-    case ai_team.difficulty
+    difficulty = ai_team.difficulty
+
+    if team.monster_beaten < difficulty
+      team.update_attribute(:monster_beaten, difficulty)
+    end
+
+    case difficulty
       when 1
         gold_change = 10
       when 2

@@ -15,6 +15,8 @@ class Team
 
   field :difficulty, :type => Integer, :default => nil
 
+  field :monster_beaten, :type => Integer, :default => 0
+
   def create_characters
     5.times do |i|
       c = Character.new(:name => "Character #{i + 1}")
