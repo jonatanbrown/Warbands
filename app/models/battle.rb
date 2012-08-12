@@ -916,16 +916,42 @@ class Battle
     melee_targets.compact!
 
     ai_team.characters.each do |char|
+      ap = char.ap
       case char.name
         when 'Goblin Berserker'
-          list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_STRIKE)})
-          list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(1, SKILL_STRIKE)})
-          list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(2, SKILL_STRIKE)})
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_STRIKE)})
+            ap -= 4
+          end
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(1, SKILL_STRIKE)})
+            ap -= 4
+          end
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(2, SKILL_STRIKE)})
+            ap -= 4
+          end
 
         when 'Goblin Forkthrower'
-          list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_FLING)})
-          list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(1, SKILL_FLING)})
-          list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(2, SKILL_FLING)})
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_FLING)})
+            ap -= 4
+          end
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(1, SKILL_FLING)})
+            ap -= 4
+          end
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(2, SKILL_FLING)})
+            ap -= 4
+          end
+        when 'Giant Boar'
+          10.times do |i|
+            if ap > 0
+              list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i, SKILL_STRIKE)})
+              ap -= 4
+            end
+          end
       end
     end
 

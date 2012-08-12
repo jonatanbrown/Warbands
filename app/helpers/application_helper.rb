@@ -14,7 +14,13 @@ module ApplicationHelper
 
   def battle_character(pos, team)
     char = team.get_char(pos)
-    if team.get_char(pos).active
+    if !(c = team.get_char(pos))
+      result = '<div class="battle-character non-existant">'
+      result += ''
+    elsif !c.active
+      result = '<div class="battle-character knocked-out">'
+      result += 'Knocked out.'
+    else
       content = '<b>'
       if current_user.team.characters.include?(char)
         content += char.get_stats_text
@@ -28,9 +34,6 @@ module ApplicationHelper
       content += '</b>'
       result = '<div class="battle-character" rel="popover" data-targetability-melee="' + team.position_targetability_melee(pos).to_s + '" data-targetability-ranged="' + team.position_targetability_ranged(pos).to_s + '" data-content="' + content + '" data-original-title="' + char.name + '" data-position="'+ pos.to_s + '">'
       result += render :partial => "characters/battle_character", :locals => { :character => char }
-    else
-      result = '<div class="battle-character knocked-out">'
-      result += 'Knocked out.'
     end
     result += '</div>'
     result.html_safe

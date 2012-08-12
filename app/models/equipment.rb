@@ -178,6 +178,8 @@ class Equipment
     case item
       when 'wooden_stick'
         Equipment.create(:name => 'Wooden Stick', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => 2, :max_damage => 4, :value => 3)
+    when 'giant_tusks'
+        Equipment.create(:name => 'Giant Tusks', :team => team, :eq_type => EQUIPMENT_AXE, :min_damage => 3, :max_damage => 5)
       when 'short_sword'
         Equipment.create(:name => 'Short Sword', :team => team, :eq_type => EQUIPMENT_SWORD, :min_damage => 4, :max_damage => 8, :value => 35)
       when 'club'

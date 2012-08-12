@@ -89,10 +89,11 @@ class Team
   end
 
   def position_targetability_melee(pos)
-    if get_char(pos).active
-      pos0_active = get_char(0).active
-      pos1_active = get_char(1).active
-      pos2_active = get_char(2).active
+    c = get_char(pos)
+    if c and c.active
+      pos0_active = (c = get_char(0) and c.active)
+      pos1_active = (c = get_char(1) and c.active)
+      pos2_active = (c = get_char(2) and c.active)
       case formation
       when 1
         true
@@ -152,9 +153,9 @@ class Team
   # 1: Slight penalty
   # 2: Severe penalty
   def position_targetability_ranged(pos)
-    pos0_active = get_char(0).active
-    pos1_active = get_char(1).active
-    pos2_active = get_char(2).active
+    pos0_active = (c = get_char(0) and c.active)
+    pos1_active = (c = get_char(1) and c.active)
+    pos2_active = (c = get_char(2) and c.active)
     case formation
     when 1
       0
@@ -238,6 +239,15 @@ class Team
         c.save
         ai_team.characters << c
       end
+      ai_team.save
+    when 'boar'
+      ai_team = Team.create(:name => "Giant Boar", :formation => 1, :rating => nil, :difficulty => 2)
+      c = Character.new(:name => 'Giant Boar', :position => 2, :str => 20, :dex => 10, :tgh => 18, :ini => 15, :int => 1, :mem => 1, :strike => 15, :ap => 40, :hp => 200, :current_hp => 200)
+      e = Equipment.create_item('giant_tusks', nil)
+      c.equipments << e
+      e.save
+      c.save
+      ai_team.characters << c
       ai_team.save
     end
     ai_team
