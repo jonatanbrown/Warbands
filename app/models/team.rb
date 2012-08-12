@@ -3,7 +3,7 @@ class Team
   belongs_to :user
   has_many :characters
 
-  has_many :equipments
+  has_many :equipments, :dependent => :destroy
 
   field :name, :type => String
 
@@ -244,12 +244,33 @@ class Team
       ai_team.save
     when 'boar'
       ai_team = Team.create(:name => "Giant Boar", :formation => 1, :rating => nil, :difficulty => 2)
-      c = Character.new(:name => 'Giant Boar', :position => 2, :str => 20, :dex => 10, :tgh => 18, :ini => 15, :int => 1, :mem => 1, :strike => 15, :ap => 40, :hp => 200, :current_hp => 200)
+      c = Character.new(:name => 'Giant Boar', :position => 2, :str => 18, :dex => 7, :tgh => 15, :ini => 13, :int => 1, :mem => 1, :strike => 15, :ap => 40, :hp => 180, :current_hp => 180)
       e = Equipment.create_item('giant_tusks', nil)
       c.equipments << e
       e.save
       c.save
       ai_team.characters << c
+      ai_team.save
+  when 'orc_bandits'
+      ai_team = Team.create(:name => "Orc Bandits", :formation => 3, :rating => nil, :difficulty => 3)
+      3.times do |i|
+        if i == 0
+          basic_weapon = 'small_axe'
+          name = 'Orc Thug'
+          position = 1
+        else
+          basic_weapon = 'javelins'
+          name = 'Orc Spearthrower'
+          position = i + 2
+        end
+
+        c = Character.new(:name => name, :position => position, :str => 15, :dex => 6, :tgh => 16, :ini => 7, :int => 1, :mem => 1, :strike => 14, :thrown => 14, :ap => 16, :hp => 70, :current_hp => 80)
+        e = Equipment.create_item(basic_weapon, nil)
+        c.equipments << e
+        e.save
+        c.save
+        ai_team.characters << c
+      end
       ai_team.save
     end
     ai_team
