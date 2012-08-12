@@ -904,6 +904,8 @@ class Battle
         gold_change = 10
       when 2
         gold_change = 20
+      when 3
+        gold_change = 30
     end
 
     battle_result = BattleResult.create(last_turn_events: player.battle_sync.turn_events, result: player.battle.result, learning_results: learning_results, :rating_change => 0, :gold_change => gold_change)
@@ -921,7 +923,9 @@ class Battle
     list = []
 
     melee_targets = team.characters.all.map {|char| team.position_targetability_melee(char.position) ? char.position : nil}
+    all_targets = team.characters.all.map {|char| char.active ? char.position : nil}
     melee_targets.compact!
+    all_targets.compact!
 
     ai_team.characters.each do |char|
       ap = char.ap
@@ -929,35 +933,53 @@ class Battle
         when 'Goblin Berserker'
           if ap > 0
             list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_STRIKE)})
-            ap -= 4
+            ap -= Constant.get_skill_ap(SKILL_STRIKE)
           end
           if ap > 0
             list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(1, SKILL_STRIKE)})
-            ap -= 4
+            ap -= Constant.get_skill_ap(SKILL_STRIKE)
           end
           if ap > 0
             list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(2, SKILL_STRIKE)})
-            ap -= 4
+            ap -= Constant.get_skill_ap(SKILL_STRIKE)
           end
 
         when 'Goblin Forkthrower'
           if ap > 0
             list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_FLING)})
-            ap -= 4
+            ap -= Constant.get_skill_ap(SKILL_FLING)
           end
           if ap > 0
             list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(1, SKILL_FLING)})
-            ap -= 4
+            ap -= Constant.get_skill_ap(SKILL_FLING)
           end
           if ap > 0
             list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_FLING.to_s, "char" => char, "prio" => char.get_priority(2, SKILL_FLING)})
-            ap -= 4
+            ap -= Constant.get_skill_ap(SKILL_FLING)
           end
         when 'Giant Boar'
           10.times do |i|
             if ap > 0
               list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i, SKILL_STRIKE)})
-              ap -= 4
+              ap -= Constant.get_skill_ap(SKILL_STRIKE)
+            end
+          end
+        when 'Orc Thug'
+          4.times do |i|
+            if ap > 0
+              list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i, SKILL_STRIKE)})
+              ap -= Constant.get_skill_ap(SKILL_STRIKE)
+            end
+          end
+      when 'Orc Spearthrower'
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => all_targets.sample}, "skill" => SKILL_DIRT.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_DIRT)})
+            ap -= Constant.get_skill_ap(SKILL_DIRT)
+          end
+          3.times do |i|
+            if ap > 0
+              list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i + 1, SKILL_THROWN)})
+              ap -= Constant.get_skill_ap(SKILL_THROWN)
             end
           end
       end

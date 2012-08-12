@@ -264,7 +264,7 @@ class Team
           position = i + 2
         end
 
-        c = Character.new(:name => name, :position => position, :str => 15, :dex => 6, :tgh => 16, :ini => 7, :int => 1, :mem => 1, :strike => 14, :thrown => 14, :ap => 16, :hp => 70, :current_hp => 80)
+        c = Character.new(:name => name, :position => position, :str => 15, :dex => 6, :tgh => 16, :ini => 7, :int => 1, :mem => 1, :strike => 14, :thrown => 14, :dirt => 14, :ap => 16, :hp => 70, :current_hp => 80)
         e = Equipment.create_item(basic_weapon, nil)
         c.equipments << e
         e.save
