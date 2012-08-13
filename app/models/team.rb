@@ -251,7 +251,7 @@ class Team
       c.save
       ai_team.characters << c
       ai_team.save
-  when 'orc_bandits'
+    when 'orc_bandits'
       ai_team = Team.create(:name => "Orc Bandits", :formation => 3, :rating => nil, :difficulty => 3)
       3.times do |i|
         if i == 0
@@ -265,6 +265,38 @@ class Team
         end
 
         c = Character.new(:name => name, :position => position, :str => 15, :dex => 6, :tgh => 16, :ini => 7, :int => 1, :mem => 1, :strike => 14, :thrown => 14, :dirt => 14, :ap => 16, :hp => 70, :current_hp => 80)
+        e = Equipment.create_item(basic_weapon, nil)
+        c.equipments << e
+        e.save
+        c.save
+        ai_team.characters << c
+      end
+      ai_team.save
+    when 'ogre'
+      ai_team = Team.create(:name => "Ogre", :formation => 1, :rating => nil, :difficulty => 4)
+      c = Character.new(:name => 'Ogre', :position => 2, :str => 45, :dex => 8, :tgh => 23, :ini => 5, :int => 1, :mem => 1, :heavy_strike => 10, :ap => 32, :hp => 300, :current_hp => 300)
+      e = Equipment.create_item('club', nil)
+      c.equipments << e
+      e.save
+      c.save
+      ai_team.characters << c
+      ai_team.save
+    when 'trained_gladiators'
+      ai_team = Team.create(:name => "Trained Gladiators", :formation => 3, :rating => nil, :difficulty => 5)
+      5.times do |i|
+        if (0..2) === i
+          basic_weapon = 'short_spear'
+          c = Character.new(:name => 'Hardened Veteran', :position => i, :str => 15, :dex => 12, :tgh => 15, :ini => 12, :int => 1, :mem => 1, :strike => 15, :dirt => 13, :ap => 18, :hp => 100, :current_hp => 100)
+          e = Equipment.create_item('kite_shield', nil)
+          c.equipments << e
+          e.save
+          e = Equipment.create_item('full_helm', nil)
+          c.equipments << e
+          e.save
+        else
+          basic_weapon = 'throwing_axes'
+          c = Character.new(:name => 'Master of Axes', :position => i, :str => 10, :dex => 20, :tgh => 10, :ini => 19, :int => 1, :mem => 1, :take_aim => 11, :bola => 14, :thrown => 15, :ap => 18, :hp => 60, :current_hp => 60)
+        end
         e = Equipment.create_item(basic_weapon, nil)
         c.equipments << e
         e.save

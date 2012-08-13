@@ -906,6 +906,10 @@ class Battle
         gold_change = 20
       when 3
         gold_change = 30
+      when 4
+        gold_change = 40
+      when 5
+        gold_change = 50
     end
 
     battle_result = BattleResult.create(last_turn_events: player.battle_sync.turn_events, result: player.battle.result, learning_results: learning_results, :rating_change => 0, :gold_change => gold_change)
@@ -971,7 +975,7 @@ class Battle
               ap -= Constant.get_skill_ap(SKILL_STRIKE)
             end
           end
-      when 'Orc Spearthrower'
+        when 'Orc Spearthrower'
           if ap > 0
             list.push({"target" => {"team" => team, "pos" => all_targets.sample}, "skill" => SKILL_DIRT.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_DIRT)})
             ap -= Constant.get_skill_ap(SKILL_DIRT)
@@ -980,6 +984,35 @@ class Battle
             if ap > 0
               list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i + 1, SKILL_THROWN)})
               ap -= Constant.get_skill_ap(SKILL_THROWN)
+            end
+          end
+        when 'Ogre'
+          8.times do |i|
+            if ap > 0
+              list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_HEAVY_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i, SKILL_HEAVY_STRIKE)})
+              ap -= Constant.get_skill_ap(SKILL_HEAVY_STRIKE)
+            end
+          end
+        when 'Master of Axes'
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => all_targets.sample}, "skill" => SKILL_BOLA.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_BOLA)})
+            ap -= Constant.get_skill_ap(SKILL_BOLA)
+          end
+          3.times do |i|
+            if ap > 0
+              list.push({"target" => {"team" => team, "pos" => all_targets.sample}, "skill" => SKILL_THROWN.to_s, "char" => char, "prio" => char.get_priority(i + 1, SKILL_THROWN)})
+              ap -= Constant.get_skill_ap(SKILL_THROWN)
+            end
+          end
+        when 'Hardened Veteran'
+          if ap > 0
+            list.push({"target" => {"team" => team, "pos" => all_targets.sample}, "skill" => SKILL_DIRT.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_DIRT)})
+            ap -= Constant.get_skill_ap(SKILL_DIRT)
+          end
+          3.times do |i|
+            if ap > 0
+              list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i + 1, SKILL_STRIKE)})
+              ap -= Constant.get_skill_ap(SKILL_STRIKE)
             end
           end
       end

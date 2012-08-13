@@ -1,10 +1,12 @@
 #arena-public-matches{
     width: 432px;
     margin-right: 6px;
+    font-size: 14px;
 }
 
 #arena-cages{
     width: 432px;
+    font-size: 14px;
 }
 
 .beast{
