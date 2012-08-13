@@ -1,8 +1,33 @@
 <% if @user.team %>
-  <h2>Welcome to the Warbands Alpha</h2></br> The game is in development and issues are bound to appear. If something out of the ordinary happens i would be happy if you could take a minute to report it
+  <h2>Welcome to the Warbands Alpha</h2>
+  <div class="content-box bright-background left" id="home-news">
+    <h3>News</h3>
+    <p>You're playing Alpha version 0.3 of Warbands. The changes introduced in this version are:</p>
+    <b>Features</b>
+    <ul>
+      <li>Added "The Cages" where the player can fight against varying difficulties of AI opponents.</li>
+      <li>Implemented a highscore system showing who has beaten the hardest AI opponent.</li>
+      <li>Improved looks of main menu</li>
+      <li>Made combat resolution more robust by moving heavy calculations to a queue system handled by a background process</li>
+    </ul>
+    <b>Bug Fixes</b>
+    <ul>
+      <li>Fixed bug where undoing an action would undo several others.</li>
+    </ul>
+    <b>Balance</b>
+    <ul>
+      <li>Increased character HP to 40</li>
+      <li>Made Run and Defensive Posture cost 4 AP</li>
+      <li>Quadrupled proc chance of bleed on axes to 20%</li>
+    </ul>
+  </div>
+  <div class="content-box bright-background left" id="report-bugs">
+    <h3>Report Bugs</h3>
+    <p>The game is in development and issues are bound to appear.If something out of the ordinary happens i would be happy if you could take a minute to report it</p>
+    <b><div><%= link_to "Report bugs", report_bugs_path %></div></b>
+  </div>
 
   </br></br>
-  <b><div><%= link_to "Report bugs", report_bugs_path %></div></b>
 
 <% else %>
  <p>You have no teams, create one here!</p>
