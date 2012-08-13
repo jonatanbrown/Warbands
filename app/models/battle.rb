@@ -787,11 +787,11 @@ class Battle
       target.effects << [EFFECT_STUNNED, 1, nil, nil]
       target.save
       result += "<p>#{target.name} is <span class='red'>stunned</span> by the powerful blow.</p>"
-    elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_AXE and rand(1..20) == 1
+    elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_AXE and rand(1..5) == 1
       target.effects << [EFFECT_BLEEDING, rand(3..5), nil, nil]
       target.save
       result += "<p>#{target.name} takes a serious hit and is <span class='red'>bleeding!</span></p>"
-    elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_THROWING_AXES and rand(1..20) == 1
+    elsif weapon = char.equipped_weapon and weapon.eq_type == EQUIPMENT_THROWING_AXES and rand(1..5) == 1
       target.effects << [EFFECT_BLEEDING, rand(3..5), nil, nil]
       target.save
       result += "<p>#{target.name} takes a serious hit and is <span class='red'>bleeding!</span></p>"
