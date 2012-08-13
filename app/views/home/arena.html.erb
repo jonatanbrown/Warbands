@@ -2,21 +2,26 @@
 <p>Here you can fight other teams or try your luck against the various species of beasts in The Cages.</p>
 <div class="bright-background content-box left" id="arena-public-matches">
   <h4>Public matches</h4>
+  </br>
   <%= link_to "Queue for match", queue_path(current_user) %>
 </div>
 <div class="bright-background content-box left" id="arena-cages">
   <h4>The Cages</h3>
+  </br>
   <div class="beast left">
     <%= link_to "Gang of Goblins", cage_path('goblins'), :class=> 'left' %>
     <span class="right">Difficulty: 1</span>
   </div>
+  <div class="beast-separator left"></div>
   <div class="beast left">
     <%= link_to "Giant Boar", cage_path('boar'), :class=> 'left' %>
     <span class="right">Difficulty: 2</span>
   </div>
+  <div class="beast-separator left"></div>
   <div class="beast left">
     <%= link_to "Orc Bandits", cage_path('orc_bandits'), :class=> 'left' %>
     <span class="right">Difficulty: 3</span>
   </div>
+  <div class="beast-separator left"></div>
 </div>
 

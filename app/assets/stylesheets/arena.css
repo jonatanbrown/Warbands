@@ -11,3 +11,13 @@
     width: 432px;
 }
 
+.beast-separator{
+    width: 432px;
+    height: 2px;
+    background: #dddddd;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
