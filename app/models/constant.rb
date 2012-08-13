@@ -96,7 +96,7 @@ class Constant
     elsif skill_id == SKILL_DIRT
       6
     elsif skill_id == SKILL_DEFENSIVE_POSTURE
-      5
+      4
     elsif skill_id == SKILL_COVER
       5
     elsif skill_id == SKILL_QUICK_STRIKE
@@ -132,7 +132,7 @@ class Constant
     elsif skill_id == SKILL_WEAKNESS_POISON
       5
     elsif skill_id == SKILL_RUN_UP
-      5
+      4
     end
   end
 
