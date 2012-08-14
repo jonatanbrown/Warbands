@@ -101,6 +101,7 @@ class TeamsController < ApplicationController
   def destroy
     @team = Team.find(params[:id])
     unless @team.user.battle
+      @team.characters.destroy_all
       @team.destroy
       render 'delete_success', :formats => [:js]
     else
