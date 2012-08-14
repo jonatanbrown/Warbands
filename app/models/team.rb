@@ -19,10 +19,8 @@ class Team
 
   def create_characters
     5.times do |i|
-      c = Character.new(:name => "Character #{i + 1}")
-      c.roll_char
+      c = Character.create(:name => "Character #{i + 1}")
       self.characters << c
-      c.create_basic_gear
       c.position = i
       c.save
     end

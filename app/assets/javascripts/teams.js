@@ -30,7 +30,135 @@ $(document).ready(function() {
 
     register_edit_team_listeners();
 
+    $(".decrease-stat-button").on("click", function(event) {
+        var pos = $(this).parent().attr('data-pos');
+        var stat = $(this).parent().attr('data-stat');
+
+        var label = $(this).parent().find('.stat-label');
+        var input = $(this).parent().find('.stat-value');
+
+        var current_label = parseInt(label.html());
+        var current_value = parseInt(input.val());
+
+        if(current_value > -5)
+        {
+
+            //Need to send -1 here because it is the previous stat point we need the cost for.
+            var cost = calc_stat_cost(current_value - 1);
+            var change = 1;
+
+            if(stat == 'hp')
+                change = 3;
+
+            Warbands.team_points['char' + pos + '_points'] += cost;
+            var new_label = current_label - change;
+            label.html(new_label);
+            input.val(current_value -= 1);
+            $(this).closest('.create-character').find('.points').html('' + Warbands.team_points['char' + pos + '_points']);
+        }
+    });
+
+    $(".increase-stat-button").on("click", function(event) {
+        var pos = $(this).parent().attr('data-pos');
+        var stat = $(this).parent().attr('data-stat');
+
+        var label = $(this).parent().find('.stat-label');
+        var input = $(this).parent().find('.stat-value');
+
+        var current_label = parseInt(label.html());
+        var current_value = parseInt(input.val());
+
+        if(current_value < 10)
+        {
+
+            var cost = calc_stat_cost(current_value);
+            var change = 1;
+
+            if(stat == 'hp')
+                change = 3
+
+            if(Warbands.team_points['char' + pos + '_points'] >= cost)
+            {
+                Warbands.team_points['char' + pos + '_points'] -= cost;
+                var new_label = current_label + change;
+                label.html(new_label);
+                input.val(current_value += 1);
+                $(this).closest('.create-character').find('.points').html('' + Warbands.team_points['char' + pos + '_points']);
+            }
+        }
+    });
+
+    $(".decrease-skill-button").on("click", function(event) {
+        var pos = $(this).parent().attr('data-pos');
+        var stat = $(this).parent().attr('data-skill');
+
+        var label = $(this).parent().find('.skill-label');
+        var input = $(this).parent().find('.skill-value');
+
+        var current_label = parseInt(label.html());
+        var current_value = parseInt(input.val());
+
+        //Need to send -1 here because it is the previous skill point we need the cost for.
+        var cost = calc_skill_cost(current_value - 1);
+
+        if(current_value > 0)
+        {
+            Warbands.team_points['char' + pos + '_points'] += cost;
+            var new_label = current_label - 1;
+            label.html(new_label);
+            input.val(current_value -= 1);
+            $(this).closest('.create-character').find('.points').html('' + Warbands.team_points['char' + pos + '_points']);
+        }
+    });
+
+    $(".increase-skill-button").on("click", function(event) {
+        var pos = $(this).parent().attr('data-pos');
+        var stat = $(this).parent().attr('data-skill');
+
+        var label = $(this).parent().find('.skill-label');
+        var input = $(this).parent().find('.skill-value');
+
+        var current_label = parseInt(label.html());
+        var current_value = parseInt(input.val());
+
+        if(current_value < 15)
+        {
+            var cost = calc_skill_cost(current_value);
+
+            if(Warbands.team_points['char' + pos + '_points'] >= cost)
+            {
+                Warbands.team_points['char' + pos + '_points'] -= cost;
+                var new_label = current_label + 1;
+                label.html(new_label);
+                input.val(current_value += 1);
+                $(this).closest('.create-character').find('.points').html('' + Warbands.team_points['char' + pos + '_points']);
+            }
+        }
+    });
+
 });
+
+function calc_stat_cost(val) {
+    var cost = 1;
+    if(val >= 8)
+        cost = 4;
+    else if(val >= 6)
+        cost = 3;
+    else if(val >= 3)
+        cost = 2;
+    return cost;
+}
+
+function calc_skill_cost(val) {
+    var cost = 1;
+    if(val >= 13)
+        cost = 4;
+    else if(val >= 11)
+        cost = 3;
+    else if(val >= 8)
+        cost = 2;
+    return cost;
+}
 
 function register_edit_team_listeners() {
 

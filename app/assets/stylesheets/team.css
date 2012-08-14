@@ -27,18 +27,61 @@
     width: 550px;
 }
 
-.character-stats-column, .character-skills-column{
-    width: 160px;
+.character-stats-column{
+    width: 130px;
+}
+
+.character-skills-column{
+    width: 180px;
 }
 
 .character-gear-column{
-    width: 220px;
+    width: 210px;
 }
 
-.character-info{
+.create-character-stats-column{
+    width: 200px;
+}
+
+.create-character-skills-column{
+    width: 240px;
+}
+
+.create-character-header{
+    width: 505px;
+    height: 30px;
+}
+
+.edit-stat{
+    font-size: 16px;
+    width: 170px;
+    margin-bottom: 10px;
+}
+
+.edit-skill{
+    font-size: 16px;
+    width: 220px;
+    margin-bottom: 10px;
+}
+
+.stat-label, .skill-label{
+    margin-right: 5px;
+}
+
+.increase-stat-button, .increase-skill-button{
+    margin-right: 2px;
+}
+
+.edit-stat .btn, .edit-skill .btn{
+    line-height: 7px;
+    width: 5px;
+}
+
+.character-info, .create-character{
     margin-bottom: 7px;
-    padding-left: 5px;
+    padding: 10px;
     border-radius: 10px;
+    width: 525px;
 }
 
 .equipment-info{

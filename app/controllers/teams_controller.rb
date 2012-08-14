@@ -1,15 +1,12 @@
 class TeamsController < ApplicationController
   def new
     if current_user.team
-      current_user.team.characters.destroy_all
-      current_user.team.destroy
+      redirect_to root_path
     end
-    @team = Team.new
-    current_user.team = @team
-    @team.update_attribute(:name, "The Team")
-    current_user.save
+    @team = Team.create(:name => "The Team")
     @team.create_characters
     @team.reset_battle_stats
+    @points = 20
   end
 
   def roll_stats
@@ -29,7 +26,7 @@ class TeamsController < ApplicationController
 
   def update
     @team = Team.find(params[:id])
-    @team.update_attribute(:name, params[:team][:name])
+    @team.update_attributes(:name => params[:team][:name], :user => current_user)
     redirect_to @team
   end
 

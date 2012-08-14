@@ -1,0 +1,71 @@
+<% character = create_character %>
+
+<div class="create-character bright-background left">
+  <div class="create-character-header left">
+    <h3 class="left">
+      <%= character.name %>
+    </h3>
+    <div class="right">
+      <h4>Points: <span class="points"><%= @points %></span></h4>
+    </div>
+  </div>
+  <div class="left create-character-stats-column">
+    <p>
+      <b>Stats</b></br>
+      <div class="edit-stat" data-pos="<%= character.position %>" data-stat="str">
+        Strength:
+        <div class="decrease-stat-button btn right">-</div>
+        <div class="increase-stat-button btn right">+</div>
+        <span class="stat-label right"><%= character.str %></span>
+        <input type="hidden" name="str-<%= character.position %>" class="stat-value" value="0"/>
+      </div>
+      <div class="edit-stat" data-pos="<%= character.position %>" data-stat="dex">
+        Dexterity:
+        <div class="decrease-stat-button btn right">-</div>
+        <div class="increase-stat-button btn right">+</div>
+        <span class="stat-label right"><%= character.dex %></span>
+        <input type="hidden" name="dex-<%= character.position %>" class="stat-value" value="0"/>
+      </div>
+      <div class="edit-stat" data-pos="<%= character.position %>" data-stat="tgh">
+        Toughness:
+        <div class="decrease-stat-button btn right">-</div>
+        <div class="increase-stat-button btn right">+</div>
+        <span class="stat-label right"><%= character.tgh %></span>
+        <input type="hidden" name="tgh-<%= character.position %>" class="stat-value" value="0"/>
+      </div>
+      <div class="edit-stat" data-pos="<%= character.position %>" data-stat="ini">
+        Initiative:
+        <div class="decrease-stat-button btn right">-</div>
+        <div class="increase-stat-button btn right">+</div>
+        <span class="stat-label right"><%= character.ini %></span>
+        <input type="hidden" name="ini-<%= character.position %>" class="stat-value" value="0"/>
+      </div>
+      </br>
+      <div class="edit-stat" data-pos="<%= character.position %>" data-stat="hp">
+        HP:
+        <div class="decrease-stat-button btn right">-</div>
+        <div class="increase-stat-button btn right">+</div>
+        <span class="stat-label right"><%= character.hp %></span>
+        <input type="hidden" name="hp-<%= character.position %>" class="stat-value" value="0"/>
+      </div>
+    </p>
+  </div>
+
+  <div class="left create-character-skills-column">
+    <p>
+      <b>Skills</b></br>
+        <% character.get_skills_array.each_with_index do |skill_level, index| %>
+          <% if skill_level != 0%>
+            <div class="edit-skill" data-pos="<%= character.position %>" data-skill="<%= index %>">
+              <%= "#{Constant.get_skill_name(index)}: "%>
+              <div class="decrease-skill-button btn right">-</div>
+              <div class="increase-skill-button btn right">+</div>
+              <span class="skill-label right"><%= "#{character.get_skill_value(index)}"%></span>
+              <input type="hidden" name="<%= Constant.get_skill_name(index) %>-<%= character.position %>" class="skill-value" value="0"/>
+            </div>
+          <% end %>
+        <% end %>
+    </p>
+  </div>
+</div>
+

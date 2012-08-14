@@ -1,12 +1,21 @@
+<script type="text/javascript">
+  Warbands.team_points = {
+    char0_points: <%= @points %>,
+    char1_points: <%= @points %>,
+    char2_points: <%= @points %>,
+    char3_points: <%= @points %>,
+    char4_points: <%= @points %>
+  }
+</script>
 <div class="content-header left">
   <h2>Create a new team!</h2>
   <h4><a href="#" id="reroll-characters" data-id="<%= @team._id %>">Reroll Characters</a></h4></br>
 </div>
+  <%= form_for @team do |f| %>
 <div id="characters-table" class="left">
-    <%= render :partial => "characters/character", :collection => @team.characters %>
+    <%= render :partial => "characters/create_character", :collection => @team.characters %>
 </div>
 <div id="choose-team-name" class="left bright-background">
-  <%= form_for @team do |f| %>
     <p>Name</p>
     <%= f.text_field :name %>
     <%= f.submit "Create Team" %>

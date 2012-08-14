@@ -9,14 +9,14 @@ class Character
   field :position, :type => Integer
 
   #Stats
-  field :str, :type => Integer
-  field :dex, :type => Integer
-  field :tgh, :type => Integer
-  field :ini, :type => Integer
-  field :int, :type => Integer
-  field :mem, :type => Integer
+  field :str, :type => Integer, :default => 10
+  field :dex, :type => Integer, :default => 10
+  field :tgh, :type => Integer, :default => 10
+  field :ini, :type => Integer, :default => 10
+  field :int, :type => Integer, :default => 1
+  field :mem, :type => Integer, :default => 1
 
-  field :ap, :type => Integer
+  field :ap, :type => Integer, :default => 12
 
   field :hp, :type => Integer, :default => 40
 
@@ -36,8 +36,8 @@ class Character
   #Melee Combat
 
     #Basic
-      field :strike, :type => Integer
-      field :defensive_posture, :type => Integer
+      field :strike, :type => Integer, :default => 5
+      field :defensive_posture, :type => Integer, :default => 5
 
     #Learnable
       field :quick_strike, :type => Integer
@@ -51,8 +51,8 @@ class Character
   #Ranged
 
     #Basic
-      field :thrown, :type => Integer
-      field :run_up, :type => Integer
+      field :thrown, :type => Integer, :default => 5
+      field :run_up, :type => Integer, :default => 5
 
     #Learnable
       field :fling, :type => Integer
@@ -65,7 +65,7 @@ class Character
   #Dirty Combat
 
     #Basic
-      field :dirt, :type => Integer
+      field :dirt, :type => Integer, :default => 5
 
     #Learnable
       field :bola, :type => Integer
@@ -84,13 +84,6 @@ class Character
 
   #Tuples in effects are in format [effect_id, duration, power, character_id]
   field :effects, :type => Array, :default => []
-
-
-  def roll_char
-    self.equipments = []
-    self.roll_stats
-    self.roll_skills
-  end
 
   def roll_stats
     self.str = roll_stat
