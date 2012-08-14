@@ -896,7 +896,7 @@ class Battle
     difficulty = ai_team.difficulty
 
     if team.monster_beaten < difficulty
-      team.update_attribute(:monster_beaten, difficulty)
+      team.monster_beaten = difficulty
     end
 
     case difficulty
@@ -911,6 +911,9 @@ class Battle
       when 5
         gold_change = 50
     end
+
+    team.gold += gold_change
+    team.save
 
     battle_result = BattleResult.create(last_turn_events: player.battle_sync.turn_events, result: player.battle.result, learning_results: learning_results, :rating_change => 0, :gold_change => gold_change)
     player.battle_result = battle_result

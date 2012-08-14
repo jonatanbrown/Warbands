@@ -59,7 +59,7 @@ class BattlesController < ApplicationController
 
     if @battle.result != BATTLE_UNDECIDED
       redirect_to battle_finished_path
-  elsif @battle.submitted
+    elsif @battle.submitted
       redirect_to waiting_for_turn_path
     else
       render 'battle'
