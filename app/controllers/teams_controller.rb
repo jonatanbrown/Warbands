@@ -17,6 +17,7 @@ class TeamsController < ApplicationController
     @team.equipments = []
     @team.characters.each do |c|
       c.roll_char
+      c.create_basic_gear
       c.save
     end
     render :partial => "characters/character", :collection => @team.characters
