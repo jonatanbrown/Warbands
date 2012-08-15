@@ -43,6 +43,10 @@
     margin-bottom: 4px;
 }
 
+.battle-character.highlighted{
+    border-color: #CD2626;
+}
+
 .skill-button-container.selected{
     -webkit-animation-name: pulsate;
     -webkit-animation-duration: 0.5s;

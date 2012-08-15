@@ -102,9 +102,25 @@ function update_action_list(pos) {
                     target_name += ' at ' + battle.op_chars[n][0]
             }
         }
-        $('#pos' + pos + '-actions').append('<p>' + skill_name + target_name + ' <a href="#" class="undo-action" data-action-index=' + i + ' data-pos=' + pos + '><span class="red">X</span></a>' + '</p>');
+        $('#pos' + pos + '-actions').append('<p class="action-list-item" data-target-pos="' + target_pos + '" data-friendly="' + friendly + '">' + skill_name + target_name + ' <a href="#" class="undo-action" data-action-index=' + i + ' data-pos=' + pos + '><span class="red">X</span></a>' + '</p>');
     }
     $('.undo-action[data-pos*="' + pos + '"]').on("click", undo_action);
+    $('#pos' + pos + '-actions .action-list-item').on("mouseenter", highlight_target)
+    $('#pos' + pos + '-actions .action-list-item').on("mouseleave", unhighlight_target)
+}
+
+function highlight_target() {
+    var friendly = $(this).attr('data-friendly')
+    var target_pos = $(this).attr('data-target-pos')
+    if(friendly == 'false')
+    {
+        $('#opponent-team').find('[data-position*='+ target_pos +']').addClass('highlighted')
+    }
+}
+
+function unhighlight_target() {
+    var target_pos = $(this).attr('data-target-pos')
+    $('#opponent-team').find('[data-position*='+ target_pos +']').removeClass('highlighted')
 }
 
 function set_skill_options(selector, pos) {
@@ -148,6 +164,10 @@ function undo_action() {
 
     var index = $(this).attr('data-action-index');
     var pos = $(this).attr('data-pos');
+
+    var target_pos = $(this).parent().attr('data-target-pos');
+    $('#opponent-team').find('[data-position*='+ target_pos +']').removeClass('highlighted');
+
     var skill_id = battle['actions']['' + pos][index].action
 
     var ap_cost = battle.skills[skill_id][2]
