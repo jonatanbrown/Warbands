@@ -17,28 +17,28 @@
         <div class="decrease-stat-button btn right">-</div>
         <div class="increase-stat-button btn right">+</div>
         <span class="stat-label right"><%= character.str %></span>
-        <input type="hidden" name="str-<%= character.position %>" class="stat-value" value="0"/>
+        <input type="hidden" name="[<%= character.position %>]str" class="stat-value" value="0"/>
       </div>
       <div class="edit-stat" data-pos="<%= character.position %>" data-stat="dex">
         Dexterity:
         <div class="decrease-stat-button btn right">-</div>
         <div class="increase-stat-button btn right">+</div>
         <span class="stat-label right"><%= character.dex %></span>
-        <input type="hidden" name="dex-<%= character.position %>" class="stat-value" value="0"/>
+        <input type="hidden" name="[<%= character.position %>]dex" class="stat-value" value="0"/>
       </div>
       <div class="edit-stat" data-pos="<%= character.position %>" data-stat="tgh">
         Toughness:
         <div class="decrease-stat-button btn right">-</div>
         <div class="increase-stat-button btn right">+</div>
         <span class="stat-label right"><%= character.tgh %></span>
-        <input type="hidden" name="tgh-<%= character.position %>" class="stat-value" value="0"/>
+        <input type="hidden" name="[<%= character.position %>]tgh" class="stat-value" value="0"/>
       </div>
       <div class="edit-stat" data-pos="<%= character.position %>" data-stat="ini">
         Initiative:
         <div class="decrease-stat-button btn right">-</div>
         <div class="increase-stat-button btn right">+</div>
         <span class="stat-label right"><%= character.ini %></span>
-        <input type="hidden" name="ini-<%= character.position %>" class="stat-value" value="0"/>
+        <input type="hidden" name="[<%= character.position %>]ini" class="stat-value" value="0"/>
       </div>
       </br>
       <div class="edit-stat" data-pos="<%= character.position %>" data-stat="hp">
@@ -46,7 +46,7 @@
         <div class="decrease-stat-button btn right">-</div>
         <div class="increase-stat-button btn right">+</div>
         <span class="stat-label right"><%= character.hp %></span>
-        <input type="hidden" name="hp-<%= character.position %>" class="stat-value" value="0"/>
+        <input type="hidden" name="[<%= character.position %>]hp" class="stat-value" value="0"/>
       </div>
     </p>
   </div>
@@ -54,17 +54,41 @@
   <div class="left create-character-skills-column">
     <p>
       <b>Skills</b></br>
-        <% character.get_skills_array.each_with_index do |skill_level, index| %>
-          <% if skill_level != 0%>
-            <div class="edit-skill" data-pos="<%= character.position %>" data-skill="<%= index %>">
-              <%= "#{Constant.get_skill_name(index)}: "%>
-              <div class="decrease-skill-button btn right">-</div>
-              <div class="increase-skill-button btn right">+</div>
-              <span class="skill-label right"><%= "#{character.get_skill_value(index)}"%></span>
-              <input type="hidden" name="<%= Constant.get_skill_name(index) %>-<%= character.position %>" class="skill-value" value="0"/>
-            </div>
-          <% end %>
-        <% end %>
+        <div class="edit-skill" data-pos="<%= character.position %>" data-skill="0">
+          Strike:
+          <div class="decrease-skill-button btn right">-</div>
+          <div class="increase-skill-button btn right">+</div>
+          <span class="skill-label right"><%= character.strike %></span>
+          <input type="hidden" name="[<%= character.position %>]strike" class="skill-value" value="0"/>
+        </div>
+        <div class="edit-skill" data-pos="<%= character.position %>" data-skill="1">
+          Thrown:
+          <div class="decrease-skill-button btn right">-</div>
+          <div class="increase-skill-button btn right">+</div>
+          <span class="skill-label right"><%= character.thrown %></span>
+          <input type="hidden" name="[<%= character.position %>]thrown" class="skill-value" value="0"/>
+        </div>
+        <div class="edit-skill" data-pos="<%= character.position %>" data-skill="3">
+          Dirt:
+          <div class="decrease-skill-button btn right">-</div>
+          <div class="increase-skill-button btn right">+</div>
+          <span class="skill-label right"><%= character.dirt %></span>
+          <input type="hidden" name="[<%= character.position %>]dirt" class="skill-value" value="0"/>
+        </div>
+        <div class="edit-skill" data-pos="<%= character.position %>" data-skill="4">
+          Defensive Posture:
+          <div class="decrease-skill-button btn right">-</div>
+          <div class="increase-skill-button btn right">+</div>
+          <span class="skill-label right"><%= character.defensive_posture %></span>
+          <input type="hidden" name="[<%= character.position %>]defensive_posture" class="skill-value" value="0"/>
+        </div>
+        <div class="edit-skill" data-pos="<%= character.position %>" data-skill="22">
+          Run Up:
+          <div class="decrease-skill-button btn right">-</div>
+          <div class="increase-skill-button btn right">+</div>
+          <span class="skill-label right"><%= character.run_up %></span>
+          <input type="hidden" name="[<%= character.position %>]run_up" class="skill-value" value="0"/>
+        </div>
     </p>
   </div>
 </div>

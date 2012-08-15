@@ -6,18 +6,7 @@ class TeamsController < ApplicationController
     @team = Team.create(:name => "The Team")
     @team.create_characters
     @team.reset_battle_stats
-    @points = 20
-  end
-
-  def roll_stats
-    @team = Team.find(params[:id])
-    @team.equipments = []
-    @team.characters.each do |c|
-      c.roll_char
-      c.create_basic_gear
-      c.save
-    end
-    render :partial => "characters/character", :collection => @team.characters
+    @points = INITIAL_CHAR_POINTS
   end
 
   def show
@@ -27,6 +16,12 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
     @team.update_attributes(:name => params[:team][:name], :user => current_user)
+    @team.characters.each do |char|
+      if char.edit_initial_stats(params[char.position.to_s])
+        char.create_basic_gear
+        char.save
+      end
+    end
     redirect_to @team
   end
 

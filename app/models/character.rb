@@ -85,23 +85,24 @@ class Character
   #Tuples in effects are in format [effect_id, duration, power, character_id]
   field :effects, :type => Array, :default => []
 
-  def roll_stats
-    self.str = roll_stat
-    self.dex = roll_stat
-    self.tgh = roll_stat
-    self.ini = roll_stat
-    self.int = roll_stat
-    self.mem = roll_stat
-
-    self.ap = roll_ap
-  end
-
-  def roll_skills
-    self.strike = roll_skill
-    self.defensive_posture = roll_skill
-    self.thrown = roll_skill
-    self.run_up = roll_skill
-    self.dirt = roll_skill
+  def edit_initial_stats(params)
+    points = INITIAL_CHAR_POINTS
+    ['str', 'dex', 'tgh', 'ini', 'hp'].each do |stat|
+      val = params[stat].to_i
+      change = (stat == 'hp' ? 3 : 1)
+      points -= (val) + ((val - 3) > 0 ? (val - 3) : 0) + ((val - 6) > 0 ? (val - 6) : 0) + ((val - 8) > 0 ? (val - 8) : 0)
+      self[stat] += val
+    end
+    ['strike', 'thrown', 'dirt', 'defensive_posture', 'run_up'].each do |skill|
+      val = params[skill].to_i
+      points -= (val) + ((val - 8) > 0 ? (val - 8) : 0) + ((val - 11) > 0 ? (val - 11) : 0) + ((val - 13) > 0 ? (val - 13) : 0)
+      self[skill] += val
+    end
+    if points >= 0
+      true
+    else
+      false
+    end
   end
 
   def create_basic_gear
