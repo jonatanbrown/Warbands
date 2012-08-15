@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $('.create-character-tooltip').tooltip({placement: 'right', delay: {show: 200, hide: 100}})
+
     $("#reroll-characters").on("click", function(event) {
         var team_id = $(this).attr('data-id')
         $.ajax({

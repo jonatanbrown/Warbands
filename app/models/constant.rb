@@ -288,6 +288,21 @@ class Constant
     end
   end
 
+  def self.get_stat_description(stat)
+    case stat
+    when 'str'
+      '<b>Strength</b> improves your melee damage and ability to wear heavy armor.'.html_safe
+    when 'dex'
+      '<b>Dexterity</b> improves your change to hit with ranged skills and your chance to dodge melee attacks.'.html_safe
+    when 'tgh'
+      '<b>Toughness</b> reduces the damage you take.'.html_safe
+    when 'ini'
+      '<b>Initiative</b> improves your chances of acting early in a round of battle.'.html_safe
+    when 'hp'
+      '<b>HP</b> determines the amount of damage you can take before you are knocked out.'.html_safe
+    end
+  end
+
   def self.get_skill_description(skill_id)
     case skill_id
       when SKILL_STRIKE
