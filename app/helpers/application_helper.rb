@@ -63,5 +63,9 @@ module ApplicationHelper
     result.html_safe
   end
 
+  def smithy_item(item, text)
+    "<div class='smithy-btn-container'><span class='item-button' data-item='#{item}'>#{text}</span><a href='#' rel='tooltip' data-original-title='Buy Item' class='buy-item-button' data-item='#{item}'><img src='/images/coin-icon.png' border='0'/></a><p class='right smithy-cost'>#{Equipment.get_cost(item)} Gold</p></div>".html_safe
+  end
+
 end
 
