@@ -42,6 +42,7 @@ function generate_weapon_description(title, class_description, class_name, range
 }
 
 function get_item_description(item) {
+    result = ''
     switch(item)
     {
     case 'short_sword':
