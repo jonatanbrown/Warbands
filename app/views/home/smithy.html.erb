@@ -1,3 +1,27 @@
+<script type="text/javascript">
+  Warbands.item_class_descriptions = {
+    sword: "<%= Equipment.get_class_tooltip(EQUIPMENT_SWORD) %>",
+    mace: "<%= Equipment.get_class_tooltip(EQUIPMENT_MACE) %>",
+    axe: "<%= Equipment.get_class_tooltip(EQUIPMENT_AXE) %>",
+    spear: "<%= Equipment.get_class_tooltip(EQUIPMENT_SPEAR) %>",
+    throwing_knives: "<%= Equipment.get_class_tooltip(EQUIPMENT_THROWING_KNIVES) %>",
+    javelins: "<%= Equipment.get_class_tooltip(EQUIPMENT_JAVELINS) %>",
+    throwing_axes: "<%= Equipment.get_class_tooltip(EQUIPMENT_THROWING_AXES) %>"
+  }
+
+  Warbands.weapon_damage = {
+    t1: '<%= "#{T1_WEAPON_MIN_DAMAGE} - #{T1_WEAPON_MAX_DAMAGE}" %>',
+    t2: '<%= "#{T2_WEAPON_MIN_DAMAGE} - #{T2_WEAPON_MAX_DAMAGE}" %>',
+    t3: '<%= "#{T3_WEAPON_MIN_DAMAGE} - #{T3_WEAPON_MAX_DAMAGE}" %>'
+  }
+
+  Warbands.weapon_value = {
+    t1: <%= "#{T1_WEAPON_VALUE}"%>,
+    t2: <%= "#{T2_WEAPON_VALUE}"%>,
+    t3: <%= "#{T3_WEAPON_VALUE}"%>
+  }
+</script>
+
 <h2>Smithy</h2>
 <p>Here you can purchase equipment for your team.</p>
 <ul class="nav nav-tabs">
@@ -24,6 +48,30 @@
     <%= smithy_item('short_spear', 'Short Spear') %>
     <div class="smithy-item-separator"></div>
 
+    <%= smithy_item('gladius', 'Gladius') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('flanged_mace', 'Flanged Mace') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('battle_axe', 'Battle Axe') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('spetum', 'Spetum') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('spatha', 'Spatha') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('morning_star', 'Morning Star') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('ono', 'Ono') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('winged_spear', 'Winged Spear') %>
+    <div class="smithy-item-separator"></div>
+
   </div>
   <div class="tab-pane" id="ranged-weapons">
 
@@ -34,6 +82,24 @@
     <div class="smithy-item-separator"></div>
 
     <%= smithy_item('throwing_axes', 'Throwing Axes') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('razor_darts', 'Razor Darts') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('pilum', 'Pilum') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('francisca', 'Francisca') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('trombash', 'Trombash') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('verutum', 'Verutum') %>
+    <div class="smithy-item-separator"></div>
+
+    <%= smithy_item('hurlbat', 'Hurlbat') %>
     <div class="smithy-item-separator"></div>
 
   </div>

@@ -32,59 +32,86 @@ $(document).ready(function() {
     $(".buy-item-button").tooltip({placement: 'right'})
 });
 
-function get_item_description(item) {
+function generate_weapon_description(title, class_description, class_name, range, damage, cost) {
     result = '';
+    result += '<h3>' + title + '</h3>';
+    result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="' + class_description + '">' + class_name + '</span></p>'
+    result += '<p>Range: ' + range + '</p>'
+    result += '<p>Damage: ' + damage + '</p>'
+    result += '<p><b>Cost: ' + cost + ' Gold</b></p>'
+}
+
+function get_item_description(item) {
     switch(item)
     {
     case 'short_sword':
-        result += '<h3>Short Sword</h3>';
-        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Swords give a 5% chance to parry melee attacks.">Sword</span></p>'
-        result += '<p>Range: Melee</p>'
-        result += '<p>Damage: 4-8</p>'
-        result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
+        generate_weapon_description('Short Sword', Warbands.item_class_descriptions.sword, 'Sword', 'Melee', Warbands.weapon_damage.t1, Warbands.weapon_value.t1)
         break;
     case 'club':
-        result += '<h3>Club</h3>';
-        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Maces give a 5% chance to stun the opponent, negating their next action.">Mace</span></p>'
-        result += '<p>Range: Melee</p>'
-        result += '<p>Damage: 4-8</p>'
-        result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
+        generate_weapon_description('Club', Warbands.item_class_descriptions.mace, 'Mace', 'Melee', Warbands.weapon_damage.t1, Warbands.weapon_value.t1)
         break;
     case 'small_axe':
-        result += '<h3>Small Axe</h3>';
-        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Axes give a 5% chance to cause the opponent to bleed, causing damage over time.">Axe</span></p>'
-        result += '<p>Range: Melee</p>'
-        result += '<p>Damage: 4-8</p>'
-        result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
+        generate_weapon_description('Small Axe', Warbands.item_class_descriptions.axe, 'Axe', 'Melee', Warbands.weapon_damage.t1, Warbands.weapon_value.t1)
         break;
     case 'short_spear':
-        result += '<h3>Short Spear</h3>';
-        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Spears give a 10% bonus to Initiative of weapon based attacks.">Spear</span></p>'
-        result += '<p>Range: Melee</p>'
-        result += '<p>Damage: 4-8</p>'
-        result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
+        generate_weapon_description('Short Spear', Warbands.item_class_descriptions.spear, 'Spear', 'Melee', Warbands.weapon_damage.t1, Warbands.weapon_value.t1)
         break;
+    case 'gladius':
+        generate_weapon_description('Gladius', Warbands.item_class_descriptions.sword, 'Sword', 'Melee', Warbands.weapon_damage.t2, Warbands.weapon_value.t2)
+        break;
+    case 'flanged_mace':
+        generate_weapon_description('Flanged Mace', Warbands.item_class_descriptions.mace, 'Mace', 'Melee', Warbands.weapon_damage.t2, Warbands.weapon_value.t2)
+        break;
+    case 'battle_axe':
+        generate_weapon_description('Battle Axe', Warbands.item_class_descriptions.axe, 'Axe', 'Melee', Warbands.weapon_damage.t2, Warbands.weapon_value.t2)
+        break;
+    case 'spetum':
+        generate_weapon_description('Spetum', Warbands.item_class_descriptions.spear, 'Spear', 'Melee', Warbands.weapon_damage.t2, Warbands.weapon_value.t2)
+        break;
+    case 'spatha':
+        generate_weapon_description('Spatha', Warbands.item_class_descriptions.sword, 'Sword', 'Melee', Warbands.weapon_damage.t3, Warbands.weapon_value.t3)
+        break;
+    case 'morning_star':
+        generate_weapon_description('Morning Star', Warbands.item_class_descriptions.mace, 'Mace', 'Melee', Warbands.weapon_damage.t3, Warbands.weapon_value.t3)
+        break;
+    case 'ono':
+        generate_weapon_description('Ono', Warbands.item_class_descriptions.axe, 'Axe', 'Melee', Warbands.weapon_damage.t3, Warbands.weapon_value.t3)
+        break;
+    case 'winged_spear':
+        generate_weapon_description('Winged Spear', Warbands.item_class_descriptions.spear, 'Spear', 'Melee', Warbands.weapon_damage.t3, Warbands.weapon_value.t3)
+        break;
+
+
     case 'throwing_knives':
-        result += '<h3>Throwing Knives</h3>';
-        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Knives give a 10% bonus to Initiative of weapon based attacks.">Knife</span></p>'
-        result += '<p>Range: Ranged</p>'
-        result += '<p>Damage: 4-8</p>'
-        result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
+        generate_weapon_description('Throwing Knives', Warbands.item_class_descriptions.throwing_knives, 'Throwing Knives', 'Ranged', Warbands.weapon_damage.t1, Warbands.weapon_value.t1)
         break;
     case 'javelins':
-        result += '<h3>Javelins</h3>';
-        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Javelins reduce chance of missing with weapon based attacks by 10%.">Javelin</span></p>'
-        result += '<p>Range: Ranged</p>'
-        result += '<p>Damage: 4-8</p>'
-        result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
+        generate_weapon_description('Javelins', Warbands.item_class_descriptions.javelins, 'Javelins', 'Ranged', Warbands.weapon_damage.t1, Warbands.weapon_value.t1)
         break;
     case 'throwing_axes':
-        result += '<h3>Throwing Axes</h3>';
-        result += '<p>Class: <span class="weapon-class" rel="tooltip" data-original-title="Axes give a 5% chance to cause the opponent to bleed, causing damage over time.">Axe</span></p>'
-        result += '<p>Range: Ranged</p>'
-        result += '<p>Damage: 4-8</p>'
-        result += '<p><b>Cost: ' + get_item_cost(item) + ' Gold</b></p>'
+       generate_weapon_description('Throwing Axes', Warbands.item_class_descriptions.throwing_axes, 'Axe', 'Ranged', Warbands.weapon_damage.t1, Warbands.weapon_value.t1)
         break;
+    case 'razor_darts':
+       generate_weapon_description('Razor Darts', Warbands.item_class_descriptions.throwing_knives, 'Throwing Knives', 'Ranged', Warbands.weapon_damage.t2, Warbands.weapon_value.t2)
+        break;
+    case 'pilum':
+       generate_weapon_description('Pilum', Warbands.item_class_descriptions.javelins, 'Javelins', 'Ranged', Warbands.weapon_damage.t2, Warbands.weapon_value.t2)
+        break;
+    case 'francisca':
+       generate_weapon_description('Francisca', Warbands.item_class_descriptions.throwing_axes, 'Axe', 'Ranged', Warbands.weapon_damage.t2, Warbands.weapon_value.t2)
+        break;
+    case 'trombash':
+       generate_weapon_description('Trombash', Warbands.item_class_descriptions.throwing_knives, 'Throwing Knives', 'Ranged', Warbands.weapon_damage.t3, Warbands.weapon_value.t3)
+        break;
+    case 'verutum':
+       generate_weapon_description('Verutum', Warbands.item_class_descriptions.javelins, 'Javelins', 'Ranged', Warbands.weapon_damage.t3, Warbands.weapon_value.t3)
+        break;
+    case 'hurlbat':
+       generate_weapon_description('Hurlbat', Warbands.item_class_descriptions.throwing_axes, 'Axe', 'Ranged', Warbands.weapon_damage.t3, Warbands.weapon_value.t3)
+        break;
+
+
+
     case 'buckler':
         result += '<h3>Buckler</h3>';
         result += '<p>Armor: 2</p>'

@@ -75,7 +75,7 @@ class Equipment
     end
   end
 
-  def get_class_tooltip
+  def self.get_class_tooltip(eq_type)
     case eq_type
     when EQUIPMENT_SWORD
       'Swords give a 5% chance to parry melee attacks.'
@@ -91,6 +91,25 @@ class Equipment
       'Javelins reduce chance of missing with weapon based attacks by 10%.'
     when EQUIPMENT_THROWING_AXES
       'Axes give a 5% chance to cause the opponent to bleed, causing damage over time.'
+    end
+  end
+
+  def self.get_item_class_tooltip(item)
+    case item
+      when 'short_sword', 'gladius', 'spatha'
+        get_class_tooltip(EQUIPMENT_SWORD)
+      when 'club', 'flanged_mace','morning_star'
+        get_class_tooltip(EQUIPMENT_MACE)
+      when 'small_axe', 'battle_axe', 'ono'
+        get_class_tooltip(EQUIPMENT_AXE)
+      when 'short_spear', 'spetum', 'winged_spear'
+        get_class_tooltip(EQUIPMENT_SPEAR)
+      when 'throwing_knives', 'razor_darts', 'trombash'
+        get_class_tooltip(EQUIPMENT_THROWING_KNIVES)
+      when 'javelins', 'pilum', 'verutum'
+        get_class_tooltip(EQUIPMENT_JAVELINS)
+      when 'throwing_axes', 'francisca', 'hurlbat'
+        get_class_tooltip(EQUIPMENT_THROWING_AXES)
     end
   end
 
@@ -127,20 +146,12 @@ class Equipment
 
   def self.get_cost(item)
     case item
-      when 'short_sword'
-        35
-      when 'club'
-        35
-      when 'small_axe'
-        35
-      when 'short_spear'
-        35
-      when 'throwing_knives'
-        35
-      when 'javelins'
-        35
-      when 'throwing_axes'
-        35
+      when 'short_sword', 'club', 'small_axe', 'short_spear', 'throwing_knives', 'javelins', 'throwing_axes'
+        T1_WEAPON_VALUE
+      when 'gladius', 'flanged_mace', 'battle_axe', 'spetum', 'razor_darts', 'pilum', 'francisca'
+        T2_WEAPON_VALUE
+      when 'spatha', 'morning_star', 'ono', 'winged_spear', 'trombash', 'verutum', 'hurlbat'
+        T3_WEAPON_VALUE
       when 'buckler'
         40
       when 'small_shield'
@@ -176,26 +187,60 @@ class Equipment
 
   def self.create_item(item, team)
     case item
+
+      #MELEE WEAPONS
       when 'wooden_stick'
         Equipment.create(:name => 'Wooden Stick', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => 2, :max_damage => 4, :value => 3)
-    when 'giant_tusks'
+      when 'giant_tusks'
         Equipment.create(:name => 'Giant Tusks', :team => team, :eq_type => EQUIPMENT_AXE, :min_damage => 3, :max_damage => 5)
       when 'short_sword'
-        Equipment.create(:name => 'Short Sword', :team => team, :eq_type => EQUIPMENT_SWORD, :min_damage => 4, :max_damage => 8, :value => 35)
+        Equipment.create(:name => 'Short Sword', :team => team, :eq_type => EQUIPMENT_SWORD, :min_damage => T1_WEAPON_MIN_DAMAGE, :max_damage => T1_WEAPON_MAX_DAMAGE, :value => T1_WEAPON_VALUE)
       when 'club'
-        Equipment.create(:name => 'Club', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => 4, :max_damage => 8, :value => 35)
+        Equipment.create(:name => 'Club', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => T1_WEAPON_MIN_DAMAGE, :max_damage => T1_WEAPON_MAX_DAMAGE, :value => T1_WEAPON_VALUE)
       when 'small_axe'
-        Equipment.create(:name => 'Small Axe', :team => team, :eq_type => EQUIPMENT_AXE, :min_damage => 4, :max_damage => 8, :value => 35)
+        Equipment.create(:name => 'Small Axe', :team => team, :eq_type => EQUIPMENT_AXE, :min_damage => T1_WEAPON_MIN_DAMAGE, :max_damage => T1_WEAPON_MAX_DAMAGE, :value => T1_WEAPON_VALUE)
       when 'short_spear'
-        Equipment.create(:name => 'Short Spear', :team => team, :eq_type => EQUIPMENT_SPEAR, :min_damage => 4, :max_damage => 8, :value => 35)
+        Equipment.create(:name => 'Short Spear', :team => team, :eq_type => EQUIPMENT_SPEAR, :min_damage => T1_WEAPON_MIN_DAMAGE, :max_damage => T1_WEAPON_MAX_DAMAGE, :value => T1_WEAPON_VALUE)
+      when 'gladius'
+        Equipment.create(:name => 'Gladius', :team => team, :eq_type => EQUIPMENT_SWORD, :min_damage => T2_WEAPON_MIN_DAMAGE, :max_damage => T2_WEAPON_MAX_DAMAGE, :value => T2_WEAPON_VALUE)
+      when 'flanged_mace'
+        Equipment.create(:name => 'Flanged Mace', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => T2_WEAPON_MIN_DAMAGE, :max_damage => T2_WEAPON_MAX_DAMAGE, :value => T2_WEAPON_VALUE)
+      when 'battle_axe'
+        Equipment.create(:name => 'Battle Axe', :team => team, :eq_type => EQUIPMENT_AXE, :min_damage => T2_WEAPON_MIN_DAMAGE, :max_damage => T2_WEAPON_MAX_DAMAGE, :value => T2_WEAPON_VALUE)
+      when 'spetum'
+        Equipment.create(:name => 'Spetum', :team => team, :eq_type => EQUIPMENT_SPEAR, :min_damage => T2_WEAPON_MIN_DAMAGE, :max_damage => T2_WEAPON_MAX_DAMAGE, :value => T2_WEAPON_VALUE)
+      when 'spatha'
+        Equipment.create(:name => 'Spatha', :team => team, :eq_type => EQUIPMENT_SWORD, :min_damage => T3_WEAPON_MIN_DAMAGE, :max_damage => T3_WEAPON_MAX_DAMAGE, :value => T3_WEAPON_VALUE)
+      when 'morning_star'
+        Equipment.create(:name => 'Morning Star', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => T3_WEAPON_MIN_DAMAGE, :max_damage => T3_WEAPON_MAX_DAMAGE, :value => T3_WEAPON_VALUE)
+      when 'ono'
+        Equipment.create(:name => 'Ono', :team => team, :eq_type => EQUIPMENT_AXE, :min_damage => T3_WEAPON_MIN_DAMAGE, :max_damage => T3_WEAPON_MAX_DAMAGE, :value => T3_WEAPON_VALUE)
+      when 'winged_spear'
+        Equipment.create(:name => 'Winged Spear', :team => team, :eq_type => EQUIPMENT_SPEAR, :min_damage => T3_WEAPON_MIN_DAMAGE, :max_damage => T3_WEAPON_MAX_DAMAGE, :value => T3_WEAPON_VALUE)
+
+      #RANGED WEAPONS
       when 'rusty_cutlery'
         Equipment.create(:name => 'Rusty Cutlery', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => 2, :max_damage => 4, :value => 3)
       when 'throwing_knives'
-        Equipment.create(:name => 'Throwing Knives', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => 4, :max_damage => 8, :value => 35)
+        Equipment.create(:name => 'Throwing Knives', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => T1_WEAPON_MIN_DAMAGE, :max_damage => T1_WEAPON_MAX_DAMAGE, :value => T1_WEAPON_VALUE)
       when 'javelins'
-        Equipment.create(:name => 'Javelins', :team => team, :eq_type => EQUIPMENT_JAVELINS, :min_damage => 4, :max_damage => 8, :value => 35)
+        Equipment.create(:name => 'Javelins', :team => team, :eq_type => EQUIPMENT_JAVELINS, :min_damage => T1_WEAPON_MIN_DAMAGE, :max_damage => T1_WEAPON_MAX_DAMAGE, :value => T1_WEAPON_VALUE)
       when 'throwing_axes'
-        Equipment.create(:name => 'Throwing Axes', :team => team, :eq_type => EQUIPMENT_THROWING_AXES, :min_damage => 4, :max_damage => 8, :value => 35)
+        Equipment.create(:name => 'Throwing Axes', :team => team, :eq_type => EQUIPMENT_THROWING_AXES, :min_damage => T1_WEAPON_MIN_DAMAGE, :max_damage => T1_WEAPON_MAX_DAMAGE, :value => T1_WEAPON_VALUE)
+      when 'razor_darts'
+        Equipment.create(:name => 'Razor Darts', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => T2_WEAPON_MIN_DAMAGE, :max_damage => T2_WEAPON_MAX_DAMAGE, :value => T2_WEAPON_VALUE)
+      when 'pilum'
+        Equipment.create(:name => 'Pilum', :team => team, :eq_type => EQUIPMENT_JAVELINS, :min_damage => T2_WEAPON_MIN_DAMAGE, :max_damage => T2_WEAPON_MAX_DAMAGE, :value => T2_WEAPON_VALUE)
+      when 'francisca'
+        Equipment.create(:name => 'Francisca', :team => team, :eq_type => EQUIPMENT_THROWING_AXES, :min_damage => T2_WEAPON_MIN_DAMAGE, :max_damage => T2_WEAPON_MAX_DAMAGE, :value => T2_WEAPON_VALUE)
+      when 'trombash'
+        Equipment.create(:name => 'Trombash', :team => team, :eq_type => EQUIPMENT_THROWING_KNIVES, :min_damage => T3_WEAPON_MIN_DAMAGE, :max_damage => T3_WEAPON_MAX_DAMAGE, :value => T3_WEAPON_VALUE)
+      when 'verutum'
+        Equipment.create(:name => 'Verutum', :team => team, :eq_type => EQUIPMENT_JAVELINS, :min_damage => T3_WEAPON_MIN_DAMAGE, :max_damage => T3_WEAPON_MAX_DAMAGE, :value => T3_WEAPON_VALUE)
+      when 'hurlbat'
+        Equipment.create(:name => 'Hurlbat', :team => team, :eq_type => EQUIPMENT_THROWING_AXES, :min_damage => T3_WEAPON_MIN_DAMAGE, :max_damage => T3_WEAPON_MAX_DAMAGE, :value => T3_WEAPON_VALUE)
+
+      #ARMOR
       when 'buckler'
         Equipment.create(:name => 'Buckler', :team => team, :eq_type => EQUIPMENT_SHIELD, :armor => 2, :value => 40)
       when 'small_shield'
