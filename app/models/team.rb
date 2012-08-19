@@ -264,7 +264,7 @@ class Team
     when 'caged_thieves'
       ai_team = Team.create(:name => "Caged Thieves", :formation => 1, :rating => nil, :difficulty => 2)
       3.times do |i|
-        c = Character.new(:name => 'Thief', :position => i + 1, :str => 13, :dex => 16, :tgh => 13, :ini => 15, :int => 1, :mem => 1, :quick_throw => 20, :weakness_poison => 17, :paralyzing_poison => 17, :ap => 22, :hp => 120, :current_hp => 100)
+        c = Character.new(:name => 'Thief', :position => i + 1, :str => 13, :dex => 16, :tgh => 13, :ini => 15, :int => 1, :mem => 1, :quick_throw => 20, :weakness_poison => 17, :paralyzing_poison => 17, :ap => 22, :hp => 100, :current_hp => 100)
         e = Equipment.create_item('razor_darts', nil)
         c.equipments << e
         e.save
@@ -285,7 +285,7 @@ class Team
           position = i + 2
         end
 
-        c = Character.new(:name => name, :position => position, :str => 15, :dex => 6, :tgh => 16, :ini => 7, :int => 1, :mem => 1, :strike => 14, :thrown => 14, :dirt => 14, :ap => 16, :hp => 70, :current_hp => 80)
+        c = Character.new(:name => name, :position => position, :str => 15, :dex => 6, :tgh => 16, :ini => 7, :int => 1, :mem => 1, :strike => 17, :thrown => 14, :dirt => 14, :ap => 16, :hp => 110, :current_hp => 110)
         e = Equipment.create_item(basic_weapon, nil)
         c.equipments << e
         e.save
