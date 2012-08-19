@@ -245,13 +245,23 @@ class Team
       ai_team = Team.create(:name => "Giant Boar", :formation => 4, :rating => nil, :difficulty => 1)
       2.times do |i|
         c = Character.new(:name => 'Giant Boar', :position => i, :str => 13, :dex => 11, :tgh => 14, :ini => 13, :int => 1, :mem => 1, :strike => 8, :run_up => 10, :ap => 24, :hp => 150, :current_hp => 150)
-        e = Equipment.create_item('giant_tusks', nil)
+        e = Equipment.create_item('animal_weaponry', nil)
         c.equipments << e
         e.save
         c.save
         ai_team.characters << c
       end
       ai_team.save
+    when 'bear'
+      ai_team = Team.create(:name => "Bear", :formation => 1, :rating => nil, :difficulty => 2)
+      c = Character.new(:name => 'Bear', :position => 2, :str => 17, :dex => 10, :tgh => 20, :ini => 12, :int => 1, :mem => 1, :strike => 10, :ap => 40, :hp => 360, :current_hp => 360)
+      e = Equipment.create_item('animal_weaponry', nil)
+      c.equipments << e
+      e.save
+      c.save
+      ai_team.characters << c
+      ai_team.save
+
     when 'orc_bandits'
       ai_team = Team.create(:name => "Orc Bandits", :formation => 3, :rating => nil, :difficulty => 3)
       3.times do |i|

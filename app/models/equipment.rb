@@ -191,7 +191,7 @@ class Equipment
       #MELEE WEAPONS
       when 'wooden_stick'
         Equipment.create(:name => 'Wooden Stick', :team => team, :eq_type => EQUIPMENT_MACE, :min_damage => 2, :max_damage => 4, :value => 3)
-      when 'giant_tusks'
+    when 'animal_weaponry'
         Equipment.create(:name => 'Giant Tusks', :team => team, :eq_type => EQUIPMENT_AXE, :min_damage => 3, :max_damage => 5)
       when 'short_sword'
         Equipment.create(:name => 'Short Sword', :team => team, :eq_type => EQUIPMENT_SWORD, :min_damage => T1_WEAPON_MIN_DAMAGE, :max_damage => T1_WEAPON_MAX_DAMAGE, :value => T1_WEAPON_VALUE)

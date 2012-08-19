@@ -8,6 +8,7 @@
 <div class="bright-background content-box left" id="arena-cages">
   <h4>The Cages</h3>
   </br>
+
   <div class="beast left">
     <%= link_to "Gang of Goblins", cage_path('goblins'), :class=> 'left' %>
     <span class="right">Difficulty: 1</span>
@@ -17,6 +18,18 @@
     <%= link_to "Giant Boars", cage_path('boars'), :class=> 'left' %>
     <span class="right">Difficulty: 1</span>
   </div>
+
+  <div class="beast-separator left"></div>
+  <div class="beast left">
+    <%= link_to "Ferocious Bear", cage_path('bear'), :class=> 'left' %>
+    <span class="right">Difficulty: 2</span>
+  </div>
+  <div class="beast-separator left"></div>
+  <div class="beast left">
+    <%= link_to "Caged Thieves", cage_path('thieves'), :class=> 'left' %>
+    <span class="right">Difficulty: 2</span>
+  </div>
+
   <div class="beast-separator left"></div>
   <div class="beast left">
     <%= link_to "Orc Bandits", cage_path('orc_bandits'), :class=> 'left' %>

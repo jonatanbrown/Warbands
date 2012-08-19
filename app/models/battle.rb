@@ -976,6 +976,13 @@ class Battle
               i += 1
             end
           end
+        when 'Bear'
+          10.times do |i|
+            if ap > 0
+              list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i, SKILL_STRIKE)})
+              ap -= Constant.get_skill_ap(SKILL_STRIKE)
+            end
+          end
         when 'Orc Thug'
           4.times do |i|
             if ap > 0
