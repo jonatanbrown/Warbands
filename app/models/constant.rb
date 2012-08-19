@@ -126,11 +126,11 @@ class Constant
     elsif skill_id == SKILL_BOLA
       6
     elsif skill_id == SKILL_MIND_POISON
-      5
+      6
     elsif skill_id == SKILL_PARALYZING_POISON
-      5
+      6
     elsif skill_id == SKILL_WEAKNESS_POISON
-      5
+      6
     elsif skill_id == SKILL_RUN_UP
       4
     end

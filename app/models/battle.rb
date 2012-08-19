@@ -219,7 +219,7 @@ class Battle
 
             result += target.check_knockout
 
-            char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+            char.delete_postdamage_effects
 
             char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
             char.roll_learning(SKILL_TAKE_AIM)
@@ -348,7 +348,7 @@ class Battle
 
           result += target.check_knockout
 
-          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+          char.delete_postdamage_effects
 
           char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
           char.roll_learning(SKILL_TAKE_AIM)
@@ -371,7 +371,7 @@ class Battle
           target.save
           result += "<p>#{char.name} throws dirt into the eyes of #{target.name}. <span class='red'>#{target.name} is blinded!</p></span>"
 
-          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+          char.delete_postdamage_effects
 
           char.roll_learning(SKILL_DIRT)
 
@@ -576,7 +576,7 @@ class Battle
 
           result += target.check_knockout
 
-          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+          char.delete_postdamage_effects
 
           char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
           char.roll_learning(SKILL_TAKE_AIM)
@@ -615,7 +615,7 @@ class Battle
 
           result += target.check_knockout
 
-          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+          char.delete_postdamage_effects
 
           char.effects << [EFFECT_TAKEN_AIM, 1, nil, target._id]
           char.roll_learning(SKILL_TAKE_AIM)
@@ -637,7 +637,7 @@ class Battle
           target.save
           result += "<p>#{char.name} throws a bola at #{target.name}. <span class='red'>#{target.name} is entangled!</p></span>"
 
-          char.effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM}
+          char.delete_postdamage_effects
 
           char.roll_learning(SKILL_BOLA)
 
@@ -981,6 +981,26 @@ class Battle
             if ap > 0
               list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i, SKILL_STRIKE)})
               ap -= Constant.get_skill_ap(SKILL_STRIKE)
+            end
+          end
+        when 'Thief'
+          if ap > 0
+            effects = char.effects.map {|x| x[0] }
+            if effects.include?(EFFECT_APPLIED_WEAKNESS_POISON) or effects.empty?
+              list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_PARALYZING_POISON.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_PARALYZING_POISON)})
+              ap -= Constant.get_skill_ap(SKILL_PARALYZING_POISON)
+            elsif effects.include?(EFFECT_APPLIED_PARALYZING_POISON) or effects.empty?
+              list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_WEAKNESS_POISON.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_WEAKNESS_POISON)})
+              ap -= Constant.get_skill_ap(SKILL_WEAKNESS_POISON)
+          else
+              list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_QUICK_THROW.to_s, "char" => char, "prio" => char.get_priority(0, SKILL_QUICK_THROW)})
+              ap -= Constant.get_skill_ap(SKILL_QUICK_THROW)
+            end
+            4.times do |i|
+              if ap > 0
+                list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_QUICK_THROW.to_s, "char" => char, "prio" => char.get_priority(i + 1, SKILL_QUICK_THROW)})
+                ap -= Constant.get_skill_ap(SKILL_QUICK_THROW)
+              end
             end
           end
         when 'Orc Thug'

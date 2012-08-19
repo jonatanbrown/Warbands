@@ -252,7 +252,7 @@ class Team
         ai_team.characters << c
       end
       ai_team.save
-    when 'bear'
+    when 'ferocious_bear'
       ai_team = Team.create(:name => "Bear", :formation => 1, :rating => nil, :difficulty => 2)
       c = Character.new(:name => 'Bear', :position => 2, :str => 17, :dex => 10, :tgh => 20, :ini => 12, :int => 1, :mem => 1, :strike => 10, :ap => 40, :hp => 360, :current_hp => 360)
       e = Equipment.create_item('animal_weaponry', nil)
@@ -261,7 +261,17 @@ class Team
       c.save
       ai_team.characters << c
       ai_team.save
-
+    when 'caged_thieves'
+      ai_team = Team.create(:name => "Caged Thieves", :formation => 1, :rating => nil, :difficulty => 2)
+      3.times do |i|
+        c = Character.new(:name => 'Thief', :position => i + 1, :str => 13, :dex => 16, :tgh => 13, :ini => 15, :int => 1, :mem => 1, :quick_throw => 20, :weakness_poison => 17, :paralyzing_poison => 17, :ap => 22, :hp => 120, :current_hp => 100)
+        e = Equipment.create_item('razor_darts', nil)
+        c.equipments << e
+        e.save
+        c.save
+        ai_team.characters << c
+      end
+      ai_team.save
     when 'orc_bandits'
       ai_team = Team.create(:name => "Orc Bandits", :formation => 3, :rating => nil, :difficulty => 3)
       3.times do |i|

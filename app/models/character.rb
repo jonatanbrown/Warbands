@@ -752,6 +752,10 @@ class Character
     end
   end
 
+  def delete_postdamage_effects
+    effects.delete_if {|effect| effect[0] == EFFECT_TAKEN_AIM or effect[0] == EFFECT_RAN_UP}
+  end
+
   def ran_up?
     effects.map {|x| x[0] }.include?(EFFECT_RAN_UP)
   end
