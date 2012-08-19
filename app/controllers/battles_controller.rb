@@ -46,6 +46,14 @@ class BattlesController < ApplicationController
     @team = current_user.team
     bs = current_user.battle_sync
 
+    if @battle.result != BATTLE_UNDECIDED
+      redirect_to battle_finished_path
+      return
+    elsif @battle.submitted
+      redirect_to waiting_for_turn_path
+      return
+    end
+
     if bs.pvp
       @op_team = User.find(@battle.opponent).team
     else
@@ -57,13 +65,7 @@ class BattlesController < ApplicationController
 
     @turn_events = bs.turn_events
 
-    if @battle.result != BATTLE_UNDECIDED
-      redirect_to battle_finished_path
-    elsif @battle.submitted
-      redirect_to waiting_for_turn_path
-    else
-      render 'battle'
-    end
+    render 'battle'
   end
 
   def leave_queue
@@ -175,7 +177,7 @@ class BattlesController < ApplicationController
         battle_result.update_attribute(:last_turn_info, bs.turn_events)
       end
       battle = current_user.battle
-      if !bs.pvp
+      if bs and !bs.pvp
         team = Team.find(current_user.battle.opponent)
         team.characters.destroy_all
         team.destroy
