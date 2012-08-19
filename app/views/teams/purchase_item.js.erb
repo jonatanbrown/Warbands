@@ -1,3 +1,8 @@
 $('#gold-display').html('<p><b>Gold: <%= @team.gold %></b></p>');
-$('#smithy-messages').html('<%= @result.html_safe %>');
+<% unless @error %>
+  $('#smithy-error').html('');
+  $('#smithy-messages').append('</br><%= @result.html_safe %>');
+<% else %>
+  $('#smithy-error').html('</br><%= @result.html_safe %>');
+<% end %>
 

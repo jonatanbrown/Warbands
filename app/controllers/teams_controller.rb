@@ -73,6 +73,7 @@ class TeamsController < ApplicationController
     cost = Equipment.get_cost(params[:item])
     if cost > @team.gold
       @result = '<span class="red">Not enough gold.</span>'
+      @error = true
     else
       @team.gold -= cost
       @team.save
