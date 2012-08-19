@@ -233,7 +233,7 @@ class Team
           basic_weapon = 'rusty_cutlery'
           name = 'Goblin Forkthrower'
         end
-        c = Character.new(:name => name, :position => i, :str => 5, :dex => 15, :tgh => 3, :ini => 14, :int => 1, :mem => 1, :strike => 10, :fling => 10, :ap => 8, :hp => 30, :current_hp => 30)
+        c = Character.new(:name => name, :position => i, :str => 5, :dex => 15, :tgh => 3, :ini => 12, :int => 1, :mem => 1, :strike => 5, :fling => 5, :ap => 12, :hp => 30, :current_hp => 30)
         e = Equipment.create_item(basic_weapon, nil)
         c.equipments << e
         e.save
@@ -241,14 +241,16 @@ class Team
         ai_team.characters << c
       end
       ai_team.save
-    when 'boar'
-      ai_team = Team.create(:name => "Giant Boar", :formation => 1, :rating => nil, :difficulty => 2)
-      c = Character.new(:name => 'Giant Boar', :position => 2, :str => 18, :dex => 11, :tgh => 17, :ini => 13, :int => 1, :mem => 1, :strike => 17, :ap => 40, :hp => 180, :current_hp => 180)
-      e = Equipment.create_item('giant_tusks', nil)
-      c.equipments << e
-      e.save
-      c.save
-      ai_team.characters << c
+    when 'boars'
+      ai_team = Team.create(:name => "Giant Boar", :formation => 4, :rating => nil, :difficulty => 1)
+      2.times do |i|
+        c = Character.new(:name => 'Giant Boar', :position => i, :str => 13, :dex => 11, :tgh => 14, :ini => 13, :int => 1, :mem => 1, :strike => 8, :run_up => 10, :ap => 24, :hp => 150, :current_hp => 150)
+        e = Equipment.create_item('giant_tusks', nil)
+        c.equipments << e
+        e.save
+        c.save
+        ai_team.characters << c
+      end
       ai_team.save
     when 'orc_bandits'
       ai_team = Team.create(:name => "Orc Bandits", :formation => 3, :rating => nil, :difficulty => 3)

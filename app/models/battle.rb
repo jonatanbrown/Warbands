@@ -965,10 +965,15 @@ class Battle
             ap -= Constant.get_skill_ap(SKILL_FLING)
           end
         when 'Giant Boar'
-          10.times do |i|
+          i = 0
+          3.times do
             if ap > 0
+              list.push({"target" => {"team" => team, "pos" => 'null'}, "skill" => SKILL_RUN_UP.to_s, "char" => char, "prio" => char.get_priority(i, SKILL_RUN_UP)})
+              ap -= Constant.get_skill_ap(SKILL_RUN_UP)
+              i += 1
               list.push({"target" => {"team" => team, "pos" => melee_targets.sample}, "skill" => SKILL_STRIKE.to_s, "char" => char, "prio" => char.get_priority(i, SKILL_STRIKE)})
               ap -= Constant.get_skill_ap(SKILL_STRIKE)
+              i += 1
             end
           end
         when 'Orc Thug'
