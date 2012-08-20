@@ -60,7 +60,7 @@ class BattlesController < ApplicationController
       @op_team = Team.find(@battle.opponent)
     end
 
-    @chars = @team.characters.where(:active => true)
+    @chars = (@team.characters.where(:active => true)).sort {|a, b| a.position <=> b.position}
     @op_chars = @op_team.characters.where(:active => true)
 
     @turn_events = bs.turn_events

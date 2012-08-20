@@ -26,7 +26,7 @@
     formation: <%= @team.formation %>,
     pos_targetability: <%= (0..4).map { |pos| [@op_team.position_targetability_melee(pos), @op_team.position_targetability_ranged(pos)] } %>,
     melee_range: <%= (0..4).map { |pos| @team.position_targetability_melee(pos) } %>,
-    chars: <%= @chars.all.map { |char| ["#{char.name}", char.position] }.to_s.html_safe %>,
+    chars: <%= @chars.map { |char| ["#{char.name}", char.position] }.to_s.html_safe %>,
     skill_selected: null
   }
 
