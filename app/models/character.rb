@@ -89,9 +89,9 @@ class Character
     points = INITIAL_CHAR_POINTS
     ['str', 'dex', 'tgh', 'ini', 'hp'].each do |stat|
       val = params[stat].to_i
-      change = (stat == 'hp' ? 3 : 1)
+      change = (stat == 'hp' ? 2 : 1)
       points -= (val) + ((val - 3) > 0 ? (val - 3) : 0) + ((val - 6) > 0 ? (val - 6) : 0) + ((val - 8) > 0 ? (val - 8) : 0)
-      self[stat] += val
+      self[stat] += val * change
     end
     ['strike', 'thrown', 'dirt', 'defensive_posture', 'run_up'].each do |skill|
       val = params[skill].to_i
