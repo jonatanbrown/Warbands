@@ -108,6 +108,11 @@ class BattlesController < ApplicationController
           battle_sync = BattleSync.collection.find_and_modify(query: { '$or' => [{ reference_id: current_user._id } , { reference_id: @battle.opponent }], '$or' => [{ state: 'orders' } , { state: 'waiting' }] }, update: {'$set' => {state: 'waiting'}}, :new => true)
 
           if battle_sync
+            #DEBUG
+            puts "################################################################"
+            puts "Found bs in Waiting or Orders. Setting state to waiting and incrementing submit_count!"
+            puts Time.now
+            puts "################################################################"
             bs = BattleSync.instantiate(battle_sync)
             bs.submit_count += 1
             unless bs.submit_time
@@ -123,8 +128,10 @@ class BattlesController < ApplicationController
           if battle_sync
           #DEBUG
           puts "################################################################"
-          puts "Queuing turn resolution!"
+          puts "Both users have submitted. Queuing turn resolution!"
           puts Time.now
+          puts "Submit count is"
+          puts battle_sync.submit_count
           puts "################################################################"
             Qu.enqueue BattleSync, battle_sync['_id']
           end
