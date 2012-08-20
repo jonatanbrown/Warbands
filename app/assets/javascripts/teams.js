@@ -77,7 +77,7 @@ $(document).ready(function() {
             var change = 1;
 
             if(stat == 'hp')
-                change = 3
+                change = 2
 
             if(Warbands.team_points['char' + pos + '_points'] >= cost)
             {
